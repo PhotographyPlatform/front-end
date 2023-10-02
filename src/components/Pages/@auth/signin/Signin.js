@@ -1,6 +1,13 @@
 'use strict'
 
 import {
+    AlertDialog,
+    AlertDialogBody,
+    AlertDialogCloseButton,
+    AlertDialogContent,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogOverlay,
     Flex,
     Box,
     FormControl,
@@ -12,31 +19,41 @@ import {
     Heading,
     Text,
     useColorModeValue,
+    useDisclosure,
 } from '@chakra-ui/react'
 
-import { signinHandler } from '../../../../store/reducers/auth/user.reducer'
-import { useDispatch, useSelector } from 'react-redux'
+import { signin } from '../../../../store/reducers/auth/user.reducer'
+import { useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
+import React, { useState } from 'react'
+import axios from 'axios'
 
 export default function Signin() {
+
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const state = useSelector(state => state.user)
-    const submitHandler = (e) => {
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const cancelRef = React.useRef();
+    const [error, setError] = useState('');
+    const submitHandler = async (e) => {
         try {
             e.preventDefault();
             const obj = {
                 username: e.target.username.value,
                 password: e.target.password.value
             }
-            dispatch(signinHandler(obj))
-            if (state.user.isLogged === true) {
+            const data = await axios.post('http://localhost:3002/login', null, {
+                headers: {
+                    Authorization: `Basic ${btoa(`${obj.username}:${obj.password}`)}`
+                }
+            })
+            dispatch(signin(data))
+            if (data.status === 200) {
                 navigate('/')
-            } else {
-                console.log('wrong validation');
             }
         } catch (e) {
-            console.log('server error');
+            setError(e.response.data);
+            onOpen();
         }
     }
     return (
@@ -49,7 +66,7 @@ export default function Signin() {
                 <Stack align={'center'}>
                     <Heading fontSize={'4xl'}>Sign in to your account</Heading>
                     <Text fontSize={'lg'} color={'gray.600'}>
-                        to enjoy all of our cool <Text color={'blue.400'}>features</Text> ✌️
+                        to see all wonderful  <Text color={'blue.400'}>Photos</Text>
                     </Text>
                 </Stack>
                 <form onSubmit={submitHandler}>
@@ -67,12 +84,11 @@ export default function Signin() {
                                 <FormLabel>Password</FormLabel>
                                 <Input type="password" />
                             </FormControl>
-                            <Stack spacing={10}>
+                            <Stack spacing={6}>
                                 <Stack
                                     direction={{ base: 'column', sm: 'row' }}
                                     align={'start'}
                                     justify={'space-between'}>
-                                    <Checkbox>Remember me</Checkbox>
                                     <Link to='/pass'> <Text color={'blue.400'}>Forgot password?</Text> </Link>
                                 </Stack>
                                 <Button
@@ -89,6 +105,26 @@ export default function Signin() {
                     </Box>
                 </form>
             </Stack>
+            <AlertDialog
+                motionPreset="slideInBottom"
+                leastDestructiveRef={cancelRef}
+                onClose={onClose}
+                isOpen={isOpen}
+                isCentered
+            >
+                <AlertDialogOverlay />
+
+                <AlertDialogContent>
+                    <AlertDialogHeader>Error</AlertDialogHeader>
+                    <AlertDialogCloseButton />
+                    <AlertDialogBody>{error}</AlertDialogBody>
+                    <AlertDialogFooter>
+                        <Button ref={cancelRef} onClick={onClose}>
+                            OK
+                        </Button>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
         </Flex>
     )
 }

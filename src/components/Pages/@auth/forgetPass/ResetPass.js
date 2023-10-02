@@ -20,6 +20,7 @@ import { useNavigate } from 'react-router-dom'
 
 export default function ResetPassword() {
     const navigate = useNavigate()
+    const [wrong, setWrong] = useState(false)
     const [alert, setAlert] = useState(false)
     const submitHandler = async (e) => {
         e.preventDefault();
@@ -27,17 +28,19 @@ export default function ResetPassword() {
             newPassword: e.target.newPass.value,
             confirmPass: e.target.confirm.value,
         }
+        console.log(obj);
         if (obj.newPassword === obj.confirmPass) {
             const id = localStorage.getItem('id')
             const data = await axios.post(`http://localhost:3002/resetPassword/${id}`, obj)
             if (data.status === 200) {
+                setWrong(false)
                 setAlert(true)
                 setTimeout(() => {
                     navigate('/signin')
                 }, 5000)
             }
         } else {
-            console.log('both passwords must match');
+            setWrong(true)
         }
     }
     return (
@@ -100,6 +103,13 @@ export default function ResetPassword() {
                         <AlertDescription maxWidth='sm'>
                             You will be Automatically Redirected to Login page in 5 seconeds
                         </AlertDescription>
+                    </Alert>
+                }
+                {
+                    wrong &&
+                    <Alert status='error'>
+                        <AlertIcon />
+                        <AlertTitle>Both Password Must Match</AlertTitle>
                     </Alert>
                 }
             </Stack>
