@@ -19,31 +19,11 @@ export default (state = USER_STATE, action) => {
             cookies.remove('user_session')
             cookies.remove('user')
             return { ...state, user: { isLogged: false } }
-
-        case 'EDIT_PROFILE':
-            console.log(payload);
-            return { ...state, payload }
         default:
             return state
     }
 }
 
-
-
-export const profileEdit = (payload) => async dispatch => {
-    const token = cookies.load('user_session')
-    const data = await axios.patch('http://localhost:3002/profile', payload, {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        }
-    })
-    dispatch(profile(data))
-}
-
-export const profile = (user) => ({
-    type: 'EDIT_PROFILE',
-    payload: user
-})
 
 export const logOut = () => ({
     type: 'LOG_OUT'
