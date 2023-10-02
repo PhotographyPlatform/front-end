@@ -1,4 +1,11 @@
 import {
+    AlertDialog,
+    AlertDialogBody,
+    AlertDialogCloseButton,
+    AlertDialogContent,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogOverlay,
     Box,
     Button,
     Checkbox,
@@ -13,40 +20,54 @@ import {
     Select,
     Stack,
     Text,
+    useDisclosure
 } from '@chakra-ui/react'
 import axios from 'axios'
 import { PasswordField } from './passwordFiled/Password'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import React, { useState } from 'react'
 export default function SignUp() {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
     const state = useSelector(state => state)
-    const submitHandler = (e) => {
-        e.preventDefault()
-        // const obj = {
-        //     email: e.target.email.value,
-        //     firstName: e.target.fname.value,
-        //     lastName: e.target.lname.value,
-        //     password: e.target.password.value,
-        //     address: e.target.address.value,
-        //     gender: e.target.options.value,
-        //     username: e.target.username.value
-        // }
-        const obj = {
-            email: 'hamza@gmail.com',
-            firstName: 'hamza',
-            lastName: 'tamari',
-            password: '123',
-            address: 'amman',
-            gender: 'male',
-            username: 'hamza.tamari'
-        }
-        const signUp = axios.post('http://localhost:3002/signup', obj)
-        if (signUp) {
-            navigate('/code')
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const cancelRef = React.useRef();
+
+    const [error, setError] = useState('');
+    const submitHandler = async (e) => {
+        try {
+            e.preventDefault()
+            // const obj = {
+            //     email: e.target.email.value,
+            //     firstName: e.target.fname.value,
+            //     lastName: e.target.lname.value,
+            //     password: e.target.password.value,
+            //     address: e.target.address.value,
+            //     gender: e.target.options.value,
+            //     birthday: e.target.bday.value,
+            //     username: e.target.username.value
+            // }
+            const obj = {
+                email: 'tamarihamza4@gmail.com',
+                firstName: 'hamza',
+                lastName: 'tamari',
+                password: '123',
+                address: 'amman',
+                birthday: '1999-12 - 12',
+                username: 'hamza.tamari'
+            }
+
+            localStorage.setItem('email', obj.email)
+            const signUp = await axios.post('http://localhost:3002/signup', obj)
+            if (signUp.status === 200) {
+                navigate('/code')
+            }
+        } catch (e) {
+            setError(e.response.data);
+            onOpen();
         }
     }
-    console.log(state);
     return (
         <Container maxW="lg" py={{ base: '12', md: '24' }} px={{ base: '0', sm: '8' }}>
             <form onSubmit={submitHandler}>
@@ -88,6 +109,7 @@ export default function SignUp() {
                                 <FormControl>
                                     <FormLabel htmlFor="bday">Birthday</FormLabel>
                                     <Input
+                                        name='bday'
                                         placeholder="Select Date"
                                         size="md"
                                         type="date"
@@ -114,13 +136,33 @@ export default function SignUp() {
                                     <Divider />
                                 </HStack>
                                 <Text color="fg.muted">
-                                    Already have an account? <Link href="#">Sign In</Link>
+                                    Already have an account? <Link href="signin">Sign In</Link>
                                 </Text>
                             </Stack>
                         </Stack>
                     </Box>
                 </Stack>
             </form >
+            <AlertDialog
+                motionPreset="slideInBottom"
+                leastDestructiveRef={cancelRef}
+                onClose={onClose}
+                isOpen={isOpen}
+                isCentered
+            >
+                <AlertDialogOverlay />
+
+                <AlertDialogContent>
+                    <AlertDialogHeader>Error</AlertDialogHeader>
+                    <AlertDialogCloseButton />
+                    <AlertDialogBody>{error}</AlertDialogBody>
+                    <AlertDialogFooter>
+                        <Button ref={cancelRef} onClick={onClose}>
+                            OK
+                        </Button>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
         </Container >
     )
 }
