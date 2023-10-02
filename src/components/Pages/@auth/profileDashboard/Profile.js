@@ -26,8 +26,7 @@ import {
 } from '@chakra-ui/react';
 import { logOut } from '../../../../store/reducers/auth/user.reducer'
 import { BsThreeDotsVertical } from 'react-icons/bs';
-// import { FaLocationArrow } from 'react-icons/fa';
-import { profileEdit } from '../../../../store/reducers/auth/user.reducer'
+import { profileEdit } from '../../../../store/reducers/profile/profile.reducer'
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -39,16 +38,17 @@ function Profile() {
     const submitHandler = (e) => {
         e.preventDefault()
         const obj = {
-            email: e.target.email.value,
-            firstName: e.target.fname.value,
-            lastName: e.target.lname.value,
-            address: e.target.address.value,
-            gender: e.target.options.value,
-            birthday: e.target.bday.value,
-            username: e.target.username.value
+            email: e.target.email.value !== '' ? e.target.email.value : null,
+            firstName: e.target.fname.value !== '' ? e.target.fname.value : null,
+            lastName: e.target.lname.value !== '' ? e.target.lname.value : null,
+            address: e.target.address.value !== '' ? e.target.address.value : null,
+            gender: e.target.options.value !== '' ? e.target.options.value : null,
+            birthday: e.target.bday.value !== '' ? e.target.bday.value : null,
+            username: e.target.username.value !== '' ? e.target.username.value : null
         }
         dispatch(profileEdit(obj))
     }
+
     useEffect(() => {
         if (userData) {
             const decodedData = CryptoJS.AES.decrypt(userData, 'pixel').toString(CryptoJS.enc.Utf8)
@@ -58,7 +58,7 @@ function Profile() {
             dispatch(logOut());
             navigate('/signin')
         }
-    }, [data])
+    }, [])
     return (
         <div>
 
