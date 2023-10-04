@@ -26,7 +26,6 @@ export default function ForgotPassword() {
             const obj = {
                 email: e.target.email.value,
             };
-            console.log(obj);
             const data = await axios.post('http://localhost:3002/forgetPassword', obj);
             if (data.status === 200) {
                 setAlert(true);

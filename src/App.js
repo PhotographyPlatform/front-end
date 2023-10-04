@@ -4,7 +4,6 @@ import './App.css';
 import Header from './components/Header/Header';
 import SignUp from './components/Pages/@auth/signup/Signup';
 import Code from './components/Pages/@auth/signup/codes/Code';
-import Signin from './components/Pages/@auth/signin/Signin';
 import AuthHome from './components/Pages/@auth/Home';
 import NonAuthHome from './components/Pages/NonAuthHome/NonAuthHome';
 import { useEffect } from 'react';
@@ -14,7 +13,11 @@ import ResetPassword from './components/Pages/@auth/forgetPass/ResetPass';
 import cookies from 'react-cookies';
 import { decodeToken } from 'react-jwt';
 import Profile from './components/Pages/@auth/profileDashboard/Profile';
-
+import Test from './components/Pages/@auth/signin/Signin';
+import {
+  ThemeProvider,
+  theme
+} from '@chakra-ui/react'
 function App() {
   const state = useSelector(state => state.user)
   const Logged = state.user.isLogged
@@ -26,24 +29,26 @@ function App() {
 
   return (
     <div className="App">
-      <Header />
-      <Routes>
-        <Route path='/code' element={<Code />} />
-        <Route path='/pass' element={<ForgotPassword />} />
-        <Route path='/resetPassword' element={<ResetPassword />} />
-        <Route path='/signup' element={<SignUp />} />
-        <Route path='/signin' element={<Signin />} />
-        {
-          decodeAuth && decodeAuth.userId ?
-            <Route path='/' element={<AuthHome />} />
-            : <Route path='/' element={<NonAuthHome />} />
+      <ThemeProvider theme={theme}>
+        <Header />
+        <Routes>
+          <Route path='/code' element={<Code />} />
+          <Route path='/forgetPassword' element={<ForgotPassword />} />
+          <Route path='/resetPassword' element={<ResetPassword />} />
+          <Route path='/signup' element={<SignUp />} />
+          <Route path='/signin' element={<Test />} />
+          {
+            decodeAuth && decodeAuth.userId ?
+              <Route path='/' element={<AuthHome />} />
+              : <Route path='/' element={<NonAuthHome />} />
 
-        }
-        {
-          decodeAuth && decodeAuth.userId &&
-          <Route path='/profile' element={<Profile />} />
-        }
-      </Routes>
+          }
+          {
+            decodeAuth && decodeAuth.userId &&
+            <Route path='/profile' element={<Profile />} />
+          }
+        </Routes>
+      </ThemeProvider>
     </div>
   );
 }

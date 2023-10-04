@@ -4,14 +4,30 @@ import Navbar from 'react-bootstrap/Navbar';
 import { Link, useNavigate } from 'react-router-dom';
 import cookies from 'react-cookies'
 import { decodeToken } from 'react-jwt';
-import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from '@chakra-ui/react';
+import {
+    Box, Button, IconButton, Modal, ColorModeProvider, ModalBody, CSSReset, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useColorMode, useDisclosure
+} from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
 import { logOut } from '../../store/reducers/auth/user.reducer'
+import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 
 function Header() {
     const isAuth = cookies.load('user_session');
     const decodeAuth = decodeToken(isAuth);
 
+    const ThemeSelector = () => {
+        const { colorMode, toggleColorMode } = useColorMode()
+
+        return (
+            <Box textAlign='right' py={4}>
+                <IconButton
+                    icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+                    onClick={toggleColorMode}
+                    variant="ghost"
+                />
+            </Box>
+        )
+    }
     // for logout 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -60,9 +76,11 @@ function Header() {
                         <Button><Link to="/signup">signup</Link></Button>
                     </Nav>
                 )}
+                <ThemeSelector />
             </Container>
         </Navbar>
     );
 }
+
 
 export default Header;

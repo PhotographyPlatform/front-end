@@ -14,6 +14,8 @@ import {
     Stack,
     useColorModeValue,
 } from '@chakra-ui/react'
+import CryptoJS from 'crypto-js';
+
 import axios from 'axios'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -33,6 +35,18 @@ export default function ResetPassword() {
             const id = localStorage.getItem('id')
             const data = await axios.post(`http://localhost:3002/resetPassword/${id}`, obj)
             if (data.status === 200) {
+                const getData = localStorage.getItem('Remember_Me')
+                const decodedData = CryptoJS.AES.decrypt(getData, 'pixel').toString(CryptoJS.enc.Utf8)
+                const parsed = JSON.parse(decodedData)
+                const changed = {
+                    username: parsed.username,
+                    password: obj.newPassword
+                }
+                localStorage.removeItem('Remember_Me')
+                const dataToEncrypt = JSON.stringify(changed)
+                const secretKey = process.env.SECRETKEY || 'pixel'
+                const encryptedData = CryptoJS.AES.encrypt(dataToEncrypt, secretKey).toString();
+                localStorage.setItem('Remember_Me', encryptedData)
                 setWrong(false)
                 setAlert(true)
                 setTimeout(() => {
