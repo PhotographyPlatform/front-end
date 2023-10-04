@@ -139,7 +139,7 @@ export default function Messages() {
 
 
 
-     const handleEmojiSelect = () => {
+     const handleEmoji = () => {
           setSelectedEmoji(!selectedEmoji);
           
      };
@@ -197,7 +197,7 @@ export default function Messages() {
                          <Input ref={inputEle} width={'550px'} border={'none'} _focusVisible={'none'} fontSize={'17px'} onChange={(e) => setValue(e.target.value)} placeholder='Type message' />
                     </Box>
                     <Box>
-                         <Button bg={'transparent'} gap={'15px'} px={'5px'} variant = 'solid' onClick={handleEmojiSelect}>
+                         <Button bg={'transparent'} gap={'15px'} px={'5px'} variant = 'solid' onClick={handleEmoji}>
                          <div className="icon-container">
                               <MdEmojiEmotions color='#757575' size={22} cursor={'pointer'}/>
                          </div>
@@ -206,10 +206,14 @@ export default function Messages() {
                          <Button onClick={send} bg={'transparent'} gap={'15px'} variant = 'solid' >
                               <IoSend color='#3b71ca' size={22} />
                          </Button>
-                         
-
                     </Box>
                </HStack>
+               {
+               selectedEmoji && 
+               <Box className='emoji-con'>
+                    <Picker data={data} onEmojiSelect={handleEmojSelect} />
+               </Box>
+               }
                {
                selectedEmoji && 
                <Box className='emoji-con'>
