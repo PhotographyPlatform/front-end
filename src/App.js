@@ -14,6 +14,8 @@ import ResetPassword from './components/Pages/@auth/forgetPass/ResetPass';
 import cookies from 'react-cookies';
 import { decodeToken } from 'react-jwt';
 import Profile from './components/Pages/@auth/profileDashboard/Profile';
+import Messages from './components/Pages/@auth/Chat/Messages';
+import Chat from './components/Pages/@auth/Chat/Chat';
 
 function App() {
   const state = useSelector(state => state.user)
@@ -37,11 +39,14 @@ function App() {
           decodeAuth && decodeAuth.userId ?
             <Route path='/' element={<AuthHome />} />
             : <Route path='/' element={<NonAuthHome />} />
-
         }
         {
           decodeAuth && decodeAuth.userId &&
+          <>
           <Route path='/profile' element={<Profile />} />
+          {/* <Route path='/messages/:id' element={<Messages />} /> */}
+          <Route path='/messages/:id' element={<Chat/>} />
+          </>
         }
       </Routes>
     </div>

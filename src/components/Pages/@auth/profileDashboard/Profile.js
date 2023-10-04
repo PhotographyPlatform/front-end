@@ -28,7 +28,7 @@ import { logOut } from '../../../../store/reducers/auth/user.reducer'
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { profileEdit } from '../../../../store/reducers/profile/profile.reducer'
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { json, useNavigate } from 'react-router-dom';
 
 function Profile() {
     const navigate = useNavigate()

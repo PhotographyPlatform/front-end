@@ -1,0 +1,27 @@
+.chat-page{
+     display: flex;
+     justify-content: flex-end;
+
+     // align-items: center;
+     width: 100%;
+     height: 92vh;
+     padding: 20px;
+}
+.ChatList{
+     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.ChatList-cont{
+     overflow-y: scroll;
+     max-height: 85vh;
+}
+
+.ChatList-cont::-webkit-scrollbar {
+     width: 7px;
+   }
+
+.ChatList-cont::-webkit-scrollbar-thumb {
+     background-color: #b6b2b2dd; 
+     border-radius: 20px; 
+   }
+
