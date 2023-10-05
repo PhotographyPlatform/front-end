@@ -14,7 +14,7 @@ import ResetPassword from './components/Pages/@auth/forgetPass/ResetPass';
 import cookies from 'react-cookies';
 import { decodeToken } from 'react-jwt';
 import Profile from './components/Pages/@auth/profileDashboard/Profile';
-
+import Layout from "./components/Layout/"
 function App() {
   const state = useSelector(state => state.user)
   const Logged = state.user.isLogged
@@ -26,24 +26,26 @@ function App() {
 
   return (
     <div className="App">
-      <Header />
-      <Routes>
-        <Route path='/code' element={<Code />} />
-        <Route path='/pass' element={<ForgotPassword />} />
-        <Route path='/resetPassword' element={<ResetPassword />} />
-        <Route path='/signup' element={<SignUp />} />
-        <Route path='/signin' element={<Signin />} />
-        {
-          decodeAuth && decodeAuth.userId ?
-            <Route path='/' element={<AuthHome />} />
-            : <Route path='/' element={<NonAuthHome />} />
+      <Layout>
+        <Header />
+        <Routes>
+          <Route path='/code' element={<Code />} />
+          <Route path='/pass' element={<ForgotPassword />} />
+          <Route path='/resetPassword' element={<ResetPassword />} />
+          <Route path='/signup' element={<SignUp />} />
+          <Route path='/signin' element={<Signin />} />
+          {
+            decodeAuth && decodeAuth.userId ?
+              <Route path='/' element={<AuthHome />} />
+              : <Route path='/' element={<NonAuthHome />} />
 
-        }
-        {
-          decodeAuth && decodeAuth.userId &&
-          <Route path='/profile' element={<Profile />} />
-        }
-      </Routes>
+          }
+          {
+            decodeAuth && decodeAuth.userId &&
+            <Route path='/profile' element={<Profile />} />
+          }
+        </Routes>
+      </Layout>
     </div>
   );
 }
