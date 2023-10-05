@@ -1,4 +1,5 @@
 import React from 'react';
+import './profile.scss'
 import {
     Card,
     CardHeader,
@@ -19,7 +20,7 @@ import { BiLike, BiChat, BiShare } from 'react-icons/bi'; // Import the BiLike, 
 
 function Home() {
     return (
-        <div>
+        <div className='auth-profile'>
             <Card maxW='md'>
                 <CardHeader>
                     <Flex spacing='4'>

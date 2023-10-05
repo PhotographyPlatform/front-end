@@ -1,0 +1,47 @@
+.custome-layout {
+    .side-nav-layout {
+        position: fixed;
+    }
+
+    .children-layout {
+        margin-left: 400px;
+    }
+}
+
+
+@media(min-width:768px) {
+
+    // Mid 
+.custome-layout {
+        .side-nav-layout {
+            // position: fixed;
+            // padding: 100px ;
+        }
+
+        .children-layout {
+            // margin-left: 400px;
+        }
+    }
+}
+@media(min-width:1199px) {
+    // Large 
+
+}
+
+@media(max-width:768px) {
+
+    // Small 
+    .custome-layout {
+        .side-nav-layout {
+            position: unset;
+            position: relative;
+            z-index: 1;
+        }
+
+        .children-layout {
+            margin-left: unset;
+            margin-top: 50px;
+        }
+    }
+
+}
