@@ -8,5 +8,34 @@
 .menu-list-custom {
     all: unset;
     // display: block !important;
-    position: relative !important;
+    position: fixed !important;
+    z-index: 1;
+}
+
+
+
+
+@media(min-width:768px) {
+
+    // Mid 
+
+}
+
+
+
+@media(max-width:768px) {
+
+    // Small 
+
+
+}
+
+@media(min-width:1199px) {
+
+    // Large 
+    .menu-list-custom {
+        all: unset;
+        position: unset !important;
+    }
+
 }

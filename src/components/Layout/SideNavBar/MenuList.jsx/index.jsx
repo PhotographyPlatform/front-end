@@ -30,7 +30,7 @@ function NavMenuList(props) {
     };
 
     return (<div className='menu-list-custom'>
-        <Menu >
+        <Menu  >
             <MenuButton
 
                 as={IconButton}

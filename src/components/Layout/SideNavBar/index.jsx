@@ -38,21 +38,21 @@ function SideNavBar(props) {
                 <div className='logo'>LOGO</div>
                 <div className='Links'>
 
-                    <div className='link-card'>
+                    <div className='link-card hover-nav'>
                         <FaHome />
-                        <span  className='links-title' >
-                             Home
+                        <span className='links-title' >
+                            Home
                         </span>
                     </div>
 
-                    <div className='link-card'>
+                    <div className='link-card hover-nav'>
                         <FaUser />
                         <span className='links-title'>
                             Profile
                         </span>
                     </div>
 
-                    <div className='link-card' >
+                    <div className='link-card hover-nav' >
                         <FaSearch />
                         <span className='links-title'>
                             Search
@@ -61,7 +61,7 @@ function SideNavBar(props) {
 
                     <div className='link-card nav-menu-list'>
                         <NavMenuList className='mid-nav-menu' />
-                        <span className='links-title more-title mid-nav-menu'>
+                        <span className='links-title more-title mid-nav-menu  disable-hover'>
                             More
                         </span>
 
@@ -89,7 +89,7 @@ function SideNavBar(props) {
                     {/*This contains user data and a link to the profile */}
                     <div className='link-card parent-profile'>
                         <img src="https://i.pinimg.com/564x/1e/71/f0/1e71f00386068f5735d579f0f94b9af7.jpg" alt="" />
-                        <span className='links-title'>
+                        <span className='links-title disable-hover'>
                             Jhon Doe
                         </span>
 

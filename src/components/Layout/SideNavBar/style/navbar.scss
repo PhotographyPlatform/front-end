@@ -15,6 +15,7 @@
     max-height: 100vh;
     height: 97vh;
     overflow: hidden;
+    cursor: none;
 
     .logo {
         font-size: 24px;
@@ -59,7 +60,7 @@
 
         }
 
-        .link-card:hover {
+        .hover-nav:hover {
             background-color: #444;
             cursor: pointer;
         }
@@ -107,7 +108,7 @@
                 width: 100%;
                 box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
                 border: 1px transparent solid;
-                border-radius: 10px;
+                border-radius: 30px;
 
                 .links-title {
                     display: none;
@@ -239,10 +240,10 @@
                 justify-content: flex-start;
                 padding-top: 20px;
                 margin-top: 0;
-                margin-left: -20px;
+                margin-left: -15px;
                 box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
                 border: 1px transparent solid;
-                border-radius: 10px;
+                border-radius: 15px;
 
                 .links-title {
                     all: unset;
@@ -267,11 +268,11 @@
 
             }
 
-            .link-card:hover {
+            // .link-card {
 
-                background-color: #444;
-                cursor: pointer;
-            }
+            //     background-color: #444;
+            //     cursor: pointer;
+            // }
 
             .menu-list {
                 // all:unset;
