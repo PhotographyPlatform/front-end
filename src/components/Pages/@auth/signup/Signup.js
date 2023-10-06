@@ -60,6 +60,8 @@ export default function SignUp() {
 
             localStorage.setItem('email', obj.email)
             const signUp = await axios.post('http://localhost:3002/signup', obj)
+            console.log("___________________________________________")
+            console.log(await signUp);
             if (signUp.status === 200) {
                 navigate('/code')
             }
