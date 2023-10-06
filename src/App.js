@@ -13,7 +13,8 @@ import ResetPassword from './components/Pages/@auth/forgetPass/ResetPass';
 import cookies from 'react-cookies';
 import { decodeToken } from 'react-jwt';
 import Profile from './components/Pages/@auth/profileDashboard/Profile';
-import Layout from "./components/Layout/"import Test from './components/Pages/@auth/signin/Signin';
+import Layout from "./components/Layout/"
+import Test from './components/Pages/@auth/signin/Signin';
 import {
   ThemeProvider,
   theme
