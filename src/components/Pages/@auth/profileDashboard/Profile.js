@@ -30,6 +30,7 @@ import { profileEdit } from '../../../../store/reducers/profile/profile.reducer'
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
+
 function Profile() {
     const navigate = useNavigate()
     const [data, setData] = useState([])
@@ -160,3 +161,6 @@ function Profile() {
 }
 
 export default Profile
+
+
+

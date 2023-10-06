@@ -99,7 +99,6 @@ const LoginForm = () => {
   const dispatch = useDispatch()
   const [isChecked, setCheck] = useState(false)
   const [data, setData] = useState()
-  console.log(data);
   const [isOpen, setOpen] = useState(false)
   const [error, setError] = useState('');
   const handleCheckboxChange = () => {
@@ -161,7 +160,7 @@ const LoginForm = () => {
 
         <Stack isInline justifyContent='space-between' mt={4}>
           <Box>
-            <Checkbox isChecked={isChecked} onChange={handleCheckboxChange}>Remember Me</Checkbox>
+            <Checkbox isChecked={data ? !isChecked : isChecked} onChange={handleCheckboxChange}>Remember Me</Checkbox>
           </Box>
           <Box>
             <Link color={`${VARIANT_COLOR}.500`} href='/forgetPassword'>Forgot your password?</Link>

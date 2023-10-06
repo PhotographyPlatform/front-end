@@ -18,6 +18,7 @@ import {
   ThemeProvider,
   theme
 } from '@chakra-ui/react'
+// import Sidebar from './components/Pages/@auth/profileDashboard/sidebar/Sidebar';
 function App() {
   const state = useSelector(state => state.user)
   const Logged = state.user.isLogged
