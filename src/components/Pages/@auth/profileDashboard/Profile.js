@@ -28,18 +28,18 @@ import {
     GridItem,
     Icon
 } from '@chakra-ui/react';
-import { logOut } from '../../../../store/reducers/auth/user.reducer'
-import { BsThreeDotsVertical } from 'react-icons/bs';
+import { logOut, uderData } from '../../../../store/reducers/auth/user.reducer'
 import { profileEdit } from '../../../../store/reducers/profile/profile.reducer'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import photography from '../../../assets/camera-photography.jpg'
 
 function Profile() {
     const navigate = useNavigate()
-    const [data, setData] = useState([])
+    const state = useSelector(state => state.user)
     const dispatch = useDispatch()
     const userData = cookies.load('user')
+    const data = state.user
     const submitHandler = (e) => {
         e.preventDefault()
         const obj = {
@@ -56,9 +56,7 @@ function Profile() {
 
     useEffect(() => {
         if (userData) {
-            const decodedData = CryptoJS.AES.decrypt(userData, 'pixel').toString(CryptoJS.enc.Utf8)
-            const parsed = JSON.parse(decodedData)
-            setData(parsed)
+            dispatch(uderData(userData))
         } else {
             dispatch(logOut());
             navigate('/signin')
