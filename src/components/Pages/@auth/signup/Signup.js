@@ -28,6 +28,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import React, { useState } from 'react'
 const VARIANT_COLOR = 'teal'
+
 export default function SignUp() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
