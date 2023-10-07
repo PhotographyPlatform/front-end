@@ -38,18 +38,16 @@ const VARIANT_COLOR = 'teal'
 const Signin = () => {
 
   return (
-    <ThemeProvider theme={theme}>
-      <ColorModeProvider>
-        <CSSReset />
-        <LoginArea />
-      </ColorModeProvider>
-    </ThemeProvider>
+    <ColorModeProvider>
+      <CSSReset />
+      <LoginArea />
+    </ColorModeProvider>
   )
 }
 
 const LoginArea = () => {
   return (
-    <Flex minHeight='100vh' width='full' align='center' justifyContent='center'>
+    <Flex minHeight='85vh' width='full' align='center' justifyContent='center'>
       <Box
         borderWidth={1}
         px={4}
@@ -86,7 +84,7 @@ const ThemeSelector = () => {
 const LoginHeader = () => {
   return (
     <Box textAlign='center'>
-      <Heading>Sign In to Your Account</Heading>
+      <Heading>Pixel Time</Heading>
       <Text color="fg.muted" fontSize='17px'>
         Don't have an account? <Link href="/signup" color={`${VARIANT_COLOR}.500`}>Sign up</Link>
       </Text>
@@ -99,7 +97,6 @@ const LoginForm = () => {
   const dispatch = useDispatch()
   const [isChecked, setCheck] = useState(false)
   const [data, setData] = useState()
-  console.log(data);
   const [isOpen, setOpen] = useState(false)
   const [error, setError] = useState('');
   const handleCheckboxChange = () => {
@@ -161,7 +158,7 @@ const LoginForm = () => {
 
         <Stack isInline justifyContent='space-between' mt={4}>
           <Box>
-            <Checkbox isChecked={isChecked} onChange={handleCheckboxChange}>Remember Me</Checkbox>
+            <Checkbox isChecked={data ? !isChecked : isChecked} onChange={handleCheckboxChange}>Remember Me</Checkbox>
           </Box>
           <Box>
             <Link color={`${VARIANT_COLOR}.500`} href='/forgetPassword'>Forgot your password?</Link>

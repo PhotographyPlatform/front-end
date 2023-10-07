@@ -58,11 +58,8 @@ export default function SignUp() {
                 birthday: '1999-12 - 12',
                 username: 'hamza.tamari'
             }
-
             localStorage.setItem('email', obj.email)
             const signUp = await axios.post('http://localhost:3002/signup', obj)
-            console.log("___________________________________________")
-            console.log(await signUp);
             if (signUp.status === 200) {
                 navigate('/code')
             }

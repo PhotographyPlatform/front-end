@@ -2,17 +2,29 @@ import React from 'react';
 import "./style/navbar.scss"
 import "./style/phone.scss"
 import "./style/profile.scss"
-import { FaHome, FaUser, FaSearch } from 'react-icons/fa';
-import { Link, useNavigate } from 'react-router-dom';
+import { FaHome, FaUser, FaSearch, FaSign } from 'react-icons/fa';
+import { Button, Link, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from '@chakra-ui/react';
 
 // ⚠  Attention !!! ⚠
 
 // This page is for the NavBar and NavSideBar. The page has two parts: one for mid and large screens and another for phone screens.
 import NavMenuList from './MenuList.jsx';
 import DrawerPhone from './DrawerPhone';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { logOut } from '../../../store/reducers/auth/user.reducer';
 
 
 function SideNavBar(props) {
+    const { isOpen, onOpen, onClose } = useDisclosure();
+
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const handleLogout = () => {
+        dispatch(logOut());
+        navigate('/signin');
+
+    };
     return (
         <nav>
             <div className='phone-item'>
@@ -40,16 +52,20 @@ function SideNavBar(props) {
 
                     <div className='link-card hover-nav'>
                         <FaHome />
-                        <span className='links-title' >
-                            Home
-                        </span>
+                        <Link href='/'>
+                            <span className='links-title' >
+                                Home
+                            </span>
+                        </Link>
                     </div>
 
                     <div className='link-card hover-nav'>
                         <FaUser />
-                        <span className='links-title'>
-                            Profile
-                        </span>
+                        <Link href='profile'>
+                            <span className='links-title'>
+                                Profile
+                            </span>
+                        </Link>
                     </div>
 
                     <div className='link-card hover-nav' >
@@ -65,6 +81,28 @@ function SideNavBar(props) {
                             More
                         </span>
 
+                    </div>
+
+                    <div className='link-card hover-nav'>
+                        <FaSign />
+                        <span className='links-title' onClick={onOpen}>
+                            Log Out
+                        </span>
+                        <Modal isOpen={isOpen} onClose={onClose}>
+                            <ModalOverlay />
+                            <ModalContent>
+                                <ModalHeader>Modal Title</ModalHeader>
+                                <ModalBody>
+                                    Are You Sure To Logout?
+                                </ModalBody>
+                                <ModalFooter>
+                                    <Button colorScheme='red' mr={3} onClick={handleLogout}>
+                                        Logout
+                                    </Button>
+                                    <Button onClick={onClose}>Cancel</Button>
+                                </ModalFooter>
+                            </ModalContent>
+                        </Modal>
                     </div>
 
                     {/*
