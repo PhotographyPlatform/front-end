@@ -2,6 +2,7 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import user from "./reducers/auth/user.reducer";
 import thunk from './middleWare/thunk'
 import { configureStore } from '@reduxjs/toolkit';
+import searchReducer from "./reducers/Search";
 // import thunk from 'redux-thunk';
 
 // const reducers = combineReducers({ user });
@@ -18,7 +19,8 @@ import { configureStore } from '@reduxjs/toolkit';
 // toolkit Store 
 
 const store = configureStore({
-    reducer: { user: user }
+    reducer: { user: user, search: searchReducer, }
 })
+
 
 export default store;

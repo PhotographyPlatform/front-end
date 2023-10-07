@@ -3,9 +3,11 @@ import "./style/navbar.scss"
 import "./style/phone.scss"
 import "./style/profile.scss"
 import { FaHome, FaUser, FaSearch, FaSign } from 'react-icons/fa';
-import { Button, Link, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from '@chakra-ui/react';
-
+import { IoMdAddCircle } from 'react-icons/io';
+import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from '@chakra-ui/react';
+//Link
 // ⚠  Attention !!! ⚠
+import { NavLink } from 'react-router-dom';
 
 // This page is for the NavBar and NavSideBar. The page has two parts: one for mid and large screens and another for phone screens.
 import NavMenuList from './MenuList.jsx';
@@ -13,6 +15,8 @@ import DrawerPhone from './DrawerPhone';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { logOut } from '../../../store/reducers/auth/user.reducer';
+import { Link } from 'react-router-dom';
+
 
 
 function SideNavBar(props) {
@@ -44,36 +48,43 @@ function SideNavBar(props) {
                     <span className='links-title more-title'>
                         More
                     </span>
-
                 </div>
 
                 <div className='logo'>LOGO</div>
                 <div className='Links'>
 
-                    <div className='link-card hover-nav'>
+                    {/* <div className='link-card hover-nav'>
                         <FaHome />
                         <Link href='/'>
                             <span className='links-title' >
                                 Home
                             </span>
                         </Link>
-                    </div>
+                    </div> */}
 
-                    <div className='link-card hover-nav'>
-                        <FaUser />
-                        <Link href='profile'>
-                            <span className='links-title'>
-                                Profile
-                            </span>
-                        </Link>
-                    </div>
+                    <NavLink to='/' className='link-card hover-nav'>
 
-                    <div className='link-card hover-nav' >
+                        <FaHome />
+                        <span className='links-title'>Home</span>
+
+                    </NavLink>
+
+
+
+                    <NavLink to='/addpost' className='link-card hover-nav'>
+                        <IoMdAddCircle />
+                        <span className='links-title'>
+                            Add Post
+                        </span>
+                    </NavLink>
+
+                    <NavLink to='/newpost' className='link-card hover-nav'>
                         <FaSearch />
                         <span className='links-title'>
                             Search
                         </span>
-                    </div>
+
+                    </NavLink>
 
                     <div className='link-card nav-menu-list'>
                         <NavMenuList className='mid-nav-menu' />
@@ -125,14 +136,12 @@ function SideNavBar(props) {
 
 
                     {/*This contains user data and a link to the profile */}
-                    <div className='link-card parent-profile'>
+                    <NavLink to='/profile' className='link-card parent-profile'>
                         <img src="https://i.pinimg.com/564x/1e/71/f0/1e71f00386068f5735d579f0f94b9af7.jpg" alt="" />
                         <span className='links-title disable-hover'>
                             Jhon Doe
                         </span>
-
-                    </div>
-
+                    </NavLink>
 
 
                 </div>

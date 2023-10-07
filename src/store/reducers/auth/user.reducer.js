@@ -1,3 +1,4 @@
+/* eslint-disable */
 
 import cookies from 'react-cookies'
 import CryptoJS from 'crypto-js';
@@ -44,7 +45,11 @@ export const id = (id) => ({
     payload: id
 })
 
+
 export const uderData = (user) => ({
     type: 'USER_DATA',
     payload: user
 })
+
+/* eslint-enable */
+
