@@ -14,6 +14,7 @@ import ResetPassword from './components/Pages/@auth/forgetPass/ResetPass';
 import cookies from 'react-cookies';
 import { decodeToken } from 'react-jwt';
 import Profile from './components/Pages/@auth/profileDashboard/Profile';
+import NewPost from './components/components/NewPost/NewPost';
 
 function App() {
   const state = useSelector(state => state.user)
@@ -27,6 +28,7 @@ function App() {
   return (
     <div className="App">
       <Header />
+      <NewPost/>
       <Routes>
         <Route path='/code' element={<Code />} />
         <Route path='/pass' element={<ForgotPassword />} />
