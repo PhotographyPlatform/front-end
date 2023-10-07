@@ -38,18 +38,16 @@ const VARIANT_COLOR = 'teal'
 const Signin = () => {
 
   return (
-    <ThemeProvider theme={theme}>
-      <ColorModeProvider>
-        <CSSReset />
-        <LoginArea />
-      </ColorModeProvider>
-    </ThemeProvider>
+    <ColorModeProvider>
+      <CSSReset />
+      <LoginArea />
+    </ColorModeProvider>
   )
 }
 
 const LoginArea = () => {
   return (
-    <Flex minHeight='100vh' width='full' align='center' justifyContent='center'>
+    <Flex minHeight='85vh' width='full' align='center' justifyContent='center'>
       <Box
         borderWidth={1}
         px={4}
@@ -86,7 +84,7 @@ const ThemeSelector = () => {
 const LoginHeader = () => {
   return (
     <Box textAlign='center'>
-      <Heading>Sign In to Your Account</Heading>
+      <Heading>Pixel Time</Heading>
       <Text color="fg.muted" fontSize='17px'>
         Don't have an account? <Link href="/signup" color={`${VARIANT_COLOR}.500`}>Sign up</Link>
       </Text>

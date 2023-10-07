@@ -15,13 +15,16 @@ import {
     useColorModeValue,
 } from '@chakra-ui/react'
 import CryptoJS from 'crypto-js';
-
 import axios from 'axios'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import Cookies from 'react-cookies'
+import NotAuth from '../../401';
+import { useSelector } from 'react-redux';
 
 export default function ResetPassword() {
     const navigate = useNavigate()
+    const [Auth, setAuth] = useState(false)
     const [wrong, setWrong] = useState(false)
     const [alert, setAlert] = useState(false)
     const submitHandler = async (e) => {
@@ -30,25 +33,30 @@ export default function ResetPassword() {
             newPassword: e.target.newPass.value,
             confirmPass: e.target.confirm.value,
         }
-        console.log(obj);
         if (obj.newPassword === obj.confirmPass) {
-            const id = localStorage.getItem('id')
+            const decryptedNumber = Cookies.load('#%5$')
+            const secretKey = 'pixel';
+            const bytes = CryptoJS.AES.decrypt(decryptedNumber, secretKey);
+            const id = parseInt(bytes.toString(CryptoJS.enc.Utf8), 10);
             const data = await axios.post(`http://localhost:3002/resetPassword/${id}`, obj)
             if (data.status === 200) {
                 const getData = localStorage.getItem('Remember_Me')
-                const decodedData = CryptoJS.AES.decrypt(getData, 'pixel').toString(CryptoJS.enc.Utf8)
-                const parsed = JSON.parse(decodedData)
-                const changed = {
-                    username: parsed.username,
-                    password: obj.newPassword
+                if (getData) {
+                    const decodedData = CryptoJS.AES.decrypt(getData, 'pixel').toString(CryptoJS.enc.Utf8)
+                    const parsed = JSON.parse(decodedData)
+                    const changed = {
+                        username: parsed.username,
+                        password: obj.newPassword
+                    }
+                    localStorage.removeItem('Remember_Me')
+                    const dataToEncrypt = JSON.stringify(changed)
+                    const secretKey = process.env.SECRETKEY || 'pixel'
+                    const encryptedData = CryptoJS.AES.encrypt(dataToEncrypt, secretKey).toString();
+                    localStorage.setItem('Remember_Me', encryptedData)
                 }
-                localStorage.removeItem('Remember_Me')
-                const dataToEncrypt = JSON.stringify(changed)
-                const secretKey = process.env.SECRETKEY || 'pixel'
-                const encryptedData = CryptoJS.AES.encrypt(dataToEncrypt, secretKey).toString();
-                localStorage.setItem('Remember_Me', encryptedData)
                 setWrong(false)
                 setAlert(true)
+                Cookies.remove('#%5$')
                 setTimeout(() => {
                     navigate('/signin')
                 }, 5000)
@@ -57,12 +65,21 @@ export default function ResetPassword() {
             setWrong(true)
         }
     }
+
+    useEffect(() => {
+        const isAuth = Cookies.load('#%5$')
+        if (isAuth) {
+            setAuth(true)
+        }
+    }, [])
     return (
-        <Flex
+
+
+        < Flex
             minH={'100vh'}
             align={'center'}
             justify={'center'}
-            bg={useColorModeValue('gray.50', 'gray.800')}>
+            bg={useColorModeValue('gray.50', 'gray.800')} >
             <Stack
                 spacing={4}
                 w={'full'}
@@ -72,32 +89,35 @@ export default function ResetPassword() {
                 boxShadow={'lg'}
                 p={6}
                 my={12}>\
-                {!alert &&
-                    <form onSubmit={submitHandler}>
-                        <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
-                            Enter new password
-                        </Heading>
+                {
+                    Auth ?
+                        !alert &&
+                        <form onSubmit={submitHandler}>
+                            <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
+                                Enter new password
+                            </Heading>
 
-                        <FormControl id="email" isRequired>
-                            <FormLabel>New Password</FormLabel>
-                            <Input type="password" name='newPass' />
-                        </FormControl>
-                        <FormControl id="password" isRequired>
-                            <FormLabel>Confirm Password</FormLabel>
-                            <Input type="password" name='confirm' />
-                        </FormControl>
-                        <Stack spacing={6}>
-                            <Button
-                                type='submit'
-                                bg={'blue.400'}
-                                color={'white'}
-                                _hover={{
-                                    bg: 'blue.500',
-                                }}>
-                                Submit
-                            </Button>
-                        </Stack>
-                    </form>
+                            <FormControl id="email" isRequired>
+                                <FormLabel>New Password</FormLabel>
+                                <Input type="password" name='newPass' />
+                            </FormControl>
+                            <FormControl id="password" isRequired>
+                                <FormLabel>Confirm Password</FormLabel>
+                                <Input type="password" name='confirm' />
+                            </FormControl>
+                            <Stack spacing={6}>
+                                <Button
+                                    type='submit'
+                                    bg={'blue.400'}
+                                    color={'white'}
+                                    _hover={{
+                                        bg: 'blue.500',
+                                    }}>
+                                    Submit
+                                </Button>
+                            </Stack>
+                        </form>
+                        : <NotAuth />
                 }
                 {
                     alert &&
@@ -129,4 +149,5 @@ export default function ResetPassword() {
             </Stack>
         </Flex >
     )
+
 }

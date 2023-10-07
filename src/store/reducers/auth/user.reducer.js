@@ -1,4 +1,4 @@
-import axios from "axios";
+
 import cookies from 'react-cookies'
 import CryptoJS from 'crypto-js';
 const USER_STATE = {
@@ -19,6 +19,8 @@ export default (state = USER_STATE, action) => {
             cookies.remove('user_session')
             cookies.remove('user')
             return { ...state, user: { isLogged: false } }
+        case 'id':
+            return { ...state, user: payload }
         default:
             return state
     }
@@ -32,4 +34,9 @@ export const logOut = () => ({
 export const signin = (user) => ({
     type: 'SIGN_IN',
     payload: user
+})
+
+export const id = (id) => ({
+    type: 'id',
+    payload: id
 })
