@@ -12,7 +12,10 @@ import { useEffect } from 'react';
 import '@fontsource/raleway/400.css'
 import '@fontsource/open-sans/700.css'
 import theme from './components/theme/theme'
+import Layout from "./components/Layout/"
+import Test from './components/Pages/@auth/signin/Signin';
 import Search from './components/Pages/Search';
+
 import {
   ThemeProvider,
 } from '@chakra-ui/react'
