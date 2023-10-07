@@ -1,130 +1,183 @@
-'use strict'
 
 import {
-    AlertDialog,
-    AlertDialogBody,
-    AlertDialogCloseButton,
-    AlertDialogContent,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogOverlay,
-    Flex,
-    Box,
-    FormControl,
-    FormLabel,
-    Input,
-    Checkbox,
-    Stack,
-    Button,
-    Heading,
-    Text,
-    useColorModeValue,
-    useDisclosure,
+  ThemeProvider,
+  theme,
+  ColorModeProvider,
+  CSSReset,
+  Box,
+  Flex,
+  IconButton,
+  useColorMode,
+  Heading,
+  Text,
+  Link,
+  FormControl,
+  FormLabel,
+  Input,
+  Stack,
+  Checkbox,
+  Button,
+  HStack,
+  Divider,
+  AlertIcon,
+  Alert
 } from '@chakra-ui/react'
+import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 
 import { signin } from '../../../../store/reducers/auth/user.reducer'
 import { useDispatch } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
-import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import { PasswordField } from '../signup/passwordFiled/Password';
+import CryptoJS from 'crypto-js';
 
-export default function Signin() {
 
-    const navigate = useNavigate()
-    const dispatch = useDispatch()
-    const { isOpen, onOpen, onClose } = useDisclosure();
-    const cancelRef = React.useRef();
-    const [error, setError] = useState('');
-    const submitHandler = async (e) => {
-        try {
-            e.preventDefault();
-            const obj = {
-                username: e.target.username.value,
-                password: e.target.password.value
-            }
-            const data = await axios.post('http://localhost:3002/login', null, {
-                headers: {
-                    Authorization: `Basic ${btoa(`${obj.username}:${obj.password}`)}`
-                }
-            })
-            dispatch(signin(data))
-            if (data.status === 200) {
-                navigate('/')
-            }
-        } catch (e) {
-            setError(e.response.data);
-            onOpen();
-        }
-    }
-    return (
-        <Flex
-            minH={'100vh'}
-            align={'center'}
-            justify={'center'}
-            bg={useColorModeValue('gray.50', 'gray.800')}>
-            <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
-                <Stack align={'center'}>
-                    <Heading fontSize={'4xl'}>Sign in to your account</Heading>
-                    <Text fontSize={'lg'} color={'gray.600'}>
-                        to see all wonderful  <Text color={'blue.400'}>Photos</Text>
-                    </Text>
-                </Stack>
-                <form onSubmit={submitHandler}>
-                    <Box
-                        rounded={'lg'}
-                        bg={useColorModeValue('white', 'gray.700')}
-                        boxShadow={'lg'}
-                        p={8}>
-                        <Stack spacing={4}>
-                            <FormControl id="username">
-                                <FormLabel>UserName</FormLabel>
-                                <Input type="text" />
-                            </FormControl>
-                            <FormControl id="password">
-                                <FormLabel>Password</FormLabel>
-                                <Input type="password" />
-                            </FormControl>
-                            <Stack spacing={6}>
-                                <Stack
-                                    direction={{ base: 'column', sm: 'row' }}
-                                    align={'start'}
-                                    justify={'space-between'}>
-                                    <Link to='/pass'> <Text color={'blue.400'}>Forgot password?</Text> </Link>
-                                </Stack>
-                                <Button
-                                    type='submit'
-                                    bg={'blue.400'}
-                                    color={'white'}
-                                    _hover={{
-                                        bg: 'blue.500',
-                                    }}>
-                                    Sign in
-                                </Button>
-                            </Stack>
-                        </Stack>
-                    </Box>
-                </form>
-            </Stack>
-            <AlertDialog
-                motionPreset="slideInBottom"
-                leastDestructiveRef={cancelRef}
-                onClose={onClose}
-                isOpen={isOpen}
-                isCentered
-            >
-                <AlertDialogOverlay />
+const VARIANT_COLOR = 'teal'
 
-                <AlertDialogContent>
-                    <AlertDialogHeader>Error</AlertDialogHeader>
-                    <AlertDialogCloseButton />
-                    <AlertDialogBody>{error}</AlertDialogBody>
-                    <AlertDialogFooter>
-                        <Button ref={cancelRef} onClick={onClose}>
-                            OK
-                        </Button>
-                    </AlertDialogFooter>
-                </AlertDialogContent>
-            </AlertDialog>
-        </Flex>
-    )
+const Signin = () => {
+
+  return (
+    <ColorModeProvider>
+      <CSSReset />
+      <LoginArea />
+    </ColorModeProvider>
+  )
 }
+
+const LoginArea = () => {
+  return (
+    <Flex minHeight='85vh' width='full' align='center' justifyContent='center'>
+      <Box
+        borderWidth={1}
+        px={4}
+        width='full'
+        maxWidth='500px'
+        borderRadius={4}
+        textAlign='center'
+        boxShadow='lg'
+      >
+        <ThemeSelector />
+        <Box p={4}>
+          <LoginHeader />
+          <LoginForm />
+        </Box>
+      </Box>
+    </Flex>
+  )
+}
+
+const ThemeSelector = () => {
+  const { colorMode, toggleColorMode } = useColorMode()
+
+  return (
+    <Box textAlign='right' py={4}>
+      <IconButton
+        icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+        onClick={toggleColorMode}
+        variant="ghost"
+      />
+    </Box>
+  )
+}
+
+const LoginHeader = () => {
+  return (
+    <Box textAlign='center'>
+      <Heading>Pixel Time</Heading>
+      <Text color="fg.muted" fontSize='17px'>
+        Don't have an account? <Link href="/signup" color={`${VARIANT_COLOR}.500`}>Sign up</Link>
+      </Text>
+    </Box>
+  )
+}
+
+const LoginForm = () => {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const [isChecked, setCheck] = useState(false)
+  const [data, setData] = useState()
+  const [isOpen, setOpen] = useState(false)
+  const [error, setError] = useState('');
+  const handleCheckboxChange = () => {
+    setCheck(!isChecked);
+  };
+
+  const submitHandler = async (e) => {
+    try {
+      e.preventDefault();
+      const obj = {
+        username: e.target.username.value,
+        password: e.target.password.value
+      }
+      const data = await axios.post('http://localhost:3002/login', null, {
+        headers: {
+          Authorization: `Basic ${btoa(`${obj.username}:${obj.password}`)}`
+        }
+      })
+      dispatch(signin(data))
+      if (data.status === 200) {
+        if (isChecked) {
+          const dataToEncrypt = JSON.stringify(obj)
+          const secretKey = process.env.SECRETKEY || 'pixel'
+          const encryptedData = CryptoJS.AES.encrypt(dataToEncrypt, secretKey).toString();
+          localStorage.setItem('Remember_Me', encryptedData)
+        }
+        navigate('/')
+      }
+    } catch (e) {
+      setError(e.response.data);
+      setOpen(true);
+    }
+  }
+  useEffect(() => {
+    const userData = localStorage.getItem('Remember_Me')
+    if (userData) {
+      const decodedData = CryptoJS.AES.decrypt(userData, 'pixel').toString(CryptoJS.enc.Utf8)
+      const parsed = JSON.parse(decodedData)
+      setData(parsed)
+    }
+  }, [])
+
+  return (
+    <Box my={8} textAlign='left'>
+      <form onSubmit={submitHandler}>
+        <FormControl>
+          <FormLabel>Username</FormLabel>
+          <Input
+            type='text'
+            placeholder='Enter your username'
+            name='username'
+            defaultValue={data ? data.username : ''}
+          />
+        </FormControl>
+
+        <FormControl mt={4}>
+          <PasswordField defaultValue={data ? data.password : ''} />
+        </FormControl>
+
+        <Stack isInline justifyContent='space-between' mt={4}>
+          <Box>
+            <Checkbox isChecked={data ? !isChecked : isChecked} onChange={handleCheckboxChange}>Remember Me</Checkbox>
+          </Box>
+          <Box>
+            <Link color={`${VARIANT_COLOR}.500`} href='/forgetPassword'>Forgot your password?</Link>
+          </Box>
+        </Stack><br />
+        <Stack>
+          {
+            isOpen &&
+            <Alert status='error'>
+              <AlertIcon />
+              {error}
+            </Alert>
+          }
+        </Stack>
+        <Button variantColor={VARIANT_COLOR} width='full' mt={4} type='submit'>Sign In</Button>
+      </form>
+    </Box >
+
+  )
+}
+
+export default Signin
