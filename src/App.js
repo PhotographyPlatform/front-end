@@ -39,7 +39,7 @@ function App() {
               <Route path="/profile" element={<Profile />} />
             </Routes>
           </Layout>
-          ) :
+        ) :
           <Container />
         }
       </ThemeProvider>
