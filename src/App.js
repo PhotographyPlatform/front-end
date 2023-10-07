@@ -53,7 +53,7 @@ function App() {
             }
             {
               decodeAuth && decodeAuth.userId &&
-              <Route path='/Search' element={<Search />} />
+              <Route path='/search' element={<Search />} />
             }
 
 
