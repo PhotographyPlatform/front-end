@@ -1,7 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import Container from './components/Pages/@auth/index';
-import { ThemeProvider } from '@chakra-ui/react';
 import Cookies from 'react-cookies';
 import { decodeToken } from 'react-jwt';
 import Layout from './components/Layout';
@@ -12,10 +11,9 @@ import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import '@fontsource/raleway/400.css'
 import '@fontsource/open-sans/700.css'
-import theme from './components/theme/theme'
-import Layout from "./components/Layout/"
 import Test from './components/Pages/@auth/signin/Signin';
 import Search from './components/Pages/Search';
+
 import {
   ThemeProvider,
   theme
