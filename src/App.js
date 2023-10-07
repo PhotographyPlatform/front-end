@@ -15,6 +15,7 @@ import { decodeToken } from 'react-jwt';
 import Profile from './components/Pages/@auth/profileDashboard/Profile';
 import Layout from "./components/Layout/"
 import Test from './components/Pages/@auth/signin/Signin';
+import Search from './components/Pages/Search';
 import {
   ThemeProvider,
   theme
@@ -50,6 +51,12 @@ function App() {
               decodeAuth && decodeAuth.userId &&
               <Route path='/profile' element={<Profile />} />
             }
+            {
+              decodeAuth && decodeAuth.userId &&
+              <Route path='/Search' element={<Search />} />
+            }
+
+
           </Routes>
         </Layout>
       </ThemeProvider>
