@@ -4,7 +4,7 @@ import ChatList from './Chat-List'
 import './Chat.scss'
 import { Box } from '@chakra-ui/react'
 
-export default function Chat({ setNotification }) {
+export default function Chat() {
 
   
   return (

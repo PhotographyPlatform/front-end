@@ -3,6 +3,8 @@ import "./style/navbar.scss"
 import "./style/phone.scss"
 import "./style/profile.scss"
 import { FaHome, FaUser, FaSearch, FaSign } from 'react-icons/fa';
+import { BsFillChatDotsFill  } from 'react-icons/bs';
+
 import { IoMdAddCircle } from 'react-icons/io';
 import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from '@chakra-ui/react';
 
@@ -34,6 +36,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { logOut } from '../../../store/reducers/auth/user.reducer';
 import { Link } from 'react-router-dom';
+import { BsChatDotsFill } from 'react-icons/bs';
 
 
 
@@ -97,6 +100,14 @@ function SideNavBar(props) {
                         </span>
 
                     </NavLink>
+                    
+                    <NavLink to='/chat' className='link-card hover-nav'>
+                        <BsFillChatDotsFill />
+                        <span className='links-title'>
+                            Chat
+                        </span>
+
+                    </NavLink>
 
                     <div className='link-card nav-menu-list'>
                         <NavMenuList className='mid-nav-menu' />
@@ -126,9 +137,9 @@ function SideNavBar(props) {
 
 
                     {/*Add the Link Here !!  */}
+                    
 
-
-
+                    
 
 
                     {/*This contains user data and a link to the profile */}

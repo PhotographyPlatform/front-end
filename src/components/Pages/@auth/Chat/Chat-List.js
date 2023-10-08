@@ -5,9 +5,11 @@ import jwtDecode from 'jwt-decode'
 import React, { useEffect, useState } from 'react'
 import cookie from 'react-cookies';
 import { Link } from 'react-router-dom'
+import { homeSocket } from '../../../../App'
 
 export default function ChatList({ render}) {
      const [userList, setUserList] = useState([])
+     const [messageCount, setMessageCount] = useState([])
 
      const cookieData = cookie.load('user_session')
      const token = jwtDecode(cookieData)
@@ -16,10 +18,25 @@ export default function ChatList({ render}) {
      const fetchUserList = async () => {
           const res = await axios.get(`http://localhost:3002/messegeslist/${userId}`)        
           setUserList(res.data.data)
+          const result = res.data.data
+          let msgCount = []
+
+          for (const ele of result) {
+               
+               let filter = ele.messages.filter(ele => ele.read === false)
+               msgCount.push({ userInfo: ele.data.username, nonRead: filter.length })
+          }
+          console.log(msgCount , 'count');
      }
      
-     console.log(userList);
-     //  render 
+
+     homeSocket.on('msgNotificaton', msg => {
+          fetchUserList()
+     })
+     
+     // console.log(userList);
+
+     //  render
      useEffect(() => {
           fetchUserList()
      }, [render])

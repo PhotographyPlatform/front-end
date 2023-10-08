@@ -33,6 +33,7 @@ import { profileEdit } from '../../../../store/reducers/profile/profile.reducer'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import photography from '../../../assets/camera-photography.jpg'
+import { homeSocket } from '../../../../App';
 
 function Profile() {
     const navigate = useNavigate()
@@ -62,6 +63,8 @@ function Profile() {
             navigate('/signin')
         }
     }, [])
+
+    
     return (
         <Container maxW='2xl'>
             <Stack

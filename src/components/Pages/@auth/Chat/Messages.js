@@ -2,8 +2,8 @@ import { Avatar, Box, Button, Flex, HStack, Icon, Input , Text } from '@chakra-u
 import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import cookie from 'react-cookies';
-import { io } from 'socket.io-client';
 import jwtDecode from "jwt-decode";
+import { io } from 'socket.io-client';
 import './message.scss'
 import { BsFillSendFill  } from 'react-icons/bs';
 import { MdEmojiEmotions } from 'react-icons/md';
@@ -11,29 +11,15 @@ import { IoSend } from 'react-icons/io5';
 
 import data from '@emoji-mart/data'
 import Picker from '@emoji-mart/react'
-import { socket } from '../../../../App';
+import { homeSocket, socket } from '../../../../App';
 import { useParams } from 'react-router-dom';
 
 
-/**
- Done : 
-  get messages from database 
-  style
-
-*/
-
-/*
-To Do :
-read
-notification
-get reciver info
-userlist
-*/
 
 // const host = "http://localhost:3002";
 // const socket = io.connect(host, { transports: ["websocket"] });
 
-export default function Messages({setNotification , setRender}) {
+export default function Messages({ setRender}) {
 
      const [value , setValue] = useState('')
      const [messageContentSender, setMessageContentSender] = useState([])
@@ -53,7 +39,6 @@ export default function Messages({setNotification , setRender}) {
      let reciver = window.location.pathname.split("/")[2];
      let arr = (userId + reciver).split("").sort().join("")
      let params = useParams()
-     console.log('params' , params);
 
      const messageHandeler = async () => {
           console.log(reciver , 'reciver' , userId , 'sender');
@@ -128,8 +113,10 @@ export default function Messages({setNotification , setRender}) {
           socket.emit("message", obj);
           inputEle.current.value = ''
           setSelectedEmoji(false)
-          setNotification(true)
-          setRender(value => !value )
+          // setNotification(true)
+          setRender(value => !value)
+          
+          homeSocket.emit("notificaton", reciver);
      };
 
 
@@ -166,7 +153,7 @@ export default function Messages({setNotification , setRender}) {
 
 
      socket.on("notificaton", (count) => {
-          console.log(count);
+          // console.log('notificaton' , count);
           setShowNoti(true)
           if (counterEle.current) {
                counterEle.current.innerHTML = count;
@@ -182,6 +169,7 @@ export default function Messages({setNotification , setRender}) {
      }
 
 
+
      const handleEmoji = () => {
           setSelectedEmoji(!selectedEmoji);
      };
@@ -193,7 +181,8 @@ export default function Messages({setNotification , setRender}) {
      return (
      <>               
      <Box className="chat-container"  >
-     <div className="notifications"> notifications <span ref={counterEle} style={{display : showNoti ? 'inline-block' : 'none'}} className="counter"></span></div> 
+     {/* <div className="notifications"> notifications <span ref={counterEle} style={{display : showNoti ? 'inline-block' : 'none'}} className="counter"></span></div> */}
+      
           <Box className="sub-chat-container" height={'95%'} display={'flex'} flexDirection={'column'} justifyContent={'flex-end'}>
                <Box className="chat" ref={chatContainerRef} maxH={{base : '600px'}}>
                     {
@@ -255,8 +244,3 @@ export default function Messages({setNotification , setRender}) {
      </>
   )
 }
-
-
-     // let sender = window.location.pathname.split("/")[2];
-     // let reciver = window.location.pathname.split("/")[3];
-     // let arr = (sender + reciver).split("").sort().join("")
