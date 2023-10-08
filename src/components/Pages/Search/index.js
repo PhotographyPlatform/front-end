@@ -20,7 +20,7 @@ function Search() {
             });
     }, [dispatch]);
 
-    console.log(categories)
+    console.log(categories, '@@@@@@@@@@@@@@@@@@@@@@@@@@@');
     return (
 
         <div>

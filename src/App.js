@@ -13,11 +13,10 @@ import '@fontsource/raleway/400.css'
 import '@fontsource/open-sans/700.css'
 import theme from './components/theme/theme'
 import Test from './components/Pages/@auth/signin/Signin';
-import Search from './components/Pages/Search';
-
 import {
   ThemeProvider,
 } from '@chakra-ui/react'
+import Search from './components/Pages/Search';
 function App() {
   const isAuth = Cookies.load('user_session');
   const decodeAuth = decodeToken(isAuth);
@@ -33,6 +32,7 @@ function App() {
         {decodeAuth && decodeAuth.userId ? (
           <Layout>
             <Routes>
+              <Route path='/searchs' element={<Search />} />
               <Route path="/" element={<AuthHome />} />
               <Route path="/profile" element={<Profile />} />
             </Routes>
