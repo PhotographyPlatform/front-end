@@ -16,11 +16,13 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { logOut } from '../../../store/reducers/auth/user.reducer';
 import { Link } from 'react-router-dom';
+import NewPost from '../../components/NewPost';
 
 
 
 function SideNavBar(props) {
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const { isOpen: isOpenNewPost, onOpen: onOpenNewPost, onClose: onCloseNewPost } = useDisclosure();
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -71,14 +73,15 @@ function SideNavBar(props) {
 
 
 
-                    <NavLink to='/addpost' className='link-card hover-nav'>
+                    <div to='/addpost' className='link-card hover-nav' onClick={onOpenNewPost}>
+                        <NewPost onCloseNewPost={onCloseNewPost} isOpenNewPost={isOpenNewPost}/>
                         <IoMdAddCircle />
                         <span className='links-title'>
                             Add Post
                         </span>
-                    </NavLink>
+                    </div>
 
-                    <NavLink to='/newpost' className='link-card hover-nav'>
+                    <NavLink to='/searchs' className='link-card hover-nav'>
                         <FaSearch />
                         <span className='links-title'>
                             Search

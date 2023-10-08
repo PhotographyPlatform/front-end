@@ -7,6 +7,7 @@ import ResetPassword from './forgetPass/ResetPass';
 import SignUp from './signup/Signup';
 import Signin from './signin/Signin';
 import Header from '../../Header/Header';
+import Search from '../Search';
 
 function Container() {
   return (
