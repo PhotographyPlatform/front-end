@@ -10,6 +10,8 @@
     // display: block !important;
     position: fixed !important;
     z-index: 1;
+    font-size: 16px;
+    padding: 5px;
 }
 
 
@@ -18,7 +20,12 @@
 @media(min-width:768px) {
 
     // Mid 
-
+    // .menu-list-custom {
+    //     all: unset;
+    //     // display: block !important;
+    //     position: fixed !important;
+    //     z-index: 1;
+    // }
 }
 
 
@@ -36,6 +43,9 @@
     .menu-list-custom {
         all: unset;
         position: unset !important;
+        font-size: 16px;
+
+
     }
 
 }

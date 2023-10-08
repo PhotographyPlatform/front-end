@@ -1,12 +1,18 @@
 .custome-layout {
+    .children-layout {
+        margin-left: 350px;
+
+        .children-scrollable {
+            padding-top: 20px;
+        }
+    }
+
     .side-nav-layout {
         // height: 100vh;
         position: fixed;
     }
 
-    .children-layout {
-        margin-left: 350px;
-    }
+
 }
 
 
@@ -39,7 +45,11 @@
 
         .children-layout {
             margin-left: unset;
-            margin-top: 50px;
+            margin-top: 30px;
+
+            .children-scrollable {
+                padding-top: 10px;
+            }
         }
     }
 
@@ -55,6 +65,11 @@
 
     .children-layout {
 
-        margin-left: 300px !important;
+
+        margin-left: 200px !important;
+
+        .children-scrollable {
+            padding-top: 10px;
+        }
     }
 }
