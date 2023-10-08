@@ -1,13 +1,17 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Messages from './Messages'
 import ChatList from './Chat-List'
 import './Chat.scss'
+import { Box } from '@chakra-ui/react'
 
-export default function Chat() {
+export default function Chat({ setNotification }) {
+
+  
   return (
     <div className='chat-page'>
-      <ChatList/>
-      <Messages/>
+      <ChatList />
+      {/* <Messages setNotification = {setNotification } /> */}
+      <Box className='chat-container' width={'715px'} display={{base : 'none' , md : 'flex'}}>chat box</Box>
     </div>
   )
 }

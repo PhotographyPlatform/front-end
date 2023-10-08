@@ -1,10 +1,32 @@
 import { SearchIcon } from '@chakra-ui/icons'
 import { Avatar, Heading, Text , Container, HStack, Box, Card, Divider, Input, InputGroup, InputRightElement} from '@chakra-ui/react'
-import React from 'react'
+import axios from 'axios'
+import jwtDecode from 'jwt-decode'
+import React, { useEffect, useState } from 'react'
+import cookie from 'react-cookies';
+import { Link } from 'react-router-dom'
 
-export default function ChatList() {
+export default function ChatList({ render}) {
+     const [userList, setUserList] = useState([])
+
+     const cookieData = cookie.load('user_session')
+     const token = jwtDecode(cookieData)
+     const userId = token.userId
+     
+     const fetchUserList = async () => {
+          const res = await axios.get(`http://localhost:3002/messegeslist/${userId}`)        
+          setUserList(res.data.data)
+     }
+     
+     console.log(userList);
+     //  render 
+     useEffect(() => {
+          fetchUserList()
+     }, [render])
+     
   return (
-    <Container className='ChatList' width={'md'} gap={'10px'} display={'flex'} flexDirection={'column'} mx={'20px'} py={'20px'}>
+  
+    <Container className='ChatList' width={'400px'} gap={'10px'} display={'flex'} flexDirection={'column'} mx={'20px'} py={'20px'}>
       <InputGroup>
           <InputRightElement pointerEvents='none'>
                <SearchIcon color='gray.300' />
@@ -12,81 +34,37 @@ export default function ChatList() {
           </InputRightElement>
           <Input className="searchBar-chat" placeholder='search'/>
      </InputGroup>
-
-     <Container className="ChatList-cont">
-          <Container width={'100%'} >
-               <Divider />
-               <HStack className="list-item">
-                    <Avatar size={'md'} name='Dan Abrahmov' src='https://cdn-icons-png.flaticon.com/512/1053/1053244.png' />
-                    <Box className="item-detailes" display={'flex'} flexDirection={'column'} alignItems={'flex-start'}  marginLeft={'10px'} >
-                         <Heading as={'h5'} fontSize={'medium'}  className='name'>Dan Abrahmov</Heading>
-                         <Text className='item-cont' textAlign={'left'} >Lorem ipsum dolor sit amet, consectetur adipisicing elit.</Text>
-                    </Box>
-               </HStack>
-          </Container>
-          <Container width={'100%'} >
-               <Divider />
-               <HStack className="list-item">
-                    <Avatar size={'md'} name='Dan Abrahmov' src='https://cdn-icons-png.flaticon.com/512/1053/1053244.png' />
-                    <Box className="item-detailes" display={'flex'} flexDirection={'column'} alignItems={'flex-start'}  marginLeft={'10px'} >
-                         <Heading as={'h5'} fontSize={'medium'}  className='name'>Dan Abrahmov</Heading>
-                         <Text className='item-cont' textAlign={'left'} >Lorem ipsum dolor sit amet, consectetur adipisicing elit.</Text>
-                    </Box>
-               </HStack>
-          </Container>
-          <Container width={'100%'} >
-               <Divider />
-               <HStack className="list-item">
-                    <Avatar size={'md'} name='Dan Abrahmov' src='https://cdn-icons-png.flaticon.com/512/1053/1053244.png' />
-                    <Box className="item-detailes" display={'flex'} flexDirection={'column'} alignItems={'flex-start'}  marginLeft={'10px'} >
-                         <Heading as={'h5'} fontSize={'medium'}  className='name'>Dan Abrahmov</Heading>
-                         <Text className='item-cont' textAlign={'left'} >Lorem ipsum dolor sit amet, consectetur adipisicing elit.</Text>
-                    </Box>
-               </HStack>
-          </Container>
-          <Container width={'100%'} >
-               <Divider />
-               <HStack className="list-item">
-                    <Avatar size={'md'} name='Dan Abrahmov' src='https://cdn-icons-png.flaticon.com/512/1053/1053244.png' />
-                    <Box className="item-detailes" display={'flex'} flexDirection={'column'} alignItems={'flex-start'}  marginLeft={'10px'} >
-                         <Heading as={'h5'} fontSize={'medium'}  className='name'>Dan Abrahmov</Heading>
-                         <Text className='item-cont' textAlign={'left'} >Lorem ipsum dolor sit amet, consectetur adipisicing elit.</Text>
-                    </Box>
-               </HStack>
-          </Container>
-          <Container width={'100%'} >
-               <Divider />
-               <HStack className="list-item">
-                    <Avatar size={'md'} name='Dan Abrahmov' src='https://cdn-icons-png.flaticon.com/512/1053/1053244.png' />
-                    <Box className="item-detailes" display={'flex'} flexDirection={'column'} alignItems={'flex-start'}  marginLeft={'10px'} >
-                         <Heading as={'h5'} fontSize={'medium'}  className='name'>Dan Abrahmov</Heading>
-                         <Text className='item-cont' textAlign={'left'} >Lorem ipsum dolor sit amet, consectetur adipisicing elit.</Text>
-                    </Box>
-               </HStack>
-          </Container>
-          <Container width={'100%'} >
-               <Divider />
-               <HStack className="list-item">
-                    <Avatar size={'md'} name='Dan Abrahmov' src='https://cdn-icons-png.flaticon.com/512/1053/1053244.png' />
-                    <Box className="item-detailes" display={'flex'} flexDirection={'column'} alignItems={'flex-start'}  marginLeft={'10px'} >
-                         <Heading as={'h5'} fontSize={'medium'}  className='name'>Dan Abrahmov</Heading>
-                         <Text className='item-cont' textAlign={'left'} >Lorem ipsum dolor sit amet, consectetur adipisicing elit.</Text>
-                    </Box>
-               </HStack>
-          </Container>
-          <Container width={'100%'} >
-               <Divider />
-               <HStack className="list-item">
-                    <Avatar size={'md'} name='Dan Abrahmov' src='https://cdn-icons-png.flaticon.com/512/1053/1053244.png' />
-                    <Box className="item-detailes" display={'flex'} flexDirection={'column'} alignItems={'flex-start'}  marginLeft={'10px'} >
-                         <Heading as={'h5'} fontSize={'medium'}  className='name'>Dan Abrahmov</Heading>
-                         <Text className='item-cont' textAlign={'left'} >Lorem ipsum dolor sit amet, consectetur adipisicing elit.</Text>
-                    </Box>
-               </HStack>
-          </Container>
-     </Container>
+     <Container  className="ChatList-cont">
+     {    userList && 
+          userList.map((ele ) => (
+               <Container key={ele.data.id} width={'100%'} >
+                         <Divider />
+                         <Link to={`/messages/${ele.data.id}`}>
+                              
+                         {/* <ChakraLink as={ReactRouterLink} to={`/messages/${ele.data.id}`}>go</ChakraLink> */}
+                              <HStack className="list-item">
+                                   <Avatar size={'md'} name={ele.data.username} src={ ele.data.img || 'https://cdn-icons-png.flaticon.com/512/1053/1053244.png'} />
+                                   <Box className="item-detailes" display={'flex'} flexDirection={'column'} alignItems={'flex-start'}  marginLeft={'10px'} >
+                                        <Heading  textTransform={'capitalize'} as={'h5'} fontSize={'medium'}  className='name'>{ele.data.username}</Heading>
+                                   <Text className='item-cont' textAlign={'left'} >{
+                                        
+                                        ele.messages[ele.messages.length - 1]?.content.length > 50 ?
+                                             ` ${ele.messages[ele.messages.length - 1]?.content.slice(0, 50)} ...`
+                                             :
+                                             ele.messages[ele.messages.length - 1]?.content
+                                   }</Text>
+                                   </Box>
+                              </HStack>
+                         </Link>
+                    </Container>
+         ))
+     }
+     </Container> 
+            
+     
       
       
     </Container>
   )
+
 }
