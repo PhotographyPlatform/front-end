@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Button,
     FormControl,
@@ -13,31 +13,39 @@ import {
     AlertTitle,
     AlertDescription,
 } from '@chakra-ui/react';
+import { id } from '../../../../store/reducers/auth/user.reducer';
 import axios from 'axios';
-
+import Cookies from 'react-cookies';
+import CryptoJS from 'crypto-js'
+import { useDispatch } from 'react-redux';
 export default function ForgotPassword() {
+    const dispatch = useDispatch()
     const [alert, setAlert] = useState(false);
     const [faild, setFaild] = useState(false);
-    const [email, setEmail] = useState(''); 
-
+    const [email, setEmail] = useState('');
+    const [id, setId] = useState()
     const submitHandler = async (e) => {
         try {
             e.preventDefault();
             const obj = {
                 email: e.target.email.value,
             };
-            console.log(obj);
             const data = await axios.post('http://localhost:3002/forgetPassword', obj);
             if (data.status === 200) {
                 setAlert(true);
-                localStorage.setItem('id', data.data.id);
+                const numberToEncrypt = data.data.id;
+                const secretKey = 'pixel';
+                const encryptedNumber = CryptoJS.AES.encrypt(
+                    numberToEncrypt.toString(),
+                    secretKey
+                ).toString();
+                Cookies.save('#%5$', encryptedNumber)
             }
         } catch (e) {
             setFaild(true);
-            setEmail(''); 
+            setEmail('');
         }
     };
-
     return (
         <>
             <Flex
@@ -70,8 +78,8 @@ export default function ForgotPassword() {
                                     placeholder="your-email@example.com"
                                     _placeholder={{ color: 'gray.500' }}
                                     type="email"
-                                    value={email} 
-                                    onChange={(e) => setEmail(e.target.value)} 
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
                                 />
                             </FormControl>
                             <br />

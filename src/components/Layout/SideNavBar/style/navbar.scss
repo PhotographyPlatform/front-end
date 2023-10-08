@@ -1,0 +1,282 @@
+.parent {
+    all: unset;
+    width: 250px;
+    height: 100vh;
+    background-color: #333;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 20px;
+    padding-top: 20px;
+    position: sticky;
+    top: 0;
+    border-right: 1px solid white;
+    max-height: 100vh;
+    height: 97vh;
+    overflow: hidden;
+    .logo {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .Links {
+        width: 100%;
+        margin-top: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+
+        .link-card {
+            width: 100%;
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-start;
+            padding-top: 20px;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+            border: 1px transparent solid;
+            border-radius: 10px;
+
+            .links-title {
+                font-size: 22px;
+                padding-left: 15px;
+                padding-bottom: 15px;
+                font-weight: 200;
+
+                .more-title {
+                    position: relative;
+                    top: -20px;
+                }
+
+            }
+
+            svg {
+                font-size: 22px;
+            }
+
+        }
+
+        .hover-nav:hover {
+            background-color: #444;
+            cursor: pointer;
+        }
+
+        .menu-list {
+            padding-top: 12px;
+            padding-bottom: 5px;
+        }
+    }
+
+    .nav-menu-phone-list {
+        display: none;
+    }
+}
+
+
+@media (min-width: 768px) {
+
+    //  Styles for medium screens 
+    .parent {
+        margin-bottom: 10px;
+        height: 100vh;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 1);
+        overflow: hidden;
+        width: 90px;
+        padding-left: 0px;
+        align-items: center;
+        border: 1px transparent solid;
+       
+
+        .Links {
+            display: flex;
+            align-items: center;
+
+            .link-card {
+                all: unset;
+                display: flex;
+                direction: column;
+                margin-top: 20px;
+                padding-top: 20px;
+                padding-bottom: 20px;
+                justify-content: center;
+                width: 100%;
+                box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+                border: 1px transparent solid;
+                border-radius: 30px;
+
+                .links-title {
+                    display: none;
+                }
+            }
+
+            // Styles for the .Links container
+
+
+            svg {
+
+                font-size: 28px !important;
+            }
+
+        }
+    }
+}
+
+
+
+
+@media (max-width: 767px) {
+
+    // small 
+    .parent {
+        all: unset;
+        color: #fff;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 12vh;
+        display: flex;
+
+
+        .logo {
+            display: none;
+        }
+
+        .Links {
+            background-color: #333;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            max-width: 100%;
+            width: 100%;
+
+            .link-card:hover {
+                background-color: unset;
+                cursor: pointer;
+            }
+
+            .link-card {
+                padding-bottom: 10px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100%;
+
+                svg {
+                    width: 100%;
+                }
+
+                .links-title {
+                    display: none;
+                }
+            }
+
+            .nav-menu-list {
+                display: none;
+            }
+
+            span:hover {
+                height: 50px;
+                background-color: #333;
+                cursor: pointer;
+            }
+
+        }
+
+
+    }
+
+
+}
+
+@media (min-width: 1199px) {
+
+    // large 
+    .parent {
+        overflow: hidden;
+        all: unset;
+        width: 250px;
+        height: 100vh;
+        background-color: #333;
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding-left: 20px;
+        padding-top: 20px;
+        position: sticky;
+        top: 0;
+        align-items: center;
+        height: 97.3vh;
+        overflow: hidden;
+
+        .logo {
+            all: unset;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .Links {
+            all: unset;
+            width: 100%;
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+
+            .link-card {
+                width: 100%;
+                display: flex;
+                align-items: flex-end;
+                justify-content: flex-start;
+                padding-top: 15px;
+                margin-top: 0;
+                margin-left: -15px;
+                box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+                border: 1px transparent solid;
+                border-radius: 15px;
+
+                .links-title {
+                    all: unset;
+                    font-size: 22px;
+                    padding-left: 15px;
+                    padding-bottom: 2px;
+                    font-weight: 200;
+                    margin-left: 10px;
+
+                    .more-title {
+                        all: unset;
+                        position: relative;
+                        top: 40px;
+                    }
+
+                }
+
+                svg {
+                    margin-left: 10px;
+                    font-size: 22px;
+                }
+
+            }
+
+            // .link-card {
+
+            //     background-color: #444;
+            //     cursor: pointer;
+            // }
+
+            .menu-list {
+                // all:unset;
+                padding-top: 0px;
+                padding-bottom: 5px;
+            }
+        }
+
+
+    }
+}

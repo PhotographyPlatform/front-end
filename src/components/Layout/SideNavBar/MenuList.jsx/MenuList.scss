@@ -1,0 +1,51 @@
+// .custom-hamburger-icon {
+//     color: white;
+//     background-color: rgb(255, 255, 255);
+//     // padding: 60px;
+
+// }
+
+.menu-list-custom {
+    all: unset;
+    // display: block !important;
+    position: fixed !important;
+    z-index: 1;
+    font-size: 16px;
+    padding: 5px;
+}
+
+
+
+
+@media(min-width:768px) {
+
+    // Mid 
+    // .menu-list-custom {
+    //     all: unset;
+    //     // display: block !important;
+    //     position: fixed !important;
+    //     z-index: 1;
+    // }
+}
+
+
+
+@media(max-width:768px) {
+
+    // Small 
+
+
+}
+
+@media(min-width:1199px) {
+
+    // Large 
+    .menu-list-custom {
+        all: unset;
+        position: unset !important;
+        font-size: 16px;
+
+
+    }
+
+}

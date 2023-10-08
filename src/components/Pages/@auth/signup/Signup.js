@@ -27,14 +27,15 @@ import { PasswordField } from './passwordFiled/Password'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import React, { useState } from 'react'
+const VARIANT_COLOR = 'teal'
+
 export default function SignUp() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const state = useSelector(state => state)
     const { isOpen, onOpen, onClose } = useDisclosure();
     const cancelRef = React.useRef();
-
-    const [error, setError] = useState('');
+    const [error, setError] = useState('')
     const submitHandler = async (e) => {
         try {
             e.preventDefault()
@@ -48,8 +49,6 @@ export default function SignUp() {
                 birthday: e.target.bday.value,
                 username: e.target.username.value
             }
-            // 
-
             localStorage.setItem('email', obj.email)
             const signUp = await axios.post('http://localhost:3002/signup', obj)
             if (signUp.status === 200) {
@@ -60,15 +59,17 @@ export default function SignUp() {
             onOpen();
         }
     }
+
     return (
-        <Container maxW="lg" py={{ base: '12', md: '24' }} px={{ base: '0', sm: '8' }}>
+        <Container maxW="2xl" py={{ base: '12', md: '24' }} px={{ base: '0', sm: '8' }}>
             <form onSubmit={submitHandler}>
+
                 <Stack spacing="8">
-                    <Stack spacing="6">
+                    {/* <Stack spacing="6">
                         <Stack spacing={{ base: '2', md: '3' }} textAlign="center">
                             <Heading size={{ base: 'xs', md: 'sm' }}>Register</Heading>
                         </Stack>
-                    </Stack>
+                    </Stack> */}
                     <Box
                         py={{ base: '0', sm: '8' }}
                         px={{ base: '4', sm: '10' }}
@@ -77,36 +78,44 @@ export default function SignUp() {
                         borderRadius={{ base: 'none', sm: 'xl' }}
                     >
                         <Stack spacing="6" >
+                            <Box textAlign='center'>
+                                <Heading>Sign Up</Heading><br />
+                                <Divider />
+                            </Box>
                             <Stack spacing="5">
+                                <Stack justifyContent='space-between' direction="row">
+                                    <FormControl>
+                                        <FormLabel htmlFor="fname">First Name</FormLabel>
+                                        <Input id="fname" type="text" />
+                                    </FormControl>
+                                    <FormControl>
+                                        <FormLabel htmlFor="lname">Last Name</FormLabel>
+                                        <Input id="lname" type="text" />
+                                    </FormControl>
+                                </Stack>
                                 <FormControl >
                                     <FormLabel htmlFor="email">Email</FormLabel>
                                     <Input id="email" type="email" />
                                 </FormControl>
                                 <FormControl>
-                                    <FormLabel htmlFor="fname">First Name</FormLabel>
-                                    <Input id="fname" type="text" />
-                                </FormControl>
-                                <FormControl>
-                                    <FormLabel htmlFor="lname">Last Name</FormLabel>
-                                    <Input id="lname" type="text" />
-                                </FormControl>
-                                <FormControl>
                                     <FormLabel htmlFor="username">User Name</FormLabel>
                                     <Input id="username" type="text" />
                                 </FormControl>
-                                <FormControl>
-                                    <FormLabel htmlFor="address">Address</FormLabel>
-                                    <Input id="address" type="text" />
-                                </FormControl>
-                                <FormControl>
-                                    <FormLabel htmlFor="bday">Birthday</FormLabel>
-                                    <Input
-                                        name='bday'
-                                        placeholder="Select Date"
-                                        size="md"
-                                        type="date"
-                                    />
-                                </FormControl>
+                                <Stack direction="row">
+                                    <FormControl>
+                                        <FormLabel htmlFor="address">Address</FormLabel>
+                                        <Input id="address" type="text" />
+                                    </FormControl>
+                                    <FormControl>
+                                        <FormLabel htmlFor="bday">Birthday</FormLabel>
+                                        <Input
+                                            name='bday'
+                                            placeholder="Select Date"
+                                            size="md"
+                                            type="date"
+                                        />
+                                    </FormControl>
+                                </Stack>
                                 <FormControl id='options'>
                                     <FormLabel htmlFor="select" >Gender</FormLabel>
                                     <Select placeholder="Male / Female" >
@@ -116,19 +125,23 @@ export default function SignUp() {
                                 </FormControl>
                                 <PasswordField />
                             </Stack>
-                            <HStack justify="space-between">
-                                <Checkbox defaultChecked>Remember me</Checkbox>
-                                <Button variant="text" size="sm">
-                                    Forgot password?
-                                </Button>
-                            </HStack>
+                            <Stack direction='row'>
+                                <Checkbox defaultChecked>I have read and agreed to the</Checkbox>
+                                <Link variant="text" size="sm" style={{ textDecoration: 'underline lightblue', color: 'black' }} href='#'>
+                                    Terms of use
+                                </Link>
+                                <Link variant="text" size="sm" style={{ textDecoration: 'underline lightblue', color: 'black' }} href='#'>
+                                    Privacy notice
+                                </Link>
+
+                            </Stack>
                             <Stack spacing="6">
                                 <Button type='submit'>Sign Up</Button>
                                 <HStack>
                                     <Divider />
                                 </HStack>
                                 <Text color="fg.muted">
-                                    Already have an account? <Link href="signin">Sign In</Link>
+                                    Already have an account? <Link href="signin" style={{ textDecoration: 'underline lightblue' }}>Sign In</Link>
                                 </Text>
                             </Stack>
                         </Stack>
@@ -155,6 +168,7 @@ export default function SignUp() {
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>
+
         </Container >
     )
 }
