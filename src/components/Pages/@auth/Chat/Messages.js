@@ -58,7 +58,7 @@ export default function Messages({ setRender}) {
                // console.log('resieveData' , resieveData);
                let msg = [...res.data.sendData, ...res.data.resieveData]
                let sortedMSG = msg.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
-               console.log(msg);
+               // console.log(msg);
                setMessageContentSender(msg)
                
           } catch (err) {     

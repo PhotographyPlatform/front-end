@@ -30,9 +30,9 @@ export default function ChatList({ render}) {
      }
      
 
-     homeSocket.on('msgNotificaton', msg => {
-          fetchUserList()
-     })
+     // homeSocket.on('msgNotificaton', msg => {
+     //      fetchUserList()
+     // })
      
      // console.log(userList);
 
