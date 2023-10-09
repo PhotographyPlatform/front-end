@@ -6,7 +6,7 @@ import { FaHome, FaUser, FaSearch, FaSign } from 'react-icons/fa';
 import { BsFillChatDotsFill  } from 'react-icons/bs';
 
 import { IoMdAddCircle } from 'react-icons/io';
-import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from '@chakra-ui/react';
+import { Box, Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, useDisclosure } from '@chakra-ui/react';
 
 
 // ⚠  Attention !!! ⚠
@@ -32,7 +32,7 @@ import { NavLink } from 'react-router-dom';
 
 import NavMenuList from './MenuList.jsx';
 import DrawerPhone from './DrawerPhone';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { logOut } from '../../../store/reducers/auth/user.reducer';
 import { Link } from 'react-router-dom';
@@ -50,6 +50,8 @@ function SideNavBar(props) {
         navigate('/signin');
 
     };
+    const notificationState = useSelector((state) => state.ChatList.AllNotification);
+    // console.log('notificationState' , notificationState);
     return (
         <nav>
             <div className='phone-item'>
@@ -102,7 +104,13 @@ function SideNavBar(props) {
                     </NavLink>
                     
                     <NavLink to='/chat' className='link-card hover-nav'>
-                        <BsFillChatDotsFill />
+                        <Box position={'relative'} >
+
+                            <Box position={'absolute'} display={notificationState ? 'inline-flex' : 'none'} pb={'5px'} bg={'red'} w={'20px'} h={'20px'} borderRadius={'50%'} justifyContent={'center'} alignItems={'center'} top={'-10px'} right={'-10px'}>
+                                    <Text m={0}>{notificationState}</Text>
+                            </Box>
+                            <BsFillChatDotsFill />
+                        </Box>
                         <span className='links-title'>
                             Chat
                         </span>

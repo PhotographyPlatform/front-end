@@ -14,7 +14,7 @@ import jwtDecode from "jwt-decode";
 import MessagePage from './components/Pages/@auth/Chat/MessagePage';
 
 import AuthHome from './components/Pages/@auth/Home/index'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect  , useState} from 'react';
 import '@fontsource/raleway/400.css'
 import '@fontsource/open-sans/700.css'
@@ -26,6 +26,7 @@ import {
   ThemeProvider,
 } from '@chakra-ui/react'
 import axios from 'axios';
+import { dispatchAllNotification, fetchUserListRedux, getNotification } from './store/reducers/chat/chatList.reducer';
 
 // socket assets 
      
@@ -41,7 +42,9 @@ function App() {
   const isAuth = Cookies.load('user_session');
   const decodeAuth = decodeToken(isAuth);
   const userState = useSelector((state) => state.user);
-
+  const dispatch = useDispatch();
+  const notificationState = useSelector((state) => state.ChatList.AllNotification);
+  // console.log('notificationState' , notificationState);
   const [render, setRender] = useState(true)
   
   const Logged = userState.isLogged;
@@ -55,27 +58,36 @@ function App() {
     userId = token.userId
   }
 
-  homeSocket.on('msgNotificaton', msg => {
-    console.log(msg , 'from server');
-    getNotification()
-  })
+  useEffect(() => {
+    
+    homeSocket.on('msgNotificaton', msg => {
+      console.log(msg , 'from server');
+      dispatch(getNotification(cookieData))
+      // getNotification()
+      // dispatch(fetchUserListRedux(userId))
+    })
 
-  async function getNotification() {
-    try {
-      const result = await axios.get('http://localhost:3002/allUserMessages', { headers: { Authorization: `Bearer ${cookieData}` } })
-      let notificationCount = result.data.recievedData.filter(ele => {
-        return ele.read === false
-      })
-      console.log('notificationCount' , notificationCount.length);
+  },[])
+
+  // async function getNotification() {
+  //   try {
+  //     const result = await axios.get('http://localhost:3002/allUserMessages', { headers: { Authorization: `Bearer ${cookieData}` } })
+  //     let notificationCount = result.data.recievedData.filter(ele => {
+  //       return ele.read === false
+  //     })
+  //     // console.log('notificationCount', notificationCount.length);
+  //     dispatch(dispatchAllNotification(notificationCount.length))
       
-    } catch (err) {
-      console.log(err);
-    }
-  }
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }
 
   useEffect(() => {
     homeSocket.emit("joinHomeRoom", userId);
-    getNotification()
+    // getNotification()
+    dispatch(getNotification(cookieData))
+
   }, [Logged]);
 
 
@@ -91,8 +103,6 @@ function App() {
               <Route path="/profile" element={<Profile />} />
               <Route path='/messages/:id' element={<MessagePage render={render} setRender = {setRender} />} />
               <Route path='/chat' element={<Chat />} />
-              {/* <Route path='/messages/:id' element={<Messages setNotification={setNotification } />} /> */}
-              {/* <Route path='/messages/:id' element={<Chat setNotification={setNotification } />} /> */}
             </Routes>
           </Layout>
         ) :

@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Flex, HStack, Icon, Input , Text } from '@chakra-ui/react';
+import { Avatar, Box, Button, Divider, Flex, HStack, Icon, Input , Text } from '@chakra-ui/react';
 import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import cookie from 'react-cookies';
@@ -13,23 +13,23 @@ import data from '@emoji-mart/data'
 import Picker from '@emoji-mart/react'
 import { homeSocket, socket } from '../../../../App';
 import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUserInfo, fetchUserListRedux, getNotification } from '../../../../store/reducers/chat/chatList.reducer';
 
 
 
 // const host = "http://localhost:3002";
 // const socket = io.connect(host, { transports: ["websocket"] });
 
-export default function Messages({ setRender}) {
+export default function Messages({setRender}) {
 
      const [value , setValue] = useState('')
      const [messageContentSender, setMessageContentSender] = useState([])
      const [selectedEmoji, setSelectedEmoji] = useState(false);
-     const [seen, setSeen] = useState(false);
-     const [showNoti, setShowNoti] = useState(false);
+
 
      const chatContainerRef = useRef(null);
      const inputEle = useRef(null);
-     const counterEle = useRef(null)
 
 
      const cookieData = cookie.load('user_session')
@@ -40,6 +40,10 @@ export default function Messages({ setRender}) {
      let arr = (userId + reciver).split("").sort().join("")
      let params = useParams()
 
+     const despatch = useDispatch()
+     const selector = useSelector(state => state.ChatList)
+     const userInfo = selector.userInfo.userInfo
+
      const messageHandeler = async () => {
           console.log(reciver , 'reciver' , userId , 'sender');
           try {
@@ -49,16 +53,12 @@ export default function Messages({ setRender}) {
                let resieveData = res.data.resieveData.map(async ele => {
                     if (!ele.read) {
                          const makeItSeen = await axios.put(`http://localhost:3002/chat/${ele.id}/${reciver}`, { read: true }, { headers: { Authorization: `Bearer ${cookieData}` } })
-                         setSeen(true)
-                         ele.read = true
                          return ele
                     }
                })
 
-               // console.log('resieveData' , resieveData);
                let msg = [...res.data.sendData, ...res.data.resieveData]
                let sortedMSG = msg.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
-               // console.log(msg);
                setMessageContentSender(msg)
                
           } catch (err) {     
@@ -66,7 +66,8 @@ export default function Messages({ setRender}) {
           }
      }
 
-     // get message date function
+//======================= message date handeler =====================
+
      function getData(date = new Date()) {
           const dateObject = new Date(date);
      
@@ -81,17 +82,28 @@ export default function Messages({ setRender}) {
           if (chatContainerRef.current) {
             chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
           }
-     };     
+     };
+
+//======================= useEffect handeler =======================
 
      useEffect(() => {
           messageHandeler() 
+          despatch(fetchUserInfo(reciver, cookieData))
+          despatch(fetchUserListRedux(userId))
+          despatch(getNotification(cookieData))
+
+          // homeSocket.on('msgNotificaton', msg => {
+          // })
+          
      }, [params])
 
      useEffect(() => {
           scrollToBottom();
-     }, [messageContentSender ])
+     }, [messageContentSender])
+     
+     // console.log('selector',userInfo);
 
-
+//======================= socket handeler =========================
      const obj = {
           content: "",
           receiverId: reciver,
@@ -103,27 +115,17 @@ export default function Messages({ setRender}) {
 
      socket.emit("joinRoom", obj);
 
-     socket.on('userSocket', (socketId) => {
-          console.log( 'socketId', socketId);
-     })
-
-
      function send() {
           obj.content = value
           socket.emit("message", obj);
           inputEle.current.value = ''
           setSelectedEmoji(false)
-          // setNotification(true)
           setRender(value => !value)
           
           homeSocket.emit("notificaton", reciver);
      };
 
-
      socket.on("test", (message) => {
-
-          // console.log(message);
-
           if (message.senderId == userId) {
                
                setMessageContentSender( [...messageContentSender,   {content : message.content , who : 'sender'}])
@@ -132,43 +134,7 @@ export default function Messages({ setRender}) {
           }
      });
 
-
-     // useEffect(() => {
-     //      socket.on("notificaton", (count) => {
-     //           console.log(count);
-     //           setShowNoti(true)
-     //           // counterEle.current.style.display = "inline-block";
-     //           if (counterEle.current) {
-     //                counterEle.current.innerHTML = count;
-     //           }
-     //      });
-      
-     //      // counterEle.current.onclick = handleCounterClick;
-      
-     //      return () => {
-     //      //   socket.off("notification", handleNotification);
-     //      //   counterEle.current.onclick = null;
-     //      };     
-     //    }, [])
-
-
-     socket.on("notificaton", (count) => {
-          // console.log('notificaton' , count);
-          setShowNoti(true)
-          if (counterEle.current) {
-               counterEle.current.innerHTML = count;
-          }
-          
-     });
-
-     if (counterEle.current) {
-          counterEle.current.onclick = (e) => {
-               counterEle.current.innerHTML = 0;
-               socket.emit("zero");
-          };
-     }
-
-
+//======================= Emoji handeler ==========================
 
      const handleEmoji = () => {
           setSelectedEmoji(!selectedEmoji);
@@ -177,12 +143,19 @@ export default function Messages({ setRender}) {
           inputEle.current.value += emoji.native
           setValue(inputEle.current.value)
      };
-     
+//==================================================================
+
      return (
-     <>               
-     <Box className="chat-container"  >
-     {/* <div className="notifications"> notifications <span ref={counterEle} style={{display : showNoti ? 'inline-block' : 'none'}} className="counter"></span></div> */}
-      
+     <>            
+     <Box className="chat-container"  >  
+          <Box maxH={'40px'}>
+               <Box display={'flex'} alignItems={'center'} gap={'10px'}>
+                    <Avatar size={'sm'} src='https://cdn-icons-png.flaticon.com/512/1053/1053244.png' />
+                    <Text textTransform={'capitalize'} margin={0} >{userInfo?.username}</Text>
+               </Box>
+               <Divider  borderBottomWidth={'2px'}  marginTop={'7px'}/>
+          </Box>
+
           <Box className="sub-chat-container" height={'95%'} display={'flex'} flexDirection={'column'} justifyContent={'flex-end'}>
                <Box className="chat" ref={chatContainerRef} maxH={{base : '600px'}}>
                     {
@@ -199,27 +172,11 @@ export default function Messages({ setRender}) {
                          ))
                     }               
                </Box>
-               
-               {/* <div className="chat">
-                    {    
-                         messageContentSender.map((ele , i) => (
-                              <>
-                                   <div key={i} className={ele.who === 'sender' && ele.senderId === userId ? 'message outgoing' : 'message'}>
-                                        <p>{ele.content}</p> 
-
-                                        <Avatar size={'sm'} src='https://cdn-icons-png.flaticon.com/512/1053/1053244.png'
-                                        className={ele.who === 'sender' || ele.senderId === userId ?'date-msg-out' : 'date-msg-in'}/>
-                                   </div>
-                              <p className={ele.who === 'sender' || ele.senderId === userId ?'date-msg-out' : 'date-msg-in'}>{getData(ele.createdAt)}</p>
-                              </>
-                         ))
-                    }               
-               </div> */}
                          
                <HStack className='message-field' my={'20px'} width={'100%'} display={'flex'} justifyContent={'space-between'} alignItems={'flex-start'}>
                     <Box display={'flex'} >
                          <Avatar size={'sm'} name='Dan Abrahmov' src='https://cdn-icons-png.flaticon.com/512/1053/1053244.png' />
-                         <Input ref={inputEle} width={{base : '150px' ,md: '300px' , sm : '200px' , lg: '550px'}} border={'none'} _focusVisible={'none'} fontSize={'17px'} onChange={(e) => setValue(e.target.value)} placeholder='Type message' />
+                         <Input ref={inputEle}  width={{base :'200px' ,sm : '250px', md: '400px' , lg : '430px'  }} border={'none'} _focusVisible={'none'} fontSize={'17px'} onChange={(e) => setValue(e.target.value)} placeholder='Type message' />
                     </Box>
                     <Box display={'flex'}>
                          <Button bg={'transparent'} gap={'15px'} px={'5px'} variant = 'solid' onClick={handleEmoji}>
