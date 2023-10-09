@@ -1,0 +1,20 @@
+.users {
+  display: flex;
+  // justify-content: center;
+  // align-items: center;
+  width: inherit;
+  background-color: rgb(239, 239, 239);
+  padding: 15px;
+
+  &:hover {
+    background-color: rgb(216, 216, 216);
+    cursor: pointer;
+  }
+
+  img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 50px;
+  }
+}

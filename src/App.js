@@ -32,9 +32,9 @@ function App() {
         {decodeAuth && decodeAuth.userId ? (
           <Layout>
             <Routes>
-              <Route path='/searchs' element={<Search />} />
               <Route path="/" element={<AuthHome />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path='/searchs' element={<Search />} />
             </Routes>
           </Layout>
         ) :
