@@ -10,7 +10,7 @@ function ViewPostParentDetails() {
     return (
         <div className='viewpost-parent-details'>
             <div className='viewpost-img'>
-                <img src="https://images.pexels.com/photos/9353471/pexels-photo-9353471.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" />
+                <img src="https://images.pexels.com/photos/18200915/pexels-photo-18200915/free-photo-of-a-contemporary-changing-room.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" />
             </div>
             <div className='viewpost-details'>
                 <section className='viewpost-section-details'>
@@ -27,7 +27,7 @@ function ViewPostParentDetails() {
 
                     <div className='viewpost-category'>
                         <ViewPostCategories />
-                    </div> 
+                    </div>
                     <div className='viewpost-basic-actions'>
                         <BiSolidLike size={32} />
                         <FaRegComment size={32} />
