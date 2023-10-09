@@ -1,0 +1,37 @@
+/* viewpostHeader.module.scss */
+
+.viewpost-header {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #f0f0f0;
+
+    .viewpost-img-postowner {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+
+    .viewpost-username-postowner {
+        font-weight: bold;
+        margin-right: 10px;
+    }
+
+    .viewpost-header-icons {
+        display: flex;
+        align-items: center;
+        margin-left: auto;
+    }
+
+    .viewpost-header-icons svg {
+        margin-right: 10px;
+        cursor: pointer;
+        transition: color 0.3s;
+    }
+
+    .viewpost-header-icons svg:hover {
+        color: white;
+        /* Change the color on hover */
+    }
+}

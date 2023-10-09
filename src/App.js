@@ -14,6 +14,7 @@ import '@fontsource/open-sans/700.css'
 import theme from './components/theme/theme'
 import Test from './components/Pages/@auth/signin/Signin';
 import Search from './components/Pages/Search';
+import ViewPost from './components/Pages/Post/ViewPost';
 
 import {
   ThemeProvider,
@@ -33,6 +34,7 @@ function App() {
         {decodeAuth && decodeAuth.userId ? (
           <Layout>
             <Routes>
+              <Route path='/vv' element={<ViewPost />} />
               <Route path="/" element={<AuthHome />} />
               <Route path="/profile" element={<Profile />} />
             </Routes>
