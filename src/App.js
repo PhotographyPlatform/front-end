@@ -19,6 +19,7 @@ import ViewPost from './components/Pages/Post/ViewPost';
 import {
   ThemeProvider,
 } from '@chakra-ui/react'
+
 function App() {
   const isAuth = Cookies.load('user_session');
   const decodeAuth = decodeToken(isAuth);
@@ -35,6 +36,7 @@ function App() {
           <Layout>
             <Routes>
               <Route path='/vv' element={<ViewPost />} />
+              <Route path='/searchs' element={<Search />} />
               <Route path="/" element={<AuthHome />} />
               <Route path="/profile" element={<Profile />} />
             </Routes>
