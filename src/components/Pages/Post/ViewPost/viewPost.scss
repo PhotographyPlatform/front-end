@@ -1,3 +1,27 @@
-.viewpost-parent{
-    
+/* Define other SCSS styles as needed */
+.viewpost-grandparent {
+    max-height: 50% !important;
+    max-width: 80% !important;
+}
+
+.div-handler {
+    display: block !important;
+    height: 100% !important;
+    // width: 600px !important;
+    max-height: 100% !important;
+    max-width: 100% !important;
+}
+
+.model-parent-viewpost {
+    // max-width: 0% !important;
+    // all: unset !important;
+    max-width: 65% !important;
+    max-height: 100% !important;
+}
+
+.viewpost-header {}
+
+.viewpost-no-space {
+    margin: 0 !important;
+    padding: 0 !important;
 }

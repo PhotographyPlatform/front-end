@@ -70,75 +70,75 @@ function SideNavBar(props) {
         dispatch(uderData(userDataCookies))
     }, [])
 
-
-
-    function SideNavBar(props) {
-        const { isOpen, onOpen, onClose } = useDisclosure();
-        const { isOpen: isOpenNewPost, onOpen: onOpenNewPost, onClose: onCloseNewPost } = useDisclosure();
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const { isOpen: isOpenNewPost, onOpen: onOpenNewPost, onClose: onCloseNewPost } = useDisclosure();
 
 
 
-        console.log("Srtate ", userData.username)
-        return (
-            <nav>
-                <div className='phone-item'>
 
-                    {/* This header is only for phones;
+
+
+    console.log("Srtate ", userData.username)
+    return (
+        <nav>
+            <div className='phone-item'>
+
+                {/* This header is only for phones;
                     no editing is required here !!
                 */}
 
-                    <header className='phone-nav-header'>
-                        <h1 className='phoneLogo'>LOGO </h1>
-                        <DrawerPhone />
-                    </header>
+                <header className='phone-nav-header'>
+                    <h1 className='phoneLogo'>LOGO </h1>
+                    <DrawerPhone />
+                </header>
 
+            </div>
+
+            <div className='parent'>
+                <div className='link-card nav-menu-phone-list'>
+                    <NavMenuList />
+                    <span className='links-title more-title'>
+                        More
+                    </span>
                 </div>
 
-                <div className='parent'>
-                    <div className='link-card nav-menu-phone-list'>
-                        <NavMenuList />
-                        <span className='links-title more-title'>
+                <div className='logo'>LOGO</div>
+
+                {/* You Can Edit the links fromh ere */}
+                <div className='Links'>
+                    <NavLink to='/' className='link-card hover-nav'>
+
+                        <FaHome />
+                        <span className='links-title'>Home</span>
+
+                    </NavLink>
+
+
+
+                    <div to='/addpost' className='link-card hover-nav' onClick={onOpenNewPost}>
+                        <NewPost onCloseNewPost={onCloseNewPost} isOpenNewPost={isOpenNewPost} />
+                        <IoMdAddCircle />
+                        <span className='links-title'>
+                            Add Post
+                        </span>
+                    </div>
+
+                    <NavLink to='/searchs' className='link-card hover-nav'>
+                        <FaSearch />
+                        <span className='links-title'>
+                            Search
+                        </span>
+
+                    </NavLink>
+
+                    <div className='link-card nav-menu-list'>
+                        <NavMenuList className='mid-nav-menu' />
+                        <span className='links-title more-title mid-nav-menu  disable-hover'>
                             More
                         </span>
                     </div>
 
-                    <div className='logo'>LOGO</div>
-
-                    {/* You Can Edit the links fromh ere */}
-                    <div className='Links'>
-                        <NavLink to='/' className='link-card hover-nav'>
-
-                            <FaHome />
-                            <span className='links-title'>Home</span>
-
-                        </NavLink>
-
-
-
-                        <div to='/addpost' className='link-card hover-nav' onClick={onOpenNewPost}>
-                            <NewPost onCloseNewPost={onCloseNewPost} isOpenNewPost={isOpenNewPost} />
-                            <IoMdAddCircle />
-                            <span className='links-title'>
-                                Add Post
-                            </span>
-                        </div>
-
-                        <NavLink to='/searchs' className='link-card hover-nav'>
-                            <FaSearch />
-                            <span className='links-title'>
-                                Search
-                            </span>
-
-                        </NavLink>
-
-                        <div className='link-card nav-menu-list'>
-                            <NavMenuList className='mid-nav-menu' />
-                            <span className='links-title more-title mid-nav-menu  disable-hover'>
-                                More
-                            </span>
-                        </div>
-
-                        {/*
+                    {/*
                      You can add a new URL here. The link appears in the  NavSideBar for mid and large screens, and at the bottom for phones
 
                     
@@ -158,34 +158,33 @@ function SideNavBar(props) {
                     */}
 
 
-                        {/*Add the Link Here !!  */}
+                    {/*Add the Link Here !!  */}
 
 
 
 
 
-                        {/*This contains user data and a link to the profile */}
+                    {/*This contains user data and a link to the profile */}
 
-                        <NavLink to='/profile' className='link-card parent-profile'>
-                            {userData.img ? (
-                                <img src={userData.img} alt="" />
-                            ) : (
-                                <Avatar
-                                    name={userData.username}
-                                />
-                            )}
-                            <span className='links-title disable-hover'>
-                                {userData.username}
-                            </span>
-                        </NavLink>
+                    <NavLink to='/profile' className='link-card parent-profile'>
+                        {userData.img ? (
+                            <img src={userData.img} alt="" />
+                        ) : (
+                            <Avatar
+                                name={userData.username}
+                            />
+                        )}
+                        <span className='links-title disable-hover'>
+                            {userData.username}
+                        </span>
+                    </NavLink>
 
-
-                    </div>
 
                 </div>
-            </nav>
-        );
-    }
+
+            </div>
+        </nav>
+    );
 }
 
 export default SideNavBar;

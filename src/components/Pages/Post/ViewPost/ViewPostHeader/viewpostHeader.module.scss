@@ -4,6 +4,7 @@
     display: flex;
     align-items: center;
     padding: 10px;
+    // justify-content:flex-end;
     background-color: #f0f0f0;
 
     .viewpost-img-postowner {
@@ -24,14 +25,18 @@
         margin-left: auto;
     }
 
-    .viewpost-header-icons svg {
+    svg {
         margin-right: 10px;
         cursor: pointer;
         transition: color 0.3s;
     }
 
-    .viewpost-header-icons svg:hover {
+    svg:hover {
         color: white;
-        /* Change the color on hover */
     }
+
+    svg {
+        margin-left: 10px;
+    }
+
 }

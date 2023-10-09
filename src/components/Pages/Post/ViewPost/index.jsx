@@ -1,11 +1,21 @@
 import React from 'react';
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton } from '@chakra-ui/react';
+import {
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalBody,
+    ModalCloseButton,
+    Box
+} from '@chakra-ui/react';
 import { useDisclosure } from '@chakra-ui/react';
 import { Button } from '@chakra-ui/react';
 
 // Import your custom components
 import ViewPostHeader from './ViewPostHeader';
 import ViewPostParentDetails from './ViewPostParentDetails ';
+import './viewPost.scss'
 
 function ViewPost(props) {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -28,25 +38,28 @@ function ViewPost(props) {
                 >{`Open ${size} Modal`}</Button>
             ))}
 
-            <Modal onClose={onClose} size={size} isOpen={isOpen}>
-                <ModalOverlay />
-                <ModalContent>
-                    <ModalHeader>
+
+            <Modal onClose={onClose} isOpen={isOpen}  >
+                <ModalOverlay /> 
+                <div className='div-handler'>
+                <ModalContent className='model-parent-viewpost' size='full' >
+                    <ModalHeader className='viewpost-no-space'>
                         {/* Use the ViewPostHeader component */}
                         <ViewPostHeader />
-
+                        <ModalCloseButton />
                     </ModalHeader>
-                    {/* <ModalCloseButton /> */}
-                    <ModalBody>
+                 
+                    <div className='viewpost-no-space viewpost-child'>
                         {/* Use the ViewPostParent component */}
                         <ViewPostParentDetails />
-
-                    </ModalBody>
-                    <ModalFooter>
+                    </div>
+                    {/* <ModalFooter>
                         <Button onClick={onClose}>Close</Button>
-                    </ModalFooter>
-                </ModalContent>
+                    </ModalFooter> */}
+                    </ModalContent>
+                </div>
             </Modal>
+
         </>
     );
 }
