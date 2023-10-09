@@ -15,10 +15,12 @@ import theme from './components/theme/theme'
 import Test from './components/Pages/@auth/signin/Signin';
 import Search from './components/Pages/Search';
 import ViewPost from './components/Pages/Post/ViewPost';
-
+import { layout } from '@chakra-ui/react';
 import {
   ThemeProvider,
 } from '@chakra-ui/react'
+import SidebarWithHeader from './components/ChakraLayout';
+
 
 function App() {
   const isAuth = Cookies.load('user_session');
@@ -33,14 +35,14 @@ function App() {
     <div className="App">
       <ThemeProvider theme={theme}>
         {decodeAuth && decodeAuth.userId ? (
-          <Layout>
+          <SidebarWithHeader>
             <Routes>
               <Route path='/vv' element={<ViewPost />} />
               <Route path='/searchs' element={<Search />} />
               <Route path="/" element={<AuthHome />} />
               <Route path="/profile" element={<Profile />} />
             </Routes>
-          </Layout>
+          </SidebarWithHeader>
         ) :
           <Container />
         }
