@@ -43,6 +43,7 @@ import AuthHome from '../Pages/@auth/Home/index'
 import NotFound from '../Pages/NotFound';
 import NewPost from '../components/NewPost';
 import { IoMdAddCircle } from 'react-icons/io';
+import { BsFillChatDotsFill } from 'react-icons/bs';
 
 
 
@@ -54,22 +55,9 @@ const LinkItems = [
     { name: 'Search', icon: FiCompass, path: '/search' },
     { name: 'Add Post', icon: FiCompass, path: '/addpost' },
     { name: 'Favourites', icon: FiStar },
+    {name: 'Chat', icon: BsFillChatDotsFill, path: '/chat'},
     { name: 'Settings', icon: FiSettings },
 ];
-
-/*
-<div to='/addpost' className='link-card hover-nav' onClick={onOpenNewPost}>
-                        <NewPost onCloseNewPost={onCloseNewPost} isOpenNewPost={isOpenNewPost} />
-                        <IoMdAddCircle />
-                        <span className='links-title'>
-                            Add Post
-                        </span>
-                    </div>
-                    
-                    */
-
-
-
 
 
 function SidebarContent({ onClose, ...rest }) {
@@ -96,24 +84,17 @@ function SidebarContent({ onClose, ...rest }) {
 
             {LinkItems.map((link) => (
                 <Link key={link.path} to={link.path}>
-                    <NavItem icon={link.icon}>{link.name}</NavItem>
+                    <NavItem icon={link.icon} name = {link.name}> {link.name}</NavItem>
                 </Link>
             ))}
             {/* popup Modal */}
 
-            {/* <div to='/addpost' className='link-card hover-nav' onClick={onOpenNewPost}>
-                <NewPost onCloseNewPost={onCloseNewPost} isOpenNewPost={isOpenNewPost} />
-                <IoMdAddCircle />
-                <span className='links-title'>
-                    Add Post
-                </span>
-            </div> */}
-
-            <Link >
+            <Link>
+                
+            
                 <NewPost onCloseNewPost={onCloseNewPost} isOpenNewPost={isOpenNewPost} />
                 <NavItem icon={IoMdAddCircle} onClick={onOpenNewPost}   >{'Add New Post'} </NavItem>
             </Link>
-
         </Box>
     );
 }

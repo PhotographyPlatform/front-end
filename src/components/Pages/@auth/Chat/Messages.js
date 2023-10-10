@@ -101,7 +101,6 @@ export default function Messages({setRender}) {
           scrollToBottom();
      }, [messageContentSender])
      
-     // console.log('selector',userInfo);
 
 //======================= socket handeler =========================
      const obj = {
@@ -153,7 +152,7 @@ export default function Messages({setRender}) {
                     <Avatar size={'sm'} src='https://cdn-icons-png.flaticon.com/512/1053/1053244.png' />
                     <Text textTransform={'capitalize'} margin={0} >{userInfo?.username}</Text>
                </Box>
-               <Divider  borderBottomWidth={'2px'}  marginTop={'7px'}/>
+               <Divider  borderBottomWidth={'2px'} borderColor={'#00000020'}  marginTop={'7px'}/>
           </Box>
 
           <Box className="sub-chat-container" height={'95%'} display={'flex'} flexDirection={'column'} justifyContent={'flex-end'}>
@@ -170,7 +169,7 @@ export default function Messages({setRender}) {
                                    <p className={ele.who === 'sender' || ele.senderId === userId ?'date-msg-out' : 'date-msg-in'}>{getData(ele.createdAt)}</p>
                               </div>
                          ))
-                    }               
+                    }        
                </Box>
                          
                <HStack className='message-field' my={'20px'} width={'100%'} display={'flex'} justifyContent={'space-between'} alignItems={'flex-start'}>
