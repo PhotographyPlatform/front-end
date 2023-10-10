@@ -15,7 +15,7 @@ import MessagePage from './components/Pages/@auth/Chat/MessagePage';
 
 import AuthHome from './components/Pages/@auth/Home/index'
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect  , useState} from 'react';
+import { useEffect, useState } from 'react';
 import '@fontsource/raleway/400.css'
 import '@fontsource/open-sans/700.css'
 import theme from './components/theme/theme'
@@ -27,19 +27,22 @@ import {
   ThemeProvider,
 } from '@chakra-ui/react'
 
+import SidebarWithHeader from './components/ChakraLayout';
+
+
+
+
 import axios from 'axios';
 import { dispatchAllNotification, fetchUserListRedux, getNotification } from './store/reducers/chat/chatList.reducer';
 
 // socket assets 
-     
+
 const host = "http://localhost:3002";
 const homeHost = "http://localhost:3002/home";
+
 export const socket = io.connect(host, { transports: ["websocket"] });
 export const homeSocket = io.connect(homeHost, { transports: ["websocket"] });
 
-
-
-import SidebarWithHeader from './components/ChakraLayout';
 
 
 
@@ -50,24 +53,24 @@ function App() {
   const dispatch = useDispatch();
   const notificationState = useSelector((state) => state.ChatList.AllNotification);
   const [render, setRender] = useState(true)
-  
+
   const Logged = userState.isLogged;
   let userId = null
   let cookieData = null
 
   if (cookie.load('user_session')) {
-    
+
     cookieData = cookie.load('user_session')
     const token = jwtDecode(cookieData)
     userId = token.userId
   }
 
   useEffect(() => {
-    
+
     homeSocket.on('msgNotificaton', msg => {
       dispatch(getNotification(cookieData))
     })
-  },[])
+  }, [])
 
 
 
@@ -87,10 +90,10 @@ function App() {
           <SidebarWithHeader>
             <Routes>
               <Route path='/vv' element={<ViewPost />} />
-              <Route path='/searchs' element={<Search />} />
               <Route path="/" element={<AuthHome />} />
               <Route path="/profile" element={<Profile />} />
-              <Route path='/messages/:id' element={<MessagePage render={render} setRender = {setRender} />} />
+              <Route path='/searchs' element={<Search />} />
+              <Route path='/messages/:id' element={<MessagePage render={render} setRender={setRender} />} />
               <Route path='/chat' element={<Chat />} />
             </Routes>
           </SidebarWithHeader>

@@ -13,6 +13,7 @@ import {
 } from "@chakra-ui/react";
 import "./NewPost.scss";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 function NewPost({onCloseNewPost, isOpenNewPost}) {
   
@@ -26,19 +27,7 @@ function NewPost({onCloseNewPost, isOpenNewPost}) {
   const [suggestedTags, setSuggestedTags] = useState([]);
   const fileInputRef = useRef(null);
 
-  const allowedTags = [
-    "animals",
-    "nature",
-    "tech",
-    "sport",
-    "colors",
-    "anime",
-    "movies",
-    "games",
-    "country",
-    "Books",
-    "house",
-  ];
+  const allowedTags = useSelector((state) => state.search.categories.map(item => item.name));
 
   const handleFileInputChange = () => {
     const fileNameSpan = document.getElementById("fileName");
@@ -70,6 +59,7 @@ function NewPost({onCloseNewPost, isOpenNewPost}) {
       category: tags,
     };
 
+    if (newPost.imgurl && newPost.title && newPost.contant && newPost.category.length) {
     try {
       const response = await axios.post(
         "http://localhost:3002/v1/newPostCOll",
@@ -79,6 +69,7 @@ function NewPost({onCloseNewPost, isOpenNewPost}) {
     } catch (error) {
       console.error("error when adding a new post: ", error);
     }
+  }
   };
 
   const addTagHandler = (e) => {
