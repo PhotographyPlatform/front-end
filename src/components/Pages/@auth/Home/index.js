@@ -16,9 +16,11 @@ import {
 } from '@chakra-ui/react';
 import { BsThreeDotsVertical } from 'react-icons/bs'; // Import the BsThreeDotsVertical icon
 import { BiLike, BiChat, BiShare } from 'react-icons/bi'; // Import the BiLike, BiChat, and BiShare icons
+import { homeSocket } from '../../../../App';
 
 
 function Home() {
+
     return (
         <div className='auth-profile'>
             <Card maxW='md'>

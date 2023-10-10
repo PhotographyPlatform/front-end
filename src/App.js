@@ -6,9 +6,16 @@ import { decodeToken } from 'react-jwt';
 import Layout from './components/Layout';
 import { Route, Routes } from 'react-router-dom';
 import Profile from './components/Pages/@auth/profileDashboard/Profile';
+import Messages from './components/Pages/@auth/Chat/Messages';
+import Chat from './components/Pages/@auth/Chat/Chat';
+import { io } from 'socket.io-client';
+import cookie from 'react-cookies';
+import jwtDecode from "jwt-decode";
+import MessagePage from './components/Pages/@auth/Chat/MessagePage';
+
 import AuthHome from './components/Pages/@auth/Home/index'
-import { useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect  , useState} from 'react';
 import '@fontsource/raleway/400.css'
 import '@fontsource/open-sans/700.css'
 import theme from './components/theme/theme'
@@ -19,17 +26,59 @@ import { layout } from '@chakra-ui/react';
 import {
   ThemeProvider,
 } from '@chakra-ui/react'
+
+import axios from 'axios';
+import { dispatchAllNotification, fetchUserListRedux, getNotification } from './store/reducers/chat/chatList.reducer';
+
+// socket assets 
+     
+const host = "http://localhost:3002";
+const homeHost = "http://localhost:3002/home";
+export const socket = io.connect(host, { transports: ["websocket"] });
+export const homeSocket = io.connect(homeHost, { transports: ["websocket"] });
+
+
+
 import SidebarWithHeader from './components/ChakraLayout';
+
 
 
 function App() {
   const isAuth = Cookies.load('user_session');
   const decodeAuth = decodeToken(isAuth);
   const userState = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const notificationState = useSelector((state) => state.ChatList.AllNotification);
+  const [render, setRender] = useState(true)
+  
   const Logged = userState.isLogged;
+  let userId = null
+  let cookieData = null
+
+  if (cookie.load('user_session')) {
+    
+    cookieData = cookie.load('user_session')
+    const token = jwtDecode(cookieData)
+    userId = token.userId
+  }
 
   useEffect(() => {
+    
+    homeSocket.on('msgNotificaton', msg => {
+      dispatch(getNotification(cookieData))
+    })
+  },[])
+
+
+
+  useEffect(() => {
+    homeSocket.emit("joinHomeRoom", userId);
+    dispatch(getNotification(cookieData))
+
   }, [Logged]);
+
+
+
 
   return (
     <div className="App">
@@ -41,6 +90,8 @@ function App() {
               <Route path='/searchs' element={<Search />} />
               <Route path="/" element={<AuthHome />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path='/messages/:id' element={<MessagePage render={render} setRender = {setRender} />} />
+              <Route path='/chat' element={<Chat />} />
             </Routes>
           </SidebarWithHeader>
         ) :
