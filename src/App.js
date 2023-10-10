@@ -21,10 +21,12 @@ import '@fontsource/open-sans/700.css'
 import theme from './components/theme/theme'
 import Test from './components/Pages/@auth/signin/Signin';
 import Search from './components/Pages/Search';
-
+import ViewPost from './components/Pages/Post/ViewPost';
+import { layout } from '@chakra-ui/react';
 import {
   ThemeProvider,
 } from '@chakra-ui/react'
+
 import axios from 'axios';
 import { dispatchAllNotification, fetchUserListRedux, getNotification } from './store/reducers/chat/chatList.reducer';
 
@@ -35,7 +37,10 @@ const homeHost = "http://localhost:3002/home";
 export const socket = io.connect(host, { transports: ["websocket"] });
 export const homeSocket = io.connect(homeHost, { transports: ["websocket"] });
 
-//
+
+
+import SidebarWithHeader from './components/ChakraLayout';
+
 
 
 function App() {
@@ -44,7 +49,6 @@ function App() {
   const userState = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const notificationState = useSelector((state) => state.ChatList.AllNotification);
-  // console.log('notificationState' , notificationState);
   const [render, setRender] = useState(true)
   
   const Logged = userState.isLogged;
@@ -61,31 +65,14 @@ function App() {
   useEffect(() => {
     
     homeSocket.on('msgNotificaton', msg => {
-      console.log(msg , 'from server');
       dispatch(getNotification(cookieData))
-      // getNotification()
-      // dispatch(fetchUserListRedux(userId))
     })
-
   },[])
 
-  // async function getNotification() {
-  //   try {
-  //     const result = await axios.get('http://localhost:3002/allUserMessages', { headers: { Authorization: `Bearer ${cookieData}` } })
-  //     let notificationCount = result.data.recievedData.filter(ele => {
-  //       return ele.read === false
-  //     })
-  //     // console.log('notificationCount', notificationCount.length);
-  //     dispatch(dispatchAllNotification(notificationCount.length))
-      
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }
+
 
   useEffect(() => {
     homeSocket.emit("joinHomeRoom", userId);
-    // getNotification()
     dispatch(getNotification(cookieData))
 
   }, [Logged]);
@@ -97,14 +84,16 @@ function App() {
     <div className="App">
       <ThemeProvider theme={theme}>
         {decodeAuth && decodeAuth.userId ? (
-          <Layout>
+          <SidebarWithHeader>
             <Routes>
+              <Route path='/vv' element={<ViewPost />} />
+              <Route path='/searchs' element={<Search />} />
               <Route path="/" element={<AuthHome />} />
               <Route path="/profile" element={<Profile />} />
               <Route path='/messages/:id' element={<MessagePage render={render} setRender = {setRender} />} />
               <Route path='/chat' element={<Chat />} />
             </Routes>
-          </Layout>
+          </SidebarWithHeader>
         ) :
           <Container />
         }
