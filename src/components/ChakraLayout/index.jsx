@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     IconButton,
     Avatar,
@@ -29,6 +29,8 @@ import { Link, Routes, Route } from 'react-router-dom';
 import ViewPost from '../Pages/Post/ViewPost';
 import Search from '../Pages/Search';
 import Profile from '../Pages/@auth/profileDashboard/Profile';
+import Chat from '../Pages/@auth/Chat/Chat';
+import MessagePage from '../Pages/@auth/Chat/MessagePage';
 // import AuthHome
 // Your LinkItems array
 const LinkItems = [
@@ -141,6 +143,8 @@ function MobileNav({ onOpen, ...rest }) {
 
 function App() {
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const [render, setRender] = useState(true)
+
 
     return (
         <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}>
@@ -165,6 +169,8 @@ function App() {
                     <Route path="/searchs" element={<Search />} />
                     {/* <Route path="/" element={<AuthHome />} /> */}
                     <Route path="/profile" element={<Profile />} />
+                    <Route path='/chat' element={<Chat />} />
+                    <Route path='/messages/:id' element={<MessagePage render={render} setRender = {setRender} />} />
                 </Routes>
             </Box>
         </Box>

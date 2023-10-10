@@ -176,7 +176,7 @@ export default function Messages({setRender}) {
                <HStack className='message-field' my={'20px'} width={'100%'} display={'flex'} justifyContent={'space-between'} alignItems={'flex-start'}>
                     <Box display={'flex'} >
                          <Avatar size={'sm'} name='Dan Abrahmov' src='https://cdn-icons-png.flaticon.com/512/1053/1053244.png' />
-                         <Input ref={inputEle}  width={{base :'200px' ,sm : '250px', md: '400px' , lg : '430px'  }} border={'none'} _focusVisible={'none'} fontSize={'17px'} onChange={(e) => setValue(e.target.value)} placeholder='Type message' />
+                         <Input ref={inputEle}  width={{base :'200px' ,sm : '250px', md: '400px' , lg : '430px' ,'2xl' : '630px' }} border={'none'} _focusVisible={'none'} fontSize={'17px'} onChange={(e) => setValue(e.target.value)} placeholder='Type message' />
                     </Box>
                     <Box display={'flex'}>
                          <Button bg={'transparent'} gap={'15px'} px={'5px'} variant = 'solid' onClick={handleEmoji}>

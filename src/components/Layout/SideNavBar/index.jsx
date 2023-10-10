@@ -5,7 +5,6 @@ import "./style/profile.scss"
 import { FaHome, FaUser, FaSearch, FaSign } from 'react-icons/fa';
 import { BsFillChatDotsFill  } from 'react-icons/bs';
 import { IoMdAddCircle } from 'react-icons/io';
-import { Box, Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, useDisclosure } from '@chakra-ui/react';
 import cookies from 'react-cookies'
 
 
@@ -41,8 +40,20 @@ import {
     Center,
     Grid,
     GridItem,
-    Icon
+    Icon,
+    useDisclosure
 } from '@chakra-ui/react';
+
+// import { Box, Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from '@chakra-ui/react';
+// import { NavLink } from 'react-router-dom';
+// import NavMenuList from './MenuList.jsx';
+// import DrawerPhone from './DrawerPhone';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { useNavigate } from 'react-router-dom';
+// import { logOut } from '../../../store/reducers/auth/user.reducer';
+
+import { Link } from 'react-router-dom';
+import { BsChatDotsFill } from 'react-icons/bs';
 
 
 import NewPost from '../../components/NewPost';
@@ -77,16 +88,9 @@ function SideNavBar(props) {
 
 
 
-import { NavLink } from 'react-router-dom';
-import NavMenuList from './MenuList.jsx';
-import DrawerPhone from './DrawerPhone';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { logOut } from '../../../store/reducers/auth/user.reducer';
-import { Link } from 'react-router-dom';
-import { BsChatDotsFill } from 'react-icons/bs';
 
-    };
+
+    // };
     const notificationState = useSelector((state) => state.ChatList.AllNotification);
 
     console.log("Srtate ", userData.username)
@@ -124,8 +128,6 @@ import { BsChatDotsFill } from 'react-icons/bs';
 
                     </NavLink>
 
-
-
                     <div to='/addpost' className='link-card hover-nav' onClick={onOpenNewPost}>
                         <NewPost onCloseNewPost={onCloseNewPost} isOpenNewPost={isOpenNewPost} />
                         <IoMdAddCircle />
@@ -153,7 +155,6 @@ import { BsChatDotsFill } from 'react-icons/bs';
                         <span className='links-title'>
                             Chat
                         </span>
-
                     </NavLink>
 
                     <div className='link-card nav-menu-list'>
