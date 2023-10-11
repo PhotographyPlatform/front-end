@@ -8,24 +8,35 @@
     justify-content: flex-start;
 
     position: relative;
+
     // top: 100px;
 
-    img {
+    img,
+    Avatar {
         position: relative;
         border-radius: 100%;
         width: 5vh;
         height: 5vh;
-        top: 100px;
+        top: 30px;
         margin-left: 26px;
+        border: 2px solid transparent;
         // margin-top: 200px;
     }
 
+    &:hover {
+
+        img,
+        Avatar {
+            border: 2px solid white;
+        }
+    }
     div {
         margin-top: 20px;
         margin-left: -50px;
     }
 
-    img:hover {
+    img:hover,
+    Avatar:hover {
         background-color: transparent;
     }
 
@@ -37,7 +48,6 @@
 
 @media (min-width: 1199px) {
 
-
     // large
     .parent-profile {
         padding-top: 5px;
@@ -45,7 +55,10 @@
         position: relative !important;
         top: 30vh !important;
 
-        img {
+
+
+        img,
+        Avatar {
             position: relative;
             border-radius: 100%;
             width: 5vh;
@@ -60,7 +73,8 @@
             margin-left: -10px;
         }
 
-        img:hover {
+        img:hover,
+        Avatar:hover {
             background-color: transparent;
         }
 
@@ -78,7 +92,9 @@
 
     // mid
     .parent-profile {
-        img {
+
+        img,
+        Avatar {
             // all: unset;
             position: relative;
             border-radius: 100% !important;
@@ -110,13 +126,14 @@
             all: unset;
         }
 
-        img {
-            top: unset;
-            padding: unset;
-            border-radius: 100%;
-            width: 5vh;
-            height: 5vh;
-            margin-left: -10px;
+        img,
+        Avatar {
+            top: unset !important;
+            padding: unset !important;
+            border-radius: 100% !important;
+            width: 5vh !important;
+            height: 5vh !important;
+            margin-left: -10px !important;
         }
 
     }

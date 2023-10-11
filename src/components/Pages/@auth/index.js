@@ -15,11 +15,13 @@ function Container() {
       <div>
         <Header />
         <Routes>
+          <Route path='/ss' element={<Search />} />
           <Route path='/code' element={<Code />} />
           <Route path='/forgetPassword' element={<ForgotPassword />} />
           <Route path='/resetPassword' element={<ResetPassword />} />
           <Route path='/signup' element={<SignUp />} />
           <Route path='/signin' element={<Signin />} />
+
           <Route path='/' element={<NonAuthHome />} />
         </Routes>
       </div>

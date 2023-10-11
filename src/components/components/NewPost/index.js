@@ -59,6 +59,7 @@ function NewPost({onCloseNewPost, isOpenNewPost}) {
       category: tags,
     };
 
+    if (newPost.imgurl && newPost.title && newPost.contant && newPost.category.length) {
     try {
       const response = await axios.post(
         "http://localhost:3002/v1/newPostCOll",
@@ -68,6 +69,7 @@ function NewPost({onCloseNewPost, isOpenNewPost}) {
     } catch (error) {
       console.error("error when adding a new post: ", error);
     }
+  }
   };
 
   const addTagHandler = (e) => {

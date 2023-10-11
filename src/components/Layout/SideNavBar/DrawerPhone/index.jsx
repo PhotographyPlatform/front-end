@@ -25,7 +25,7 @@ function DrawerPhone() {
         onOpen();
     }
 
-    const sizes = ['xs'];
+    const sizes = ['sm'];
 
     return (
         <>

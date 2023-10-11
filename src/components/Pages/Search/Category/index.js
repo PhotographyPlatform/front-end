@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCategories, setActiveCategory, setLoading } from "../../../../store/reducers/Search";
 import "./Category.scss";
+import { CircularProgress, Spinner } from "@chakra-ui/react";
 
 function Category() {
 
@@ -23,14 +24,15 @@ function Category() {
         <p>Or, you can browse the available categories to discover and find more</p>
         <div className="categories">
             {loading ? (
-                <p>Loading...</p>
+                <Spinner thickness='3px' speed='0.65s' emptyColor='gray.200' color='blue.500' size='xl' />
             ) : (
                 <ul className='category-container'>
 
                     {categories.map((category) => (
-
-                        <li key={category.id} className='category-card' onClick={()=>dispatch(setActiveCategory(category.name))}>
-                            {category.name}
+                        
+                        <li style={{
+                            backgroundImage: 'url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPe-0_BF69iVrssanpv82RoV-cWdqppHOKvA&usqp=CAU")'}} key={category.id} className='category-card' onClick={()=>dispatch(setActiveCategory(category.name))}>
+                            <p>{category.name}</p>
                         </li>
                     ))}
 

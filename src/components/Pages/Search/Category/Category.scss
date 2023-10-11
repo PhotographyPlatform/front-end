@@ -18,17 +18,31 @@
 
     .category-card{
         list-style: none;
-        padding: 10px 20px;
+        padding: 40px 40px;
         // border: rgb(0, 0, 0) solid 1px;
         background-color: rgb(220, 220, 220);
         border-radius: 20px;
         display: flex;
         justify-content: center;
         align-items: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-color: rgba(0, 0, 0, 0.4);
+        background-blend-mode: multiply;
+        // filter: brightness(70%);
+        // object-fit: contain;
+        
+        p{
+            color: white;
+            z-index: 10;
+            margin: 0;
+            padding: 0;
+        }
 
         &:hover{
             cursor: pointer;
             background-color: rgb(233, 233, 233);
+            background-color: rgba(0, 0, 0, 0.2);
         }
     }
 }

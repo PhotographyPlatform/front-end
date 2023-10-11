@@ -6,11 +6,15 @@ import {
   setSearchWord,
 } from "../../../../store/reducers/Search";
 import "./Results.scss";
-import Post from "../../../components/posts/Post";
 import Posts from "../../../components/posts";
 import Users from "./Users";
+import Cookies from "react-cookies";
+import { useNavigate } from "react-router-dom";
+import { CircularProgress, Spinner } from "@chakra-ui/react";
+import { ArrowBackIcon } from "@chakra-ui/icons";
 
 function Results() {
+  const navigate = useNavigate();
   const state = useSelector((state) => state.search);
   const dispatch = useDispatch();
 
@@ -149,22 +153,34 @@ function Results() {
   //   },
   // ];
 
+  // function clickHandler(id){
+  //   Cookies.remove('id');
+  //   Cookies.save('id', id);
+  //   if(id){
+  //     navigate('/userProfile');
+  //   }
+  // }
+
   return (
     <div className="result-container">
       <div className="top-flex">
         <div>
           <button onClick={backHandler}>
-            <u>back</u>
+            <u>
+              <ArrowBackIcon boxSize={10} />
+            </u>
           </button>
         </div>
         <div>
           {state.searchWord !== "" && state.activeCategory === "" && (
-            <p>
-              results:{" "}
-              {searchresults.users && searchresults.posts
-                ? searchresults.users.length + searchresults.posts.length
-                : 0}
-            </p>
+            <div className="result-flex">
+              <p>total results: </p>
+              <p>
+                {searchresults.users && searchresults.posts
+                  ? searchresults.users.length + searchresults.posts.length
+                  : 0}
+              </p>
+            </div>
           )}
           {state.searchWord === "" && state.activeCategory !== "" && (
             <p>
@@ -177,7 +193,15 @@ function Results() {
 
       {state.searchWord !== "" && state.activeCategory === "" && (
         <div className="search-results">
-          <b>users:</b>
+          <b>
+            Users: <b>{searchresults.users ? searchresults.users.length : 0}</b>
+          </b>
+          <small>
+            <i>
+              {searchresults.users ? searchresults.users.length : 0} users found
+              for the search word '{state.searchWord}'
+            </i>
+          </small>
           {/* {!loading ? (
             <ul>
               {searchresults.users &&
@@ -186,32 +210,57 @@ function Results() {
                 ))}
             </ul>
           ) : (
-            "Loading..."
+            <Spinner thickness='3px' speed='0.65s' emptyColor='gray.200' color='blue.500' size='xl' />
           )} */}
-          <div className="all-users-outer-flex">
-            <div className="all-users-inner-flex">
-              {!loading
-                ? searchresults.users &&
-                  searchresults.users.map((item) => (
-                    <Users
-                      key={item.id}
-                      username={item.username}
-                      profilePic={item.img}
-                    />
-                  ))
-                : "Loading..."}
-            </div>
+
+          <div className="all-users-flex">
+            {!loading ? (
+              searchresults.users &&
+              searchresults.users.map((item) => (
+                // <Text onClick={()=>clickHandler(item.id)}>{item.username}</Text>
+                <Users
+                  id={item.id}
+                  key={item.id}
+                  username={item.username}
+                  profilePic={item.img}
+                />
+              ))
+            ) : (
+              <Spinner
+                thickness="3px"
+                speed="0.65s"
+                emptyColor="gray.200"
+                color="blue.500"
+                size="xl"
+              />
+            )}
           </div>
 
-          <b>posts:</b>
+          <b>
+            Posts: <b>{searchresults.posts ? searchresults.posts.length : 0}</b>
+          </b>
+          <small>
+            <i>
+              {searchresults.posts ? searchresults.posts.length : 0} posts found
+              for the search word '{state.searchWord}'
+            </i>
+          </small>
           {/* { !loading ? <ul>
           {searchresults.posts &&
             searchresults.posts.map((item) => <li key={item.id}>{item.title}</li>)}
         </ul> : 'Loading...'} */}
 
-          {!loading
-            ? searchresults.posts && <Posts posts={searchresults.posts} />
-            : "Loading..."}
+          {!loading ? (
+            searchresults.posts && <Posts posts={searchresults.posts} />
+          ) : (
+            <Spinner
+              thickness="3px"
+              speed="0.65s"
+              emptyColor="gray.200"
+              color="blue.500"
+              size="xl"
+            />
+          )}
         </div>
       )}
 
@@ -223,8 +272,24 @@ function Results() {
             searchCategoryresults.map((item) => <li key={item.id}>{item.title}</li>)}
         </ul> : 'Loading...'} */}
 
-          <p>category result: </p>
-          {!loading ? <Posts posts={searchCategoryresults} /> : "Loading..."}
+          {/* <p>category result: </p> */}
+          <small>
+            <i>
+              {searchCategoryresults ? searchCategoryresults.length : 0} posts
+              found containing the category '{state.activeCategory}'
+            </i>
+          </small>
+          {!loading ? (
+            <Posts posts={searchCategoryresults} />
+          ) : (
+            <Spinner
+              thickness="3px"
+              speed="0.65s"
+              emptyColor="gray.200"
+              color="blue.500"
+              size="xl"
+            />
+          )}
           {/* { !loading ? <Posts posts={test}/> : 'Loading...'} */}
         </div>
       )}
