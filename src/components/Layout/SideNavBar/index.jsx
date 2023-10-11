@@ -3,9 +3,11 @@ import "./style/navbar.scss"
 import "./style/phone.scss"
 import "./style/profile.scss"
 import { FaHome, FaUser, FaSearch, FaSign } from 'react-icons/fa';
+import { BsFillChatDotsFill  } from 'react-icons/bs';
 import { IoMdAddCircle } from 'react-icons/io';
-import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from '@chakra-ui/react';
+import { Box, Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, useDisclosure } from '@chakra-ui/react';
 import cookies from 'react-cookies'
+
 
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
@@ -75,8 +77,17 @@ function SideNavBar(props) {
 
 
 
+import { NavLink } from 'react-router-dom';
+import NavMenuList from './MenuList.jsx';
+import DrawerPhone from './DrawerPhone';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { logOut } from '../../../store/reducers/auth/user.reducer';
+import { Link } from 'react-router-dom';
+import { BsChatDotsFill } from 'react-icons/bs';
 
-
+    };
+    const notificationState = useSelector((state) => state.ChatList.AllNotification);
 
     console.log("Srtate ", userData.username)
     return (
@@ -130,6 +141,20 @@ function SideNavBar(props) {
                         </span>
 
                     </NavLink>
+                    
+                    <NavLink to='/chat' className='link-card hover-nav'>
+                        <Box position={'relative'} >
+
+                            <Box position={'absolute'} display={notificationState ? 'inline-flex' : 'none'} pb={'5px'} bg={'red'} w={'20px'} h={'20px'} borderRadius={'50%'} justifyContent={'center'} alignItems={'center'} top={'-10px'} right={'-10px'}>
+                                    <Text m={0}>{notificationState}</Text>
+                            </Box>
+                            <BsFillChatDotsFill />
+                        </Box>
+                        <span className='links-title'>
+                            Chat
+                        </span>
+
+                    </NavLink>
 
                     <div className='link-card nav-menu-list'>
                         <NavMenuList className='mid-nav-menu' />
@@ -159,9 +184,9 @@ function SideNavBar(props) {
 
 
                     {/*Add the Link Here !!  */}
+                    
 
-
-
+                    
 
 
                     {/*This contains user data and a link to the profile */}

@@ -33,6 +33,7 @@ import { profileEdit } from '../../../../store/reducers/profile/profile.reducer'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import photography from '../../../assets/camera-photography.jpg'
+import { homeSocket } from '../../../../App';
 
 function Profile() {
     const navigate = useNavigate()
@@ -62,6 +63,8 @@ function Profile() {
             navigate('/signin')
         }
     }, [])
+
+    
     return (
         <Container maxW='2xl'>
             <Stack
@@ -74,7 +77,7 @@ function Profile() {
                     align={'center'}
                     alignSelf={'center'}
                     position={'relative'}>
-                    <Image src={photography} objectFit='cover' maxW={{ base: '700px', md: '715px', lg: '1200px', xl: '1260px' }} width={{ base: '700px', md: '715px', lg: '950px', xl: '1035px' }} height='300px' />
+                    <Image src={photography} objectFit='cover' maxW={{ base: '700px', md: '715px', lg: '1200px', xl: '1200px' }} width={{ base: '700px', md: '715px', lg: '950px', xl: '1200px' }} height='300px' />
                     <Avatar position='absolute' top={{ base: '88%', sm: '90%', md: '93%', lg: '90%' }} size={{ base: 'md', sm: 'lg', md: 'xl' }} name={data.username} />
                 </Stack>
                 <Stack>
