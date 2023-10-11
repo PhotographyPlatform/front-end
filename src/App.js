@@ -26,6 +26,7 @@ import { layout } from '@chakra-ui/react';
 import {
   ThemeProvider,
 } from '@chakra-ui/react'
+import UsersProfile from './components/Pages/@auth/profileDashboard/UsersProfile';
 
 import SidebarWithHeader from './components/ChakraLayout';
 import { dispatchAllNotification, fetchUserListRedux, getNotification } from './store/reducers/chat/chatList.reducer';
@@ -38,7 +39,6 @@ const homeHost = "http://localhost:3002/home";
 export const socket = io.connect(host, { transports: ["websocket"] });
 export const homeSocket = io.connect(homeHost, { transports: ["websocket"] });
 
-import UsersProfile from './components/Pages/@auth/profileDashboard/UsersProfile';
 
 function App() {
   const isAuth = Cookies.load('user_session');
