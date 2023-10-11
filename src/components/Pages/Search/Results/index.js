@@ -10,7 +10,7 @@ import Posts from "../../../components/posts";
 import Users from "./Users";
 import Cookies from "react-cookies";
 import { useNavigate } from "react-router-dom";
-import { CircularProgress, Spinner } from "@chakra-ui/react";
+import { Box, CircularProgress, Spinner } from "@chakra-ui/react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 
 function Results() {
@@ -23,6 +23,15 @@ function Results() {
   const [loading, setLoading] = useState(false);
 
   console.log(searchresults);
+
+  // handle the user profile 
+  const profileHandler = (id) => {
+    Cookies.remove('id')
+    Cookies.save('id', id)
+    if (id) {
+      navigate('/userProfile')
+    }
+  }
 
   useEffect(() => {
     const obj = {
@@ -213,12 +222,12 @@ function Results() {
             <Spinner thickness='3px' speed='0.65s' emptyColor='gray.200' color='blue.500' size='xl' />
           )} */}
 
-          <div className="all-users-flex">
+          <div className="all-users-flex" >
             {!loading ? (
               searchresults.users &&
               searchresults.users.map((item) => (
-                // <Text onClick={()=>clickHandler(item.id)}>{item.username}</Text>
                 <Users
+                  handler={profileHandler}
                   id={item.id}
                   key={item.id}
                   username={item.username}
