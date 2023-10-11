@@ -10,7 +10,7 @@ function ViewPostParentDetails() {
     return (
         <div className='viewpost-parent-details'>
             <div className='viewpost-img'>
-                <img src="https://images.pexels.com/photos/18047274/pexels-photo-18047274/free-photo-of-cyclist-passing-by-parked-motorcycles.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" />
+                <img src="https://images.pexels.com/photos/2760519/pexels-photo-2760519.jpeg?auto=compress&cs=tinysrgb&w=600" alt="" />
             </div>
             <div className='viewpost-details'>
                 <section className='viewpost-section-details'>
