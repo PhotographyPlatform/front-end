@@ -3,7 +3,7 @@ import './viewPostCategories.scss'
 
 function ViewPostCategories(props) {
     return (
-        <ul className='category-container'>
+        <ul className='category-container-viewpost'>
             {/* onClick={() => dispatch(setActiveCategory(category.name)) */}
 
             <li className='category-card'>nature</li>

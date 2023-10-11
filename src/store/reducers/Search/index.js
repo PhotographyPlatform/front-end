@@ -6,6 +6,8 @@ const categorySlice = createSlice({
     initialState: {
         categories: [],
         loading: false,
+        searchWord : '',
+        activeCategory:''
     },
     reducers: {
         setCategories: (state, action) => {
@@ -14,11 +16,17 @@ const categorySlice = createSlice({
         setLoading: (state, action) => {
             state.loading = action.payload;
         },
-    },
+        setSearchWord: (state, action) => {
+            state.searchWord = action.payload;
+        },
+        setActiveCategory: (state, action) => {
+            state.activeCategory = action.payload;
+        }
+    }
 });
 
 
-export const { setCategories, setLoading } = categorySlice.actions;
+export const { setCategories, setLoading, setSearchWord, setActiveCategory } = categorySlice.actions;
 
 export const fetchCategories = () => async (dispatch) => {
     try {

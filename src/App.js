@@ -87,9 +87,9 @@ function App() {
           <SidebarWithHeader>
             <Routes>
               <Route path='/vv' element={<ViewPost />} />
-              <Route path='/searchs' element={<Search />} />
               <Route path="/" element={<AuthHome />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path='/searchs' element={<Search />} />
               <Route path='/messages/:id' element={<MessagePage render={render} setRender = {setRender} />} />
               <Route path='/chat' element={<Chat />} />
             </Routes>

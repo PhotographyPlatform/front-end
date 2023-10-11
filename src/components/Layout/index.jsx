@@ -11,9 +11,9 @@ function Layout({ children }) {
             </div>
 
             <div className='children-layout'>
-                <div className='children-scrollable'>
+                {/* <div className='children-scrollable'> */}
                     {children}
-                </div>
+                {/* </div> */}
             </div>
             
 

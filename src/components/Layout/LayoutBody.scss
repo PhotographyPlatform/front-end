@@ -1,6 +1,8 @@
 .custome-layout {
     .children-layout {
-        margin-left: 350px;
+        padding-left: 40px;
+        width: 88%;
+        // margin-left: 350px;
 
         .children-scrollable {
             padding-top: 20px;
@@ -69,7 +71,7 @@
         margin-left: 200px !important;
 
         .children-scrollable {
-            padding-top: 10px;
+            // padding-top: 10px;
         }
     }
 }
