@@ -28,11 +28,6 @@ import {
 } from '@chakra-ui/react'
 
 import SidebarWithHeader from './components/ChakraLayout';
-
-
-
-
-import axios from 'axios';
 import { dispatchAllNotification, fetchUserListRedux, getNotification } from './store/reducers/chat/chatList.reducer';
 
 // socket assets 
@@ -43,8 +38,7 @@ const homeHost = "http://localhost:3002/home";
 export const socket = io.connect(host, { transports: ["websocket"] });
 export const homeSocket = io.connect(homeHost, { transports: ["websocket"] });
 
-
-
+import UsersProfile from './components/Pages/@auth/profileDashboard/UsersProfile';
 
 function App() {
   const isAuth = Cookies.load('user_session');
@@ -81,8 +75,6 @@ function App() {
   }, [Logged]);
 
 
-
-
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
@@ -95,6 +87,7 @@ function App() {
               <Route path='/searchs' element={<Search />} />
               <Route path='/messages/:id' element={<MessagePage render={render} setRender={setRender} />} />
               <Route path='/chat' element={<Chat />} />
+              <Route path="/userProfile" element={<UsersProfile />} />
             </Routes>
           </SidebarWithHeader>
         ) :
