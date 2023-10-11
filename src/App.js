@@ -16,6 +16,7 @@ import Search from './components/Pages/Search';
 import {
   ThemeProvider,
 } from '@chakra-ui/react'
+import UsersProfile from './components/Pages/@auth/profileDashboard/UsersProfile';
 function App() {
   const isAuth = Cookies.load('user_session');
   const decodeAuth = decodeToken(isAuth);
@@ -33,6 +34,7 @@ function App() {
             <Routes>
               <Route path="/" element={<AuthHome />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/userProfile" element={<UsersProfile />} />
             </Routes>
           </Layout>
         ) :
