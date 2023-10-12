@@ -12,6 +12,10 @@ import { useNavigate } from "react-router-dom";
 import { Spinner } from "@chakra-ui/react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import "./Results.scss";
+import { Box, CircularProgress, Spinner } from "@chakra-ui/react";
+import { ArrowBackIcon } from "@chakra-ui/icons";
+import { decodeToken } from "react-jwt";
+
 
 function Results() {
   const navigate = useNavigate();
@@ -22,6 +26,19 @@ function Results() {
   const [searchCategoryresults, setSearchCategoryresults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [isdragging, setIsdragging] = useState(false);
+
+  // handle the user profile 
+  const profileHandler = (id) => {
+    Cookies.remove('id')
+    Cookies.save('id', id)
+    const token = Cookies.load('user_session')
+    const parsed = decodeToken(token)
+    if (id === parsed.userId) {
+      navigate('/profile')
+    } else {
+      navigate('/userProfile')
+    }
+  }
 
   useEffect(() => {
     const obj = {
@@ -128,12 +145,12 @@ function Results() {
             </i>
           </small>
 
-          <div className="all-users-flex">
+          <div className="all-users-flex" >
             {!loading ? (
               searchresults.users &&
               searchresults.users.map((item) => (
-                // <Text onClick={()=>clickHandler(item.id)}>{item.username}</Text>
                 <Users
+                  handler={profileHandler}
                   id={item.id}
                   key={item.id}
                   username={item.username}

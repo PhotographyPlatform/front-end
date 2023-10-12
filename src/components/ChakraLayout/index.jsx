@@ -39,6 +39,7 @@ import AuthHome from '../Pages/@auth/Home/index'
 import NotFound from '../Pages/NotFound';
 import NewPost from '../components/NewPost';
 import { IoMdAddCircle } from 'react-icons/io';
+import UsersProfile from '../Pages/@auth/profileDashboard/UsersProfile';
 
 
 
@@ -83,7 +84,7 @@ function SidebarContent({ onClose, ...rest }) {
             {...rest}
         >
             <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-               
+
                 <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
                     Logo
                 </Text>
@@ -146,6 +147,7 @@ function SidebarWithHeader() {
                     <Route path="/search" element={<Search />} />
                     <Route path="/" element={<AuthHome />} />
                     <Route path="/profile" element={<Profile />} />
+                    <Route path="/userProfile" element={<UsersProfile />} />
                     {/* <Route path="/addpost" element={<Profile />} /> */}
                     <Route path="*" element={<NotFound />} />
                 </Routes>
