@@ -17,27 +17,17 @@ import ViewPostHeader from './ViewPostHeader';
 import ViewPostParentDetails from './ViewPostParentDetails '; 
 
 import './viewPost.scss'
+import { useSelector, useDispatch } from 'react-redux';
+
 
 function ViewPost(props) {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [size, setSize] = React.useState('md');
 
-    const handleSizeClick = (newSize) => {
-        setSize(newSize);
-        onOpen();
-    }
-
-    const sizes = ['xs', 'sm', 'md', 'lg', 'xl', 'full'];
-
+  
     return (
         <>
-            {sizes.map((size) => (
-                <Button
-                    onClick={() => handleSizeClick('4xl')}
-                    key={size}
-                    m={4}
-                >{`Open ${size} Modal`}</Button>
-            ))}
+      
 
 
             <Modal onClose={onClose} isOpen={isOpen}  >
