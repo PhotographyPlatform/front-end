@@ -12,6 +12,7 @@ import Cookies from "react-cookies";
 import { useNavigate } from "react-router-dom";
 import { Box, CircularProgress, Spinner } from "@chakra-ui/react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
+import { decodeToken } from "react-jwt";
 
 function Results() {
   const navigate = useNavigate();
@@ -28,7 +29,11 @@ function Results() {
   const profileHandler = (id) => {
     Cookies.remove('id')
     Cookies.save('id', id)
-    if (id) {
+    const token = Cookies.load('user_session')
+    const parsed = decodeToken(token)
+    if (id === parsed.userId) {
+      navigate('/profile')
+    } else {
       navigate('/userProfile')
     }
   }
