@@ -14,7 +14,8 @@ import { Button } from '@chakra-ui/react';
 
 // Import your custom components
 import ViewPostHeader from './ViewPostHeader';
-import ViewPostParentDetails from './ViewPostParentDetails ';
+import ViewPostParentDetails from './ViewPostParentDetails '; 
+
 import './viewPost.scss'
 
 function ViewPost(props) {

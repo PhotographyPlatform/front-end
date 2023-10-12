@@ -5,6 +5,7 @@ import { BiBookmarkHeart } from 'react-icons/bi';
 import CommentSection from './CommentSection';
 import { GrMoreVertical } from 'react-icons/gr';
 import ViewPostCategories from './ViewPostCategories';
+import PostOption from './PostOption';
 import './detailsPost.scss'
 function ViewPostParentDetails() {
     return (
@@ -18,7 +19,7 @@ function ViewPostParentDetails() {
                     <div className='viewpost-title'>
                         <h3>Gorgeous Image</h3>
                         <div className='viewpost-icon-details'>
-                            <GrMoreVertical size={30} />
+                            <PostOption  />
                         </div>
                     </div>
                     <p className='viewpost-description'>
