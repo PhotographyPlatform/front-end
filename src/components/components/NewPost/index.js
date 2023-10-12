@@ -8,12 +8,11 @@ import {
   ModalBody,
   ModalCloseButton,
   Button,
-  Input,
-  Textarea,
+  useToast 
 } from "@chakra-ui/react";
-import "./NewPost.scss";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import "./NewPost.scss";
 
 function NewPost({onCloseNewPost, isOpenNewPost}) {
   
@@ -25,6 +24,12 @@ function NewPost({onCloseNewPost, isOpenNewPost}) {
   const [tags, setTags] = useState([]);
   const [tagInput, setTagInput] = useState("");
   const [suggestedTags, setSuggestedTags] = useState([]);
+  const [isUploadImageInputEmpty, setisUploadImageInputEmpty] = useState(false);
+  const [isTitleInputEmpty, setisTitleInputEmpty] = useState(false);
+  const [isDecEmpty, setisDecEmpty] = useState(false);
+  const [isTagInputEmpty, setIsTagInputEmpty] = useState(false);
+  
+  const toast = useToast();
   const fileInputRef = useRef(null);
 
   const allowedTags = useSelector((state) => state.search.categories.map(item => item.name));
@@ -38,18 +43,26 @@ function NewPost({onCloseNewPost, isOpenNewPost}) {
     } else {
       fileNameSpan.textContent = "";
     }
+    setisUploadImageInputEmpty(false);
   };
 
   const onChangeTitle = (e) => {
     setTitleCounter(e.target.value.length);
+    setisTitleInputEmpty(false);
   };
 
   const onChangeDes = (e) => {
     setDesCounter(e.target.value.length);
+    setisDecEmpty(false);
   };
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
+
+    if(e.target.elements.title.value === '') setisTitleInputEmpty(true);
+    if(e.target.elements.descript.value === '') setisDecEmpty(true);
+    if(tags.length === 0) setIsTagInputEmpty(true);
+    e.target.elements.fileInput.value ? setisUploadImageInputEmpty(false) : setisUploadImageInputEmpty(true);
 
     const newPost = {
       imgurl: e.target.elements.fileInput.value,
@@ -65,10 +78,22 @@ function NewPost({onCloseNewPost, isOpenNewPost}) {
         "http://localhost:3002/v1/newPostCOll",
         newPost
       );
-      console.log(response);
+      if(response.status === 201){
+        onCloseNewPost();
+        toast({
+          position:'top-left',
+          title: 'Post created',
+          description: "your post has been created succefully",
+          status: 'success',
+          duration: 9000,
+          isClosable: true,
+        });
+        setTags([]);
+      }
     } catch (error) {
       console.error("error when adding a new post: ", error);
     }
+
   }
   };
 
@@ -93,6 +118,7 @@ function NewPost({onCloseNewPost, isOpenNewPost}) {
       tag.toLowerCase().includes(e.target.value.toLowerCase())
     );
     setSuggestedTags(matchingTags);
+    setIsTagInputEmpty(false)
   };
 
   const handleSuggestionClick = (suggestion) => {
@@ -101,9 +127,12 @@ function NewPost({onCloseNewPost, isOpenNewPost}) {
     setSuggestedTags([]);
   };
 
+  const validateTagInput = isTagInputEmpty ? 'empty-tag-input' : 'tags-container';
+  const validateTitleInput = isTitleInputEmpty ?  'empty-title-input' : 'title-input';
+  const validateDecInput = isDecEmpty ?  'empty-title-input' : 'title-input';
+
   return (
     <>
-      {/* <Button onClick={onOpen}>Add post</Button> */}
 
       <Modal isOpen={isOpenNewPost} onClose={onCloseNewPost} size="xl">
         <ModalOverlay />
@@ -122,14 +151,16 @@ function NewPost({onCloseNewPost, isOpenNewPost}) {
                     ref={fileInputRef}
                     onChange={handleFileInputChange}
                   />
-                  <div>
+                  <div className="ulpoad-dec">
+                    <p>Upload your image here</p>
                     <label
                       htmlFor="fileInput"
                       className="upload-image-container_ulpoader"
                     >
-                      Choose File
+                      Ulpoad image
                     </label>
                   </div>
+                  {isUploadImageInputEmpty && <span className="empty-img-input">!! you must upload an image !!</span>}
                   <span id="fileName"></span>
                 </div>
 
@@ -140,9 +171,11 @@ function NewPost({onCloseNewPost, isOpenNewPost}) {
                       {titleCounter}/{TitleLimit}
                     </small>
                   </div>
-                  <Input
+                  <input
+                    type="text"
                     name="title"
-                    className="modal-input"
+                    placeholder="write the title here...."
+                    className={validateTitleInput}
                     onChange={onChangeTitle}
                     maxLength={TitleLimit}
                   />
@@ -150,23 +183,22 @@ function NewPost({onCloseNewPost, isOpenNewPost}) {
 
                 <div className="modal-item">
                   <div className="counter-flex">
-                    <label>Descript</label>
+                    <label>Description</label>
                     <small>
                       {desCounter}/{desLimit}
                     </small>
                   </div>
-                  <Textarea
-                    name="descript"
-                    className="modal-input"
+                  <textarea name="descript"
+                    className={validateDecInput}
                     maxLength={desLimit}
-                    onChange={onChangeDes}
-                  />
+                    placeholder="write the description here...."
+                    onChange={onChangeDes}></textarea>
                 </div>
 
                 <div className="modal-item">
                   <label>Tags</label>
                   <div className="tags">
-                    <div className="tags-container">
+                    <div className={validateTagInput}>
                       {tags.map((item, index) => (
                         <div className="tags-item" key={index}>
                           <span className="text">{item}</span>
@@ -181,7 +213,7 @@ function NewPost({onCloseNewPost, isOpenNewPost}) {
                       <input
                         className="tag-input"
                         type="search"
-                        placeholder="write tag.."
+                        placeholder="Ex: nature, country, food..."
                         onKeyDown={addTagHandler}
                         onChange={suggestTag}
                         value={tagInput}
