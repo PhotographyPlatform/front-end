@@ -1,10 +1,119 @@
+:root {
+    --scrollbar-track-color: #f1f1f1;
+    --scrollbar-thumb-color: #888;
+    --scrollbar-thumb-hover-color: #555;
+    --owner-text-shadow-color: rgba(112, 112, 114, 0.5);
+    --svg-color: #888;
+}
+
+
+
+
 .viewpost-comment-list {
-    margin-top: 20px;
+    box-sizing: border-box;
+    // margin-top: 5px;
     overflow-y: scroll;
     width: 100% !important;
-    height: 100% !important;
+    height: 42vh !important;
+    max-height: 100% !important;
     list-style: none;
-    li{
+
+    li {
         margin-top: 20px;
     }
+
+    &::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: var(--scrollbar-track-color);
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: var(--scrollbar-thumb-color);
+        border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background: var(--scrollbar-thumb-hover-color);
+    }
+
+    .comments-card {
+        display: flex;
+        flex-direction: column;
+        margin-top: 20px;
+        // border-bottom: 1px rgba(0, 0, 0, 0.1) solid;
+
+        // box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.1);
+
+        .owner {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            margin-left: -30px;
+            font-weight: 600;
+            padding-top: 5px;
+            text-shadow: 0px 1px 0px var(--owner-text-shadow-color);
+
+            SVG {
+                color: var(--svg-color);
+                margin: 5px;
+            }
+
+            .details {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+            }
+
+            img {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                margin-right: 10px;
+            }
+        }
+
+        .comment-content {
+            font-family: sans-serif;
+            font-size: 14px;
+            margin-top: -12px;
+            padding-left: 4px;
+            padding-right: 4px;
+            margin-left: 40px;
+            font-weight: 400;
+        }
+    }
+}
+
+.comment-input {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+    border-radius: 40px;
+
+    input {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #888;
+        border-radius: 40px;
+    }
+
+    button {
+        background-color: #888;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        padding: 10px;
+        margin-left: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        border-radius: 40px;
+
+        &:hover {
+            background-color: #555;
+        }
+    }
+
 }

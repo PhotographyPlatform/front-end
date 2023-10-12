@@ -25,17 +25,18 @@
         margin-left: auto;
     }
 
-    svg {
+    .svg {
         margin-right: 10px;
         cursor: pointer;
         transition: color 0.3s;
     }
 
-    svg:hover {
-        color: white;
+    .svg:hover {
+        color: rgb(159, 159, 159);
+        ;
     }
 
-    svg {
+    .svg {
         margin-left: 10px;
     }
 
