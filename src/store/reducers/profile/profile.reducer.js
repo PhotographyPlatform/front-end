@@ -1,8 +1,6 @@
 import axios from "axios";
 import cookies from 'react-cookies'
 import CryptoJS from 'crypto-js';
-import { createSlice } from "@reduxjs/toolkit";
-import { useState } from "react";
 
 // Initial state
 const PROFILE_STATE = {
@@ -16,6 +14,7 @@ export default (state = PROFILE_STATE, action) => {
         case 'EDIT_PROFILE':
             return { ...state, profile: payload };
         case 'UPDATE_PROFILE':
+            console.log(payload);
             cookies.remove('user')
             const dataToEncrypt = JSON.stringify(payload)
             const secretKey = 'pixel'
@@ -30,6 +29,11 @@ export default (state = PROFILE_STATE, action) => {
             return { ...state, userProfile: payload };
         case 'ADD_FOLLOW':
             return { ...state, refresh: payload };
+        case 'UPLOAD':
+            return { ...state, images: payload };
+        case 'GET_IMAGES':
+            return { ...state, allImages: payload };
+
         default:
             return state;
     }
@@ -180,12 +184,61 @@ export const removeFollower = (id) => async dispatch => {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
-            data: { followers_id: id }, // Send data in the request body
+            data: { followers_id: id },
         });
         dispatch(follow(response.data));
     } catch (error) {
         dispatch(profile(error.response.status));
         console.error('Error add follower:', error);
+    }
+};
+
+
+export const uploadImage = (image) => async dispatch => {
+    const token = cookies.load('user_session');
+    const formData = new FormData();
+    formData.append('image', image)
+    await axios.post('http://localhost:3002/profileImage', formData, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        }
+    })
+        .then(res => {
+            dispatch(upload(res))
+        })
+}
+
+
+export const uploadHero = (image) => async dispatch => {
+    const token = cookies.load('user_session');
+    const formData = new FormData();
+    formData.append('image', image)
+    await axios.post('http://localhost:3002/heroImage', formData, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        }
+    })
+        .then(res => {
+            dispatch(upload(res))
+        })
+}
+
+
+export const getImages = () => async dispatch => {
+    try {
+        const token = cookies.load('user_session');
+        const response = await axios.get('http://localhost:3002/v2/profile', {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        const obj = {
+            heroImage: response.data.heroImage,
+            profileImg: response.data.profileImg,
+        }
+        dispatch(getImage(obj));
+    } catch (error) {
+        console.error('Error fetching images:', error);
     }
 };
 
@@ -219,4 +272,15 @@ export const follow = (user) => ({
     type: 'ADD_FOLLOW',
     payload: user
 });
+
+export const upload = (user) => ({
+    type: 'UPLOAD',
+    payload: user
+});
+
+export const getImage = (image) => ({
+    type: 'GET_IMAGES',
+    payload: image
+});
+
 

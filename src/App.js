@@ -31,6 +31,7 @@ import UsersProfile from './components/Pages/@auth/profileDashboard/UsersProfile
 import SidebarWithHeader from './components/ChakraLayout';
 import { dispatchAllNotification, fetchUserListRedux, getNotification } from './store/reducers/chat/chatList.reducer';
 
+
 // socket assets 
 
 const host = "http://localhost:3002";
@@ -74,6 +75,7 @@ function App() {
 
   }, [Logged]);
 
+  
 
   return (
     <div className="App">
@@ -88,6 +90,7 @@ function App() {
               <Route path='/messages/:id' element={<MessagePage render={render} setRender={setRender} />} />
               <Route path='/chat' element={<Chat />} />
               <Route path="/userProfile" element={<UsersProfile />} />
+              
             </Routes>
           </SidebarWithHeader>
         ) :

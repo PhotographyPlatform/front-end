@@ -7,7 +7,7 @@ const refresh = createSlice({
   },
   reducers: {
     setTrue: (state) => {
-      state.number += 1; // Correctly update the "number" property
+      state.number += 1;
     }
   }
 });
