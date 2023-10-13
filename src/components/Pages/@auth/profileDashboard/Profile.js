@@ -42,7 +42,7 @@ import {
 } from '@chakra-ui/react';
 import { BsFillPencilFill } from 'react-icons/bs'
 import { logOut, uderData } from '../../../../store/reducers/auth/user.reducer'
-import { profileEdit, update, getFollowing, getFollowers } from '../../../../store/reducers/profile/profile.reducer'
+import { profileEdit, update, getFollowing, getFollowers, uploadImage, uploadHero, getImages } from '../../../../store/reducers/profile/profile.reducer'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import photography from '../../../assets/camera-photography.jpg'
@@ -50,24 +50,28 @@ import { homeSocket } from '../../../../App';
 import FollowersModal from './FollowersModal'
 import './style.scss'
 import axios from 'axios';
+import { setTrue } from '../../../../store/reducers/profile/refresh';
+
 function Profile() {
+    const [profileImage, setprofileImage] = useState(null);
+    const [heroImage, setheroImage] = useState(null);
     const [showFollowersModal, setShowFollowersModal] = useState(false);
     const [showFollowingModal, setShowFollowingModal] = useState(false);
     const [updateObj, setObj] = useState({})
     const [images, setImage] = useState([])
     const navigate = useNavigate()
     const state = useSelector(state => state.user)
+    const image = useSelector(state => state.profile)
     const profileState = useSelector(state => state.profile)
-    // console.log(profileState.profile);
     const dispatch = useDispatch()
     const userData = cookies.load('user')
     const data = state.user
     const { isOpen, onOpen, onClose } = useDisclosure()
     const refreshState = useSelector(state => state.refresh)
+    console.log(refreshState);
     const handleClick = () => {
         onOpen()
     }
-
 
     const handleFollowersClick = () => {
         setShowFollowersModal(!showFollowersModal);
@@ -86,6 +90,16 @@ function Profile() {
             birthday: e.target.bday ? e.target.bday.value : null,
             username: e.target.username.value !== data.username ? e.target.username.value : null,
         };
+
+        if (profileImage !== null) {
+            dispatch(uploadImage(profileImage))
+            dispatch(setTrue())
+        }
+        if (heroImage !== null) {
+            dispatch(uploadHero(heroImage))
+            dispatch(setTrue())
+        }
+
         setObj(obj)
         dispatch(profileEdit(obj))
         onClose()
@@ -107,6 +121,7 @@ function Profile() {
             dispatch(uderData(userData))
             dispatch(getFollowers())
             dispatch(getFollowing())
+            dispatch(getImages())
         } else {
             dispatch(logOut());
             navigate('/signin')
@@ -119,7 +134,6 @@ function Profile() {
         })
     }, [])
 
-    
     return (
         <>
             <Container maxW='2xl' >
@@ -133,19 +147,25 @@ function Profile() {
                         align={'center'}
                         alignSelf={'center'}
                         position={'relative'}>
-                        <Image
-                            src={photography}
-                            objectFit="cover"
-                            maxW={['100%', '100%', '100%', '1200px', '1260px']}
-                            width={['368px', '600px', '710px', '920px', '1000px']}
-                            height="300px"
-                        />
-                        <Avatar
-                            position="absolute"
-                            top={['88%', '90%', '93%', '90%']}
-                            size={['lg', 'lg', 'xl']}
-                            name={data.username}
-                        />
+                        {
+                            image.allImages &&
+                            <Image
+                                src={image.allImages.heroImage}
+                                objectFit="cover"
+                                maxW={['100%', '100%', '100%', '1200px', '1260px']}
+                                width={['368px', '600px', '710px', '740px', '1000px']}
+                                height="300px"
+                            />
+                        }
+                        {
+                            image.allImages &&
+                            <Avatar
+                                position="absolute"
+                                top={['88%', '90%', '93%', '90%']}
+                                size={['lg', 'lg', 'xl']}
+                                src={image.allImages.profileImg}
+                            />
+                        }
                         <Button
                             position="absolute"
                             left={['85%', '90%', '93%', '96%']}
@@ -199,43 +219,75 @@ function Profile() {
                                         alignSelf={'center'}
                                         position={'relative'}>
                                         <Button
+                                            as="label"
+                                            htmlFor="hero-file-input"
                                             position="absolute"
-                                            left={['79%', '87%', '91%', '91%']}
-                                            top={['3%', '2%', '2%', '3%']}
                                             bg='Background'
-                                            onClick={handleClick}
-                                            rounded='30px'
                                             color='white'
+                                            left={['56%', '55%', '54%', '93%']}
+                                            top={['99%', '100%', '100%', '1%']}
+                                            rounded='30px'
+                                            width='40px'
                                             className='btn'
+                                            cursor='pointer'
+                                            _hover={{ bg: 'hoverColor' }}
                                         >
-                                            <BsFillPencilFill />
                                         </Button>
-                                        <Image
-                                            src={photography}
-                                            objectFit="cover"
-                                            maxW={['420px', '768px', '992px', '1200px', '1260px']}
-                                            width={['100%', '490px', '620px', '600px', '630px']}
-                                            height="220px"
+
+                                        <Input
+                                            type="file"
+                                            id="hero-file-input"
+                                            display="none"
+                                            onChange={(event) => {
+                                                setheroImage(event.target.files[0]);
+                                            }}
                                         />
-                                        <Avatar
-                                            position='absolute'
-                                            top={['76%', '82%', '93%', '70%']}
-                                            size={['xl', 'xl', 'xl']}
-                                            name={data.username}
-                                        />
+                                        {
+                                            image.allImages &&
+                                            <Image
+                                                src={heroImage && URL.createObjectURL(heroImage) || image.allImages.heroImage}
+                                                objectFit="cover"
+                                                maxW={['420px', '768px', '992px', '1200px', '1260px']}
+                                                width={['100%', '490px', '620px', '600px', '630px']}
+                                                height="220px"
+                                            />
+                                        }
+                                        {
+                                            image.allImages &&
+                                            <Avatar
+                                                position='absolute'
+                                                top={['76%', '82%', '93%', '70%']}
+                                                size={['xl', 'xl', 'xl']}
+
+                                                src={profileImage && URL.createObjectURL(profileImage) || image.allImages.profileImg}
+                                            />
+                                        }
                                         <Button
+                                            as="label"
+                                            htmlFor="file-input"
                                             position="absolute"
                                             left={['56%', '55%', '54%', '54%']}
                                             top={['99%', '100%', '100%', '92%']}
                                             bg='Background'
-                                            onClick={handleClick}
                                             rounded='30px'
                                             color='white'
                                             width='40px'
                                             className='btn'
+                                            cursor='pointer' // Add cursor style to indicate it's clickable
+                                            _hover={{ bg: 'hoverColor' }} // Add hover effect
+
                                         >
-                                            <BsFillPencilFill />
                                         </Button>
+
+                                        <Input
+                                            type="file"
+                                            id="file-input"
+                                            display="none" // Hide the actual file input
+                                            onChange={(event) => {
+                                                setprofileImage(event.target.files[0]);
+                                            }}
+                                        />
+                                        <BsFillPencilFill />
                                     </Stack>
                                     <Stack>
                                         <HStack marginTop='20px'>

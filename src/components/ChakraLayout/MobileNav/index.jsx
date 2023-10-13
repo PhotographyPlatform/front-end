@@ -32,18 +32,34 @@ import {
     FiChevronDown,
 } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
-import { uderData } from '../../../store/reducers/auth/user.reducer'
+import { logOut, uderData } from '../../../store/reducers/auth/user.reducer'
 import Cookies from 'react-cookies';
+import { useNavigate } from 'react-router';
+import { getImages } from '../../../store/reducers/profile/profile.reducer';
 
 
 
 function MobileNav({ onOpen, ...rest }) {
+    const navigate = useNavigate()
     const dispatch = useDispatch()
     const data = useSelector(state => state.user.user)
+    const image = useSelector(state => state.profile)
+
     useEffect(() => {
         const userData = Cookies.load('user')
+        dispatch(getImages())
         dispatch(uderData(userData))
     }, [])
+
+    const handleLogout = () => {
+        dispatch(logOut());
+        navigate('/signin');
+
+    };
+    const handleProfile = () => {
+        navigate('/profile');
+
+    };
     return (
         <Flex
             ml={{ base: 0, md: 60 }}
@@ -82,11 +98,13 @@ function MobileNav({ onOpen, ...rest }) {
                             data &&
                             <MenuButton py={2} transition="all 0.3s" _focus={{ boxShadow: 'none' }}>
                                 <HStack>
-
-                                    <Avatar
-                                        size={'sm'}
-                                        name={data.username}
-                                    />
+                                    {
+                                        image.allImages &&
+                                        <Avatar
+                                            size={'sm'}
+                                            src={image.allImages.profileImg}
+                                        />
+                                    }
 
                                     <VStack
                                         display={{ base: 'none', md: 'flex' }}
@@ -110,11 +128,9 @@ function MobileNav({ onOpen, ...rest }) {
                             bg={useColorModeValue('white', 'gray.900')}
                             borderColor={useColorModeValue('gray.200', 'gray.700')}
                         >
-                            <MenuItem>Profile</MenuItem>
-                            <MenuItem>Settings</MenuItem>
-                            <MenuItem>Billing</MenuItem>
+                            <MenuItem onClick={handleProfile}>Profile</MenuItem>
                             <MenuDivider />
-                            <MenuItem>Sign out</MenuItem>
+                            <MenuItem onClick={handleLogout}>Sign out</MenuItem>
                         </MenuList>
                     </Menu>
                 </Flex>
