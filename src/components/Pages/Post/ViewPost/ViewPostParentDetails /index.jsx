@@ -6,7 +6,7 @@ import PostOption from './PostOption';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchPostData } from '../../../../../store/reducers/basicActions/post';
 import './detailsPost.scss'
-
+import { DecodeToken } from '../../../../../store/reducers/auth/user.reducer';
 
 
 function ViewPostParentDetails({ details, onClose }) {
@@ -14,9 +14,11 @@ function ViewPostParentDetails({ details, onClose }) {
 
     const { id, imgurl, userid, title, contant, challengeName, challengeID, category, createdAt, updatedAt, } = details;
     const dispatch = useDispatch();
+    // dispatch(DecodeToken());
+
     const numEffect = useSelector((state) => state.post.numEffect);
 
-    const decodedToken = useSelector((state) => state.user);
+    // const decodedToken = useSelector((state) => state.user);
 
 
 
@@ -28,8 +30,8 @@ function ViewPostParentDetails({ details, onClose }) {
             .catch((error) => { });
 
     }, [numEffect]);
-
-    const postData = useSelector((state) => state.post);
+    // 
+    // const postData = useSelector((state) => state.post);
 
 
 

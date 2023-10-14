@@ -4,22 +4,35 @@ import { ChevronDownIcon } from "@chakra-ui/icons";
 import { GrMoreVertical } from "react-icons/gr";
 import { useSelector, useDispatch } from 'react-redux';
 import { removeComment } from '../../../../../../../store/reducers/basicActions/post';
-
+import jwtDecode from "jwt-decode";
+import cookies from 'react-cookies';
 function CommentOption({ item }) {
     const [allow, setAllow] = useState(false);
 
     const commntsParent = item;
     const commentState = useSelector((state) => state.post.commentsList);
-    const userId = useSelector((state) => state.user.token.decoded.userId);
+    // const userId = useSelector((state) => state.user.token.userId);
+    const session_user = cookies.load('user_session');
+    let decoded = null;
+
+    if (session_user) {
+        decoded = jwtDecode(session_user);
+    }
+    // const userId = useSelector((state) => state.user?.token?.userId ?? 1);
+    const userId = decoded.userId;
+
 
     const dispatch = useDispatch()
-
+    console.log("MENEU LIST COMMENT", userId)
     useEffect(() => {
-        if (Array.isArray(commentState)) {
-            if (commntsParent.owner.Id === userId) {
-                setAllow(true);
+        if (userId) {
+            if (Array.isArray(commentState)) {
+                if (commntsParent.owner.Id === userId) {
+                    setAllow(true);
+                }
             }
         }
+
     }, [commentState, userId]);
 
     const handleRemoveComment = () => {

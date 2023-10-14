@@ -3,8 +3,8 @@
 import cookies from 'react-cookies';
 import CryptoJS from 'crypto-js';
 import { useDispatch } from 'react-redux'
-
 import jwtDecode from "jwt-decode";
+
 const session_user = cookies.load('user_session');
 let decoded = null;
 
@@ -14,8 +14,9 @@ if (session_user) {
 
 const USER_STATE = {
     user: [],
-    token: { decoded }
+    token: decoded
 }
+
 
 export default (state = USER_STATE, action) => {
     const { type, payload } = action
@@ -33,7 +34,7 @@ export default (state = USER_STATE, action) => {
         case 'DECODE_TOKEN':
             const Detoken = cookies.load('user_session');
             const decoded = jwtDecode(Detoken);
-            console.log(decoded);
+
             return { ...state, token: decoded };
         case 'LOG_OUT':
             cookies.remove('user_session')

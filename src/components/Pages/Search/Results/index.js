@@ -9,8 +9,6 @@ import Posts from "../../../components/posts";
 import Users from "./Users";
 import Cookies from "react-cookies";
 import { useNavigate } from "react-router-dom";
-import { Spinner } from "@chakra-ui/react";
-import { ArrowBackIcon } from "@chakra-ui/icons";
 import "./Results.scss";
 import { Box, CircularProgress, Spinner } from "@chakra-ui/react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
@@ -83,24 +81,24 @@ function Results() {
     dispatch(setActiveCategory(""));
   };
 
-  function handleMouseMove(e){
+  function handleMouseMove(e) {
     const tagsBox = document.querySelector(".nav-tags");
-    if(isdragging){ 
+    if (isdragging) {
       tagsBox.classList.add("dragging");
       tagsBox.scrollLeft -= e.movementX;
     }
   }
-  
-  function stopDragging(){
+
+  function stopDragging() {
     const tagsBox = document.querySelector(".nav-tags");
     setIsdragging(false);
-    tagsBox.classList.remove("dragging");    
+    tagsBox.classList.remove("dragging");
   }
 
-  function moveSliderOnClick(button){
+  function moveSliderOnClick(button) {
     const tagsBox = document.querySelector(".nav-tags");
-    tagsBox.scrollLeft += button==='left' ? -350 : 350;
-    
+    tagsBox.scrollLeft += button === 'left' ? -350 : 350;
+
   }
 
   return (
@@ -177,7 +175,7 @@ function Results() {
               for the search word '{state.searchWord}'
             </i>
           </small>
-        
+
           {!loading ? (
             searchresults.posts && <Posts posts={searchresults.posts} />
           ) : (
@@ -194,13 +192,13 @@ function Results() {
 
       {state.searchWord === "" && state.activeCategory !== "" && (
         <div>
-          
+
           <div className="tag-navigator">
-            <div className="tag-navigator-arrow"><h4 className="arrow" onClick={()=>moveSliderOnClick('left')}>&#60;</h4></div>
-            <ul className="nav-tags" onMouseMove={handleMouseMove} onMouseDown={()=>setIsdragging(true)} onMouseUp={stopDragging}>
-            {state.categories.map(item => <li className="nav-tag" onClick={()=>dispatch(setActiveCategory(item.name))}>{item.name}</li>)}
+            <div className="tag-navigator-arrow"><h4 className="arrow" onClick={() => moveSliderOnClick('left')}>&#60;</h4></div>
+            <ul className="nav-tags" onMouseMove={handleMouseMove} onMouseDown={() => setIsdragging(true)} onMouseUp={stopDragging}>
+              {state.categories.map(item => <li className="nav-tag" onClick={() => dispatch(setActiveCategory(item.name))}>{item.name}</li>)}
             </ul>
-            <div className="tag-navigator-arrow"><h4 className="arrow" onClick={()=>moveSliderOnClick('right')}>&#62;</h4></div>
+            <div className="tag-navigator-arrow"><h4 className="arrow" onClick={() => moveSliderOnClick('right')}>&#62;</h4></div>
           </div>
 
           <small>
@@ -221,7 +219,7 @@ function Results() {
               size="xl"
             />
           )}
-          
+
         </div>
       )}
     </div>
