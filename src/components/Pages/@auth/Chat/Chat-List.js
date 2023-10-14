@@ -26,6 +26,7 @@ export default function ChatList({ render , setShowfolowingList}) {
 
      useEffect(() => {
           dispatch(fetchUserListRedux(userId))
+          // dispatch(getNotification(cookieData))
           console.log('userNotification', state.userNotification);
      }, [render  , params])
 
