@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
     IconButton,
     Avatar,
@@ -37,8 +37,11 @@ import { useSelector } from 'react-redux';
 
 function NavItem({ name, icon, children, ...rest }) {
     
-const notificationState = useSelector((state) => state.ChatList.AllNotification);
+    const notificationState = useSelector((state) => state.ChatList.AllNotification);
 
+    // useEffect(() => {
+    //     console.log('dddddddddddddddddddd');
+    // }, [notificationState])
     
     return (
         <Box

@@ -53,7 +53,7 @@ export const fetchUserListRedux = (userId) => async (dispatch) => {
           let filter = ele.messages.filter(ele => ele.read === false)
           msgCount.push({ userInfo: ele.data.id, nonRead: filter.length })
      }
-     console.log(msgCount, 'count');
+     // console.log(msgCount, 'count');
      dispatch(dispatchUserList(result , msgCount))
 
 }
@@ -90,7 +90,7 @@ export const getNotification = (cookieData) =>  async (dispatch) => {
        let notificationCount = result.data.recievedData.filter(ele => {
          return ele.read === false
        })
-       // console.log('notificationCount', notificationCount.length);
+       console.log('notificationCount', notificationCount.length);
        dispatch(dispatchAllNotification(notificationCount.length))
        
      } catch (err) {

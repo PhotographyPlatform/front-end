@@ -60,8 +60,6 @@ const dispatchFavoritePost = (data) => {
 export const removeFavorite = (cookieData , id) => async dispatch =>{
      try {
           const res = await axios.delete(`${url}/favorites/${id}`, { headers: { Authorization: `Bearer ${cookieData}` } })
-          console.log(id);
-          console.log(res);
           dispatch(dispatchRemoveFavorite(id))
      } catch (err) {
           console.log(err);

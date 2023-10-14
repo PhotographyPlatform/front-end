@@ -56,10 +56,13 @@ export default function Messages({setRender}) {
                          return ele
                     }
                })
+               // despatch(fetchUserListRedux(userId))
+               despatch(getNotification(cookieData))
 
                let msg = [...res.data.sendData, ...res.data.resieveData]
                let sortedMSG = msg.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
                setMessageContentSender(msg)
+
                
           } catch (err) {     
                console.log( 'get message page error',err );
@@ -90,8 +93,7 @@ export default function Messages({setRender}) {
           messageHandeler() 
           despatch(fetchUserInfo(reciver, cookieData))
           despatch(fetchUserListRedux(userId))
-          despatch(getNotification(cookieData))
-
+          // despatch(getNotification(cookieData))
           // homeSocket.on('msgNotificaton', msg => {
           // })
           
