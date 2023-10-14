@@ -1,5 +1,7 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import user from "./reducers/auth/user.reducer";
+import profile from './reducers/profile/profile.reducer'
+import refresh from './reducers/profile/refresh'
 import thunk from './middleWare/thunk'
 import { configureStore } from '@reduxjs/toolkit';
 import searchReducer from "./reducers/Search";
@@ -23,7 +25,9 @@ import postReducer from './reducers/basicActions/post'
 // toolkit Store 
 
 const store = configureStore({
-    reducer: { user: user, search: searchReducer, messages: MessagesReducer, ChatList: ChatListReducer, post: postReducer }
+
+    reducer: { user: user, search: searchReducer, messages: MessagesReducer, ChatList: ChatListReducer, profile: profile, refresh: refresh, post: postReducer  }
+
 })
 
 

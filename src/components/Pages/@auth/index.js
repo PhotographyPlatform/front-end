@@ -8,7 +8,6 @@ import SignUp from './signup/Signup';
 import Signin from './signin/Signin';
 import Header from '../../Header/Header';
 import Search from '../Search';
-
 function Container() {
   return (
     <div>
@@ -21,7 +20,6 @@ function Container() {
           <Route path='/resetPassword' element={<ResetPassword />} />
           <Route path='/signup' element={<SignUp />} />
           <Route path='/signin' element={<Signin />} />
-
           <Route path='/' element={<NonAuthHome />} />
         </Routes>
       </div>
