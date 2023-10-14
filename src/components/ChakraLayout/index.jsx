@@ -44,6 +44,7 @@ import NotFound from '../Pages/NotFound';
 import NewPost from '../components/NewPost';
 import { IoMdAddCircle } from 'react-icons/io';
 import { BsFillChatDotsFill } from 'react-icons/bs';
+import FavoritePage from '../Pages/@auth/FavoritePage/FavoritePage';
 
 
 
@@ -54,7 +55,7 @@ const LinkItems = [
     { name: 'Profile', icon: FiTrendingUp, path: '/profile' },
     { name: 'Search', icon: FiCompass, path: '/search' },
     { name: 'Add Post', icon: FiCompass, path: '/addpost' },
-    { name: 'Favourites', icon: FiStar },
+    { name: 'Favourites', icon: FiStar , path : '/favorite' },
     {name: 'Chat', icon: BsFillChatDotsFill, path: '/chat'},
     { name: 'Settings', icon: FiSettings },
 ];
@@ -133,6 +134,7 @@ function SidebarWithHeader() {
                     <Route path="/search" element={<Search />} />
                     <Route path="/" element={<AuthHome />} />
                     <Route path="/profile" element={<Profile />} />
+                    <Route path="/favorite" element={<FavoritePage />} />
                     <Route path='/chat' element={<Chat />} />
                     <Route path='/messages/:id' element={<MessagePage render={render} setRender = {setRender} />} />
                     {/* <Route path="/addpost" element={<Profile />} /> */}

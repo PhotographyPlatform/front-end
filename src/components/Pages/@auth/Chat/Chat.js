@@ -18,7 +18,6 @@ export default function Chat() {
             : <FolowingList setShowfolowingList = {setShowfolowingList} />
         }
       </Container>
-
         <Box className='chat-container' width={{xl : '650px'}} display={{base : 'none' , xl : 'flex'}}>chat box</Box>
     </Box>
   )

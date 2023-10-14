@@ -13,15 +13,15 @@ import { TbUserSearch  } from 'react-icons/tb';
 
 export default function ChatList({ render , setShowfolowingList}) {
      let params = useParams()
-
+     const cookieData = cookie.load('user_session')
+     const token = jwtDecode(cookieData)
+     const userId = token.userId
 
      // redux
      const dispatch = useDispatch()
      const state = useSelector(state => state.ChatList)
 
-     const cookieData = cookie.load('user_session')
-     const token = jwtDecode(cookieData)
-     const userId = token.userId
+
      
 
      useEffect(() => {

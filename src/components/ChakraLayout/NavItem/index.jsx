@@ -64,8 +64,8 @@ const notificationState = useSelector((state) => state.ChatList.AllNotification)
                     name !== 'Chat' ? <Icon mr="4"  fontSize="20"  _groupHover={{ color: 'white', }} as={icon} /> 
                     : (
                         <Box position={'relative'} >
-                            <Box position={'absolute'} display={notificationState || 1 ? 'inline-flex' : 'none'} pb={'5px'} bg={'red'} minW={'20px'} h={'20px'} borderRadius={'50%'} justifyContent={'center'} alignItems={'center'} top={'-13px'} color={'white'} right={'8px'}>
-                                <Text m={0}>{notificationState || 1}</Text>
+                            <Box position={'absolute'} display={notificationState ? 'inline-flex' : 'none'} pb={'5px'} bg={'red'} minW={'20px'} h={'20px'} borderRadius={'50%'} justifyContent={'center'} alignItems={'center'} top={'-13px'} color={'white'} right={'8px'}>
+                                <Text m={0}>{notificationState}</Text>
                             </Box>
                             <Icon mr="4" fontSize="20" _groupHover={{color: 'white',}} as={icon} />
                         </Box>
