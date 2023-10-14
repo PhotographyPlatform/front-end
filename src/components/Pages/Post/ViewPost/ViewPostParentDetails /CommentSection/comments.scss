@@ -12,18 +12,39 @@
 .viewpost-comment-list {
     box-sizing: border-box;
     // margin-top: 5px;
+    width: 100%;
     overflow-y: scroll;
+    overflow-x: none;
     width: 100% !important;
-    height: 42vh !important;
+    height: 46vh !important;
     max-height: 100% !important;
     list-style: none;
+
+    .no-comments {
+        position: relative;
+        top: 50px;
+    }
+
+
+    /* Hide the default scrollbar */
+    &::-webkit-scrollbar {
+        opacity: 0 !important;
+        transition: opacity 0.3s;
+    }
+
+    /* When hovering over the container */
+    &:hover {
+        &::-webkit-scrollbar {
+            opacity: 1;
+        }
+    }
 
     li {
         margin-top: 20px;
     }
 
     &::-webkit-scrollbar {
-        width: 8px;
+        width: 4px;
     }
 
     &::-webkit-scrollbar-track {
@@ -89,8 +110,9 @@
 
 .comment-input {
     display: flex;
+
     align-items: center;
-    margin-top: 5px;
+    margin-top: 30px;
     border-radius: 40px;
 
     input {

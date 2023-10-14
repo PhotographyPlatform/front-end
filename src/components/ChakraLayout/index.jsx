@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
 
     Box,
@@ -35,10 +35,16 @@ import { Link, Routes, Route } from 'react-router-dom';
 import ViewPost from '../Pages/Post/ViewPost';
 import Search from '../Pages/Search';
 import Profile from '../Pages/@auth/profileDashboard/Profile';
+import Chat from '../Pages/@auth/Chat/Chat';
+import MessagePage from '../Pages/@auth/Chat/MessagePage';
+// import AuthHome
+// Your LinkItems array
 import AuthHome from '../Pages/@auth/Home/index'
 import NotFound from '../Pages/NotFound';
 import NewPost from '../components/NewPost';
 import { IoMdAddCircle } from 'react-icons/io';
+import { BsFillChatDotsFill } from 'react-icons/bs';
+import FavoritePage from '../Pages/@auth/FavoritePage/FavoritePage';
 import UsersProfile from '../Pages/@auth/profileDashboard/UsersProfile';
 import Challenges from '../Pages/Challenges';
 import { MdOutlinePartyMode } from 'react-icons/md';
@@ -52,23 +58,11 @@ const LinkItems = [
     { name: 'Profile', icon: FiTrendingUp, path: '/profile' },
     { name: 'Search', icon: FiCompass, path: '/search' },
     { name: 'challenges', icon: MdOutlinePartyMode, path: '/challenges' },
-    { name: 'Favourites', icon: FiStar },
+    { name: 'Add Post', icon: FiCompass, path: '/addpost' },
+    { name: 'Favourites', icon: FiStar , path : '/favorite' },
+    {name: 'Chat', icon: BsFillChatDotsFill, path: '/chat'},
     { name: 'Settings', icon: FiSettings },
 ];
-
-/*
-<div to='/addpost' className='link-card hover-nav' onClick={onOpenNewPost}>
-                        <NewPost onCloseNewPost={onCloseNewPost} isOpenNewPost={isOpenNewPost} />
-                        <IoMdAddCircle />
-                        <span className='links-title'>
-                            Add Post
-                        </span>
-                    </div>
-                    
-                    */
-
-
-
 
 
 function SidebarContent({ onClose, ...rest }) {
@@ -95,24 +89,17 @@ function SidebarContent({ onClose, ...rest }) {
 
             {LinkItems.map((link) => (
                 <Link key={link.path} to={link.path}>
-                    <NavItem icon={link.icon}>{link.name}</NavItem>
+                    <NavItem icon={link.icon} name = {link.name}> {link.name}</NavItem>
                 </Link>
             ))}
             {/* popup Modal */}
 
-            {/* <div to='/addpost' className='link-card hover-nav' onClick={onOpenNewPost}>
-                <NewPost onCloseNewPost={onCloseNewPost} isOpenNewPost={isOpenNewPost} />
-                <IoMdAddCircle />
-                <span className='links-title'>
-                    Add Post
-                </span>
-            </div> */}
-
-            <Link >
+            <Link>
+                
+            
                 <NewPost onCloseNewPost={onCloseNewPost} isOpenNewPost={isOpenNewPost} />
                 <NavItem icon={IoMdAddCircle} onClick={onOpenNewPost}   >{'Add New Post'} </NavItem>
             </Link>
-
         </Box>
     );
 }
@@ -121,6 +108,8 @@ function SidebarContent({ onClose, ...rest }) {
 
 function SidebarWithHeader() {
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const [render, setRender] = useState(true)
+
 
 
     return (
@@ -149,6 +138,9 @@ function SidebarWithHeader() {
                     <Route path="/search" element={<Search />} />
                     <Route path="/" element={<AuthHome />} />
                     <Route path="/profile" element={<Profile />} />
+                    <Route path="/favorite" element={<FavoritePage />} />
+                    <Route path='/chat' element={<Chat />} />
+                    <Route path='/messages/:id' element={<MessagePage render={render} setRender = {setRender} />} />
                     <Route path="/userProfile" element={<UsersProfile />} />
                     <Route path="/challenges" element={<Challenges />} />
                     {/* <Route path="/addpost" element={<Profile />} /> */}

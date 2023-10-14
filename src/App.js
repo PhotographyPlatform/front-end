@@ -4,7 +4,7 @@ import Container from './components/Pages/@auth/index';
 import Cookies from 'react-cookies';
 import { decodeToken } from 'react-jwt';
 import Layout from './components/Layout';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useParams } from 'react-router-dom';
 import Profile from './components/Pages/@auth/profileDashboard/Profile';
 import Messages from './components/Pages/@auth/Chat/Messages';
 import Chat from './components/Pages/@auth/Chat/Chat';
@@ -32,6 +32,7 @@ import SidebarWithHeader from './components/ChakraLayout';
 import { dispatchAllNotification, fetchUserListRedux, getNotification } from './store/reducers/chat/chatList.reducer';
 import Challenges from './components/Pages/Challenges';
 
+
 // socket assets 
 
 const host = "http://localhost:3002";
@@ -48,6 +49,8 @@ function App() {
   const dispatch = useDispatch();
   const notificationState = useSelector((state) => state.ChatList.AllNotification);
   const [render, setRender] = useState(true)
+  let params = useParams()
+
 
   const Logged = userState.isLogged;
   let userId = null
@@ -66,6 +69,10 @@ function App() {
       dispatch(getNotification(cookieData))
     })
   }, [])
+  
+  // useEffect(() => {
+  //     dispatch(getNotification(cookieData))
+  // }, [params])
 
 
 
@@ -75,6 +82,7 @@ function App() {
 
   }, [Logged]);
 
+  
 
   return (
     <div className="App">
@@ -90,6 +98,7 @@ function App() {
               <Route path='/messages/:id' element={<MessagePage render={render} setRender={setRender} />} />
               <Route path='/chat' element={<Chat />} />
               <Route path="/userProfile" element={<UsersProfile />} />
+              
             </Routes>
           </SidebarWithHeader>
         ) :

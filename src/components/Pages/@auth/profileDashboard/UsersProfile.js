@@ -3,11 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Follow, getFollowing, getProfile, unFollow } from '../../../../store/reducers/profile/profile.reducer';
 import cookies from 'react-cookies';
-import photography from '../../../assets/camera-photography.jpg';
 import OthersModal from './OthersModal';
 
 function UsersProfile() {
     const [data, setData] = useState({});
+    console.log(data);
     const [showFollowersModal, setShowFollowersModal] = useState(false);
     const [showFollowingModal, setShowFollowingModal] = useState(false);
     const [toggle, setToggle] = useState(false)
@@ -89,7 +89,7 @@ function UsersProfile() {
                         position={'relative'}
                     >
                         <Image
-                            src={photography}
+                            src={data.user.heroImg}
                             objectFit="cover"
                             maxW={{ base: '700px', md: '715px', lg: '1200px', xl: '1260px' }}
                             width={{ base: '700px', md: '715px', lg: '950px', xl: '1035px' }}
@@ -99,7 +99,7 @@ function UsersProfile() {
                             position="absolute"
                             top={{ base: '88%', sm: '90%', md: '93%', lg: '90%' }}
                             size={{ base: 'md', sm: 'lg', md: 'xl' }}
-                            name={data.user.username}
+                            src={data.user.img}
                         />
                     </Stack>
                     <Stack>
