@@ -31,7 +31,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { PasswordField } from '../signup/passwordFiled/Password';
 import CryptoJS from 'crypto-js';
-
+import { DecodeToken } from '../../../../store/reducers/auth/user.reducer';
 
 const VARIANT_COLOR = 'teal'
 
@@ -115,7 +115,8 @@ const LoginForm = () => {
           Authorization: `Basic ${btoa(`${obj.username}:${obj.password}`)}`
         }
       })
-      dispatch(signin(data))
+      dispatch(signin(data));
+      dispatch(DecodeToken());
       if (data.status === 200) {
         if (isChecked) {
           const dataToEncrypt = JSON.stringify(obj)
