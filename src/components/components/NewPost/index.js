@@ -8,14 +8,14 @@ import {
   ModalBody,
   ModalCloseButton,
   Button,
-  useToast 
+  useToast
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import "./NewPost.scss";
 
-function NewPost({onCloseNewPost, isOpenNewPost}) {
-  
+function NewPost({ onCloseNewPost, isOpenNewPost }) {
+
   const TitleLimit = 65;
   const desLimit = 200;
 
@@ -28,7 +28,7 @@ function NewPost({onCloseNewPost, isOpenNewPost}) {
   const [isTitleInputEmpty, setisTitleInputEmpty] = useState(false);
   const [isDecEmpty, setisDecEmpty] = useState(false);
   const [isTagInputEmpty, setIsTagInputEmpty] = useState(false);
-  
+
   const toast = useToast();
   const fileInputRef = useRef(null);
 
@@ -59,9 +59,9 @@ function NewPost({onCloseNewPost, isOpenNewPost}) {
   const onSubmitHandler = async (e) => {
     e.preventDefault();
 
-    if(e.target.elements.title.value === '') setisTitleInputEmpty(true);
-    if(e.target.elements.descript.value === '') setisDecEmpty(true);
-    if(tags.length === 0) setIsTagInputEmpty(true);
+    if (e.target.elements.title.value === '') setisTitleInputEmpty(true);
+    if (e.target.elements.descript.value === '') setisDecEmpty(true);
+    if (tags.length === 0) setIsTagInputEmpty(true);
     e.target.elements.fileInput.value ? setisUploadImageInputEmpty(false) : setisUploadImageInputEmpty(true);
 
     const newPost = {
@@ -73,28 +73,28 @@ function NewPost({onCloseNewPost, isOpenNewPost}) {
     };
 
     if (newPost.imgurl && newPost.title && newPost.contant && newPost.category.length) {
-    try {
-      const response = await axios.post(
-        "http://localhost:3002/v1/newPostCOll",
-        newPost
-      );
-      if(response.status === 201){
-        onCloseNewPost();
-        toast({
-          position:'top-left',
-          title: 'Post created',
-          description: "your post has been created succefully",
-          status: 'success',
-          duration: 9000,
-          isClosable: true,
-        });
-        setTags([]);
+      try {
+        const response = await axios.post(
+          "http://localhost:3002/v1/newPostCOll",
+          newPost
+        );
+        if (response.status === 201) {
+          onCloseNewPost();
+          toast({
+            position: 'top-left',
+            title: 'Post created',
+            description: "your post has been created succefully",
+            status: 'success',
+            duration: 9000,
+            isClosable: true,
+          });
+          setTags([]);
+        }
+      } catch (error) {
+        console.error("error when adding a new post: ", error);
       }
-    } catch (error) {
-      console.error("error when adding a new post: ", error);
-    }
 
-  }
+    }
   };
 
   const addTagHandler = (e) => {
@@ -128,8 +128,8 @@ function NewPost({onCloseNewPost, isOpenNewPost}) {
   };
 
   const validateTagInput = isTagInputEmpty ? 'empty-tag-input' : 'tags-container';
-  const validateTitleInput = isTitleInputEmpty ?  'empty-title-input' : 'title-input';
-  const validateDecInput = isDecEmpty ?  'empty-title-input' : 'title-input';
+  const validateTitleInput = isTitleInputEmpty ? 'empty-title-input' : 'title-input';
+  const validateDecInput = isDecEmpty ? 'empty-title-input' : 'title-input';
 
   return (
     <>

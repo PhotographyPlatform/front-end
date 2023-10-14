@@ -12,15 +12,17 @@ import {
 import { useDisclosure } from '@chakra-ui/react';
 import { Button } from '@chakra-ui/react';
 
+
+import { useSelector, useDispatch } from 'react-redux';
+
 // Import your custom components
 import ViewPostHeader from './ViewPostHeader';
 import ViewPostParentDetails from './ViewPostParentDetails ';
 
 import './viewPost.scss'
 
-
 function ViewPost({ onCloseViewPost, isOpenViewPost, data }) {
-
+  
     return (
         <>
             <Modal onClose={onCloseViewPost} isOpen={isOpenViewPost}  >
