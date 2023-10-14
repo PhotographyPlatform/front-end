@@ -3,8 +3,10 @@ import user from "./reducers/auth/user.reducer";
 import thunk from './middleWare/thunk'
 import { configureStore } from '@reduxjs/toolkit';
 import searchReducer from "./reducers/Search";
-import  { MessagesReducer } from "./reducers/chat/messages.reducer";
+import { MessagesReducer } from "./reducers/chat/messages.reducer";
 import { ChatListReducer } from "./reducers/chat/chatList.reducer";
+import postReducer from './reducers/basicActions/post'
+
 // import thunk from 'redux-thunk';
 
 // const reducers = combineReducers({ user });
@@ -21,7 +23,7 @@ import { ChatListReducer } from "./reducers/chat/chatList.reducer";
 // toolkit Store 
 
 const store = configureStore({
-    reducer: { user: user, search: searchReducer, messages : MessagesReducer  , ChatList : ChatListReducer}
+    reducer: { user: user, search: searchReducer, messages: MessagesReducer, ChatList: ChatListReducer, post: postReducer }
 })
 
 

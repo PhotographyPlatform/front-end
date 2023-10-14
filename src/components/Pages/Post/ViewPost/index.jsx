@@ -14,37 +14,31 @@ import { Button } from '@chakra-ui/react';
 
 // Import your custom components
 import ViewPostHeader from './ViewPostHeader';
-import ViewPostParentDetails from './ViewPostParentDetails '; 
+import ViewPostParentDetails from './ViewPostParentDetails ';
 
 import './viewPost.scss'
-import { useSelector, useDispatch } from 'react-redux';
 
 
-function ViewPost(props) {
-    const { isOpen, onOpen, onClose } = useDisclosure();
-    const [size, setSize] = React.useState('md');
+function ViewPost({ onCloseViewPost, isOpenViewPost, data }) {
 
-  
     return (
         <>
-      
-
-
-            <Modal onClose={onClose} isOpen={isOpen}  >
-                <ModalOverlay /> 
+            <Modal onClose={onCloseViewPost} isOpen={isOpenViewPost}  >
+                <ModalOverlay />
                 <div className='div-handler'>
-                <ModalContent className='model-parent-viewpost' size='full' >
-                    <ModalHeader className='viewpost-no-space'>
-                        {/* Use the ViewPostHeader component */}
-                        <ViewPostHeader />
-                        <ModalCloseButton />
-                    </ModalHeader>
-                 
-                    <div className='viewpost-no-space viewpost-child'>
-                        {/* Use the ViewPostParent component */}
-                        <ViewPostParentDetails />
-                    </div>
-                    {/* <ModalFooter>
+                    <ModalContent className='model-parent-viewpost' size='full' >
+                        <ModalHeader className='viewpost-no-space'>
+                            {/* Use the ViewPostHeader component */}
+                            <ViewPostHeader />
+                            <ModalCloseButton />
+                        </ModalHeader>
+
+                        <div className='viewpost-no-space viewpost-child'>
+                            {/* Use the ViewPostParent component */}
+
+                            <ViewPostParentDetails details={data} onClose={onCloseViewPost} />
+                        </div>
+                        {/* <ModalFooter>
                         <Button onClick={onClose}>Close</Button>
                     </ModalFooter> */}
                     </ModalContent>

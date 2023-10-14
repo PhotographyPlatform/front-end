@@ -1,15 +1,19 @@
 import React from 'react';
 import './viewPostCategories.scss'
+// import 
 
 function ViewPostCategories(props) {
+    console.log('Category Components', props)
+    console.log(props)
     return (
         <ul className='category-container-viewpost'>
             {/* onClick={() => dispatch(setActiveCategory(category.name)) */}
 
-            <li className='category-card'>nature</li>
-            <li className='category-card'>Blcak & White</li>
-            <li className='category-card'>Modern</li>
-
+            {props.category.map((category, index) => (
+                <li key={index} className='category-card' >
+                    {category}
+                </li>
+            ))}
         </ul>
 
 
