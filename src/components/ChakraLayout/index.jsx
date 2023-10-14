@@ -40,6 +40,8 @@ import NotFound from '../Pages/NotFound';
 import NewPost from '../components/NewPost';
 import { IoMdAddCircle } from 'react-icons/io';
 import UsersProfile from '../Pages/@auth/profileDashboard/UsersProfile';
+import Challenges from '../Pages/Challenges';
+import { MdOutlinePartyMode } from 'react-icons/md';
 
 
 
@@ -49,7 +51,7 @@ const LinkItems = [
     { name: 'Home', icon: FiHome, path: '/' },
     { name: 'Profile', icon: FiTrendingUp, path: '/profile' },
     { name: 'Search', icon: FiCompass, path: '/search' },
-    { name: 'Add Post', icon: FiCompass, path: '/addpost' },
+    { name: 'challenges', icon: MdOutlinePartyMode, path: '/challenges' },
     { name: 'Favourites', icon: FiStar },
     { name: 'Settings', icon: FiSettings },
 ];
@@ -148,6 +150,7 @@ function SidebarWithHeader() {
                     <Route path="/" element={<AuthHome />} />
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/userProfile" element={<UsersProfile />} />
+                    <Route path="/challenges" element={<Challenges />} />
                     {/* <Route path="/addpost" element={<Profile />} /> */}
                     <Route path="*" element={<NotFound />} />
                 </Routes>

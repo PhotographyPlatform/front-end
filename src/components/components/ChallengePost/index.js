@@ -12,9 +12,9 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import "./NewPost.scss";
+import "./ChallengePost.scss";
 
-function NewPost({onCloseNewPost, isOpenNewPost}) {
+function ChallengePost({onCloseNewPost, isOpenNewPost, ChallengeName, challengeId, setIsNewPostAdded}) {
   
   const TitleLimit = 65;
   const desLimit = 200;
@@ -66,18 +66,21 @@ function NewPost({onCloseNewPost, isOpenNewPost}) {
 
     const newPost = {
       imgurl: e.target.elements.fileInput.value,
-      userid: 1,
+      userid: 2,
       title: e.target.elements.title.value,
       contant: e.target.elements.descript.value,
       category: tags,
+      challengeID: challengeId,
+      challengeName: ChallengeName
     };
 
     if (newPost.imgurl && newPost.title && newPost.contant && newPost.category.length) {
     try {
+      setIsNewPostAdded(true);
       const response = await axios.post(
         "http://localhost:3002/v1/newPostCOll",
         newPost
-      );
+        );
       if(response.status === 201){
         onCloseNewPost();
         toast({
@@ -90,8 +93,9 @@ function NewPost({onCloseNewPost, isOpenNewPost}) {
         });
         setTags([]);
       }
+      setIsNewPostAdded(false);
     } catch (error) {
-      console.error("error when adding a new post: ", error);
+      console.error(`error when adding a new post for a the challenge '${ChallengeName}'`, error);
     }
 
   }
@@ -136,8 +140,8 @@ function NewPost({onCloseNewPost, isOpenNewPost}) {
 
       <Modal isOpen={isOpenNewPost} onClose={onCloseNewPost} size="xl">
         <ModalOverlay />
-        <ModalContent className="modal modal-np">
-          <ModalHeader className="modal-title">Add post</ModalHeader>
+        <ModalContent className="modal">
+          <ModalHeader className="modal-title">Participate</ModalHeader>
           <ModalCloseButton />
           <form onSubmit={onSubmitHandler}>
             <ModalBody>
@@ -162,6 +166,18 @@ function NewPost({onCloseNewPost, isOpenNewPost}) {
                   </div>
                   {isUploadImageInputEmpty && <span className="empty-img-input">!! you must upload an image !!</span>}
                   <span id="fileName"></span>
+                </div>
+
+                <div className="modal-item">
+                  <div className="counter-flex">
+                    <label>Challenge name</label>
+                  </div>
+                  <input
+                    type="text"
+                    placeholder={ChallengeName}
+                    className='input-disabled'
+                    disabled={true}
+                  />
                 </div>
 
                 <div className="modal-item">
@@ -239,7 +255,7 @@ function NewPost({onCloseNewPost, isOpenNewPost}) {
               </div>
             </ModalBody>
 
-            <ModalFooter className="modal-buttons">
+            <ModalFooter className="modal-buttons-cp">
               <Button variant="ghost" onClick={onCloseNewPost}>
                 Close
               </Button>
@@ -254,5 +270,5 @@ function NewPost({onCloseNewPost, isOpenNewPost}) {
   );
 }
 
-export default NewPost;
+export default ChallengePost;
 

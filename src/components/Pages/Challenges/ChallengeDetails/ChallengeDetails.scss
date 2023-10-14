@@ -1,0 +1,32 @@
+.challenge-details{
+    width: 70%;
+    margin: auto;
+}
+
+.card-img-top-cd{
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+    // background-color: rgb(196, 196, 196);
+    // object-fit: contain;
+}
+
+.card-cd{
+    width: 100%;
+    margin-bottom: 400px !important;
+}
+
+.card-body-cd{
+    padding: 60px;
+}
+
+.card-item{
+    margin-bottom: 50px;
+}
+
+.card-buttons-cd{
+    button{
+        font-size: 18px;
+        padding: 10px 25px;
+    }
+}

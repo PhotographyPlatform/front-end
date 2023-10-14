@@ -30,6 +30,7 @@ import UsersProfile from './components/Pages/@auth/profileDashboard/UsersProfile
 
 import SidebarWithHeader from './components/ChakraLayout';
 import { dispatchAllNotification, fetchUserListRedux, getNotification } from './store/reducers/chat/chatList.reducer';
+import Challenges from './components/Pages/Challenges';
 
 // socket assets 
 
@@ -85,6 +86,7 @@ function App() {
               <Route path="/" element={<AuthHome />} />
               <Route path="/profile" element={<Profile />} />
               <Route path='/searchs' element={<Search />} />
+              <Route path="/challenges" element={<Challenges />} />
               <Route path='/messages/:id' element={<MessagePage render={render} setRender={setRender} />} />
               <Route path='/chat' element={<Chat />} />
               <Route path="/userProfile" element={<UsersProfile />} />

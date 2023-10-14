@@ -1,0 +1,100 @@
+.modal {
+    padding: 15px;
+    background-color: aquamarine;
+  
+    &-form {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+  }
+  
+  .upload-image-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+  
+    &_ulpoader {
+      cursor: pointer;
+      background-color: #3498db;
+      color: #f3f4f6;
+      display: inline-block;
+      padding: 6px 12px;
+      border: 2px solid #3498db;
+      border-radius: 4px;
+      font-size: 16px;
+  
+      &:hover {
+        color: #3498db;
+        background-color: #fff;
+      }
+    }
+  }
+
+  .ulpoad-dec{
+    text-align: center;
+  }
+  
+  .counter-flex {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .title-input{
+    width: 100%;
+    border: 1.5px solid #e2e8f0;
+    transition: border;
+    padding: 10px;
+    border-radius: 6px;
+    margin-top: 10px;
+
+    &:focus {
+      border-color:#256ad2;
+      outline: #256ad2;
+    }
+
+  }
+  
+  .empty-title-input {
+    width: 100%;
+    border: 1.5px solid red;
+    transition: border;
+    padding: 10px;
+    border-radius: 6px;
+    margin-top: 10px;
+
+    &:focus {
+      border-color:#256ad2;
+      outline: #256ad2;
+    }
+  }
+  
+  .empty-img-input{
+    color:red;
+  }
+
+  .date-flex-1{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .date-flex-2{
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+
+    input{
+      color: gray;
+    }
+  }
+
+  .modal-buttons-nc{
+    margin: 12% 0 5% 0;
+    button{
+      margin-right: 10px;
+    }
+  }

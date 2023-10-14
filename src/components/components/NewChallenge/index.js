@@ -11,28 +11,30 @@ import {
   useToast 
 } from "@chakra-ui/react";
 import axios from "axios";
-import { useSelector } from "react-redux";
-import "./NewPost.scss";
+import "./NewChallenge.scss";
+// import { useSelector } from "react-redux";
 
-function NewPost({onCloseNewPost, isOpenNewPost}) {
+function NewChallenge({onCloseNewPost, isOpenNewPost}) {
   
   const TitleLimit = 65;
-  const desLimit = 200;
+  const desLimit = 500;
 
   const [titleCounter, setTitleCounter] = useState(0);
   const [desCounter, setDesCounter] = useState(0);
-  const [tags, setTags] = useState([]);
-  const [tagInput, setTagInput] = useState("");
-  const [suggestedTags, setSuggestedTags] = useState([]);
+  const [rulesCounter, setRulesCounter] = useState(0);
+  const [prizeCounter, setPrizeCounter] = useState(0);
   const [isUploadImageInputEmpty, setisUploadImageInputEmpty] = useState(false);
   const [isTitleInputEmpty, setisTitleInputEmpty] = useState(false);
   const [isDecEmpty, setisDecEmpty] = useState(false);
-  const [isTagInputEmpty, setIsTagInputEmpty] = useState(false);
+  const [isRulesEmpty, setIsRulesEmpty] = useState(false);
+  const [isPrizeEmpty, setIsPrizeEmpty] = useState(false);
+  const [isStartEmpty, setIsStartEmpty] = useState(false);
+  const [isEndEmpty, setIsEndEmpty] = useState(false);
+
+  // const role = useSelector(state=> state.user.token);
   
   const toast = useToast();
   const fileInputRef = useRef(null);
-
-  const allowedTags = useSelector((state) => state.search.categories.map(item => item.name));
 
   const handleFileInputChange = () => {
     const fileNameSpan = document.getElementById("fileName");
@@ -55,89 +57,88 @@ function NewPost({onCloseNewPost, isOpenNewPost}) {
     setDesCounter(e.target.value.length);
     setisDecEmpty(false);
   };
+  
+  const onChangerules = (e) => {
+    setRulesCounter(e.target.value.length);
+    setIsRulesEmpty(false);
+  };
+
+  const onChangePrize = (e) => {
+    setPrizeCounter(e.target.value.length);
+    setIsPrizeEmpty(false);
+  };
+  
+  const onChangeStart = (e) => {
+    setPrizeCounter(e.target.value.length);
+    setIsStartEmpty(false);
+  };
+
+  const onChangeEnd = (e) => {
+    setPrizeCounter(e.target.value.length);
+    setIsEndEmpty(false);
+  };
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
 
+    e.target.elements.fileInput.value ? setisUploadImageInputEmpty(false) : setisUploadImageInputEmpty(true);
     if(e.target.elements.title.value === '') setisTitleInputEmpty(true);
     if(e.target.elements.descript.value === '') setisDecEmpty(true);
-    if(tags.length === 0) setIsTagInputEmpty(true);
-    e.target.elements.fileInput.value ? setisUploadImageInputEmpty(false) : setisUploadImageInputEmpty(true);
+    if(e.target.elements.rules.value === '') setIsRulesEmpty(true);
+    if(e.target.elements.prize.value === '') setIsPrizeEmpty(true);
+    if(e.target.elements.startDate.value === '') setIsStartEmpty(true);
+    if(e.target.elements.endDate.value === '') setIsEndEmpty(true);
 
-    const newPost = {
+    const newChallenge = {
       imgurl: e.target.elements.fileInput.value,
-      userid: 1,
       title: e.target.elements.title.value,
-      contant: e.target.elements.descript.value,
-      category: tags,
+      brief: e.target.elements.descript.value,
+      rules: e.target.elements.rules.value,
+      prize: e.target.elements.prize.value,
+      startDate: e.target.elements.startDate.value,
+      endDate: e.target.elements.endDate.value
     };
 
-    if (newPost.imgurl && newPost.title && newPost.contant && newPost.category.length) {
+    if (newChallenge.imgurl || newChallenge.title || newChallenge.brief || newChallenge.rules || newChallenge.prize || newChallenge.startDate || newChallenge.endDate) {
     try {
       const response = await axios.post(
-        "http://localhost:3002/v1/newPostCOll",
-        newPost
+        "http://localhost:3002/v1/challenagesCollection",
+        newChallenge
       );
       if(response.status === 201){
         onCloseNewPost();
         toast({
           position:'top-left',
-          title: 'Post created',
-          description: "your post has been created succefully",
+          title: 'challenge created',
+          description: "the challenge has been created succefully",
           status: 'success',
           duration: 9000,
           isClosable: true,
         });
-        setTags([]);
       }
     } catch (error) {
-      console.error("error when adding a new post: ", error);
+      console.error("error when adding a new challenge: ", error);
     }
 
   }
   };
 
-  const addTagHandler = (e) => {
-    const value = e.target.value;
-    if (e.key === "Enter" && value.trim() !== "") {
-      if (allowedTags.includes(value.trim())) {
-        setTags([...tags, value]);
-        e.target.value = "";
-        setSuggestedTags([]);
-      }
-    }
-  };
-
-  const removeTag = (index) => {
-    setTags(tags.filter((item) => item !== index));
-  };
-
-  const suggestTag = (e) => {
-    setTagInput(e.target.value);
-    const matchingTags = allowedTags.filter((tag) =>
-      tag.toLowerCase().includes(e.target.value.toLowerCase())
-    );
-    setSuggestedTags(matchingTags);
-    setIsTagInputEmpty(false)
-  };
-
-  const handleSuggestionClick = (suggestion) => {
-    setTags([...tags, suggestion]);
-    setTagInput("");
-    setSuggestedTags([]);
-  };
-
-  const validateTagInput = isTagInputEmpty ? 'empty-tag-input' : 'tags-container';
   const validateTitleInput = isTitleInputEmpty ?  'empty-title-input' : 'title-input';
   const validateDecInput = isDecEmpty ?  'empty-title-input' : 'title-input';
+  const validateRulesInput = isRulesEmpty ?  'empty-title-input' : 'title-input';
+  const validatePrizeInput = isPrizeEmpty ?  'empty-title-input' : 'title-input';
+  const validateStartInput = isStartEmpty ?  'empty-title-input' : 'title-input';
+  const validateEndInput = isEndEmpty ?  'empty-title-input' : 'title-input';
 
   return (
     <>
 
+    {/* {role.role==='admin' &&  */}
+
       <Modal isOpen={isOpenNewPost} onClose={onCloseNewPost} size="xl">
         <ModalOverlay />
-        <ModalContent className="modal modal-np">
-          <ModalHeader className="modal-title">Add post</ModalHeader>
+        <ModalContent className="modal">
+          <ModalHeader className="modal-title">Add Challenge</ModalHeader>
           <ModalCloseButton />
           <form onSubmit={onSubmitHandler}>
             <ModalBody>
@@ -194,52 +195,52 @@ function NewPost({onCloseNewPost, isOpenNewPost}) {
                     placeholder="write the description here...."
                     onChange={onChangeDes}></textarea>
                 </div>
-
+                
                 <div className="modal-item">
-                  <label>Tags</label>
-                  <div className="tags">
-                    <div className={validateTagInput}>
-                      {tags.map((item, index) => (
-                        <div className="tags-item" key={index}>
-                          <span className="text">{item}</span>
-                          <span
-                            onClick={() => removeTag(item)}
-                            className="close"
-                          >
-                            &times;
-                          </span>
-                        </div>
-                      ))}
-                      <input
-                        className="tag-input"
-                        type="search"
-                        placeholder="Ex: nature, country, food..."
-                        onKeyDown={addTagHandler}
-                        onChange={suggestTag}
-                        value={tagInput}
-                      />
-                    </div>
-
-                    <ul className="suggestions">
-                      {suggestedTags.map(
-                        (suggestion, index) =>
-                          !tags.includes(suggestion.trim()) && (
-                            <li
-                              key={index}
-                              onClick={() => handleSuggestionClick(suggestion)}
-                              className="suggestion"
-                            >
-                              {suggestion}
-                            </li>
-                          )
-                      )}
-                    </ul>
+                  <div className="counter-flex">
+                    <label>Rules</label>
+                    <small>
+                      {rulesCounter}/{desLimit}
+                    </small>
+                  </div>
+                  <textarea name="rules"
+                    className={validateRulesInput}
+                    maxLength={desLimit}
+                    placeholder="write the Rules here...."
+                    onChange={onChangerules}></textarea>
+                </div>
+                
+                <div className="modal-item">
+                  <div className="counter-flex">
+                    <label>Prize</label>
+                    <small>
+                      {prizeCounter}/{desLimit}
+                    </small>
+                  </div>
+                  <textarea name="prize"
+                    className={validatePrizeInput}
+                    maxLength={desLimit}
+                    placeholder="write the Prize here...."
+                    onChange={onChangePrize}></textarea>
+                </div>
+                
+                <div className="modal-item">
+                  <div className="date-flex-1">
+                   <div className="date-flex-2">
+                   <label>Start:</label>
+                   <input type="date" className={validateStartInput} name="startDate" onChange={onChangeStart}/>
+                   </div>
+                   <div className="date-flex-2">
+                   <label>End:</label>
+                   <input type="date" className={validateEndInput} name="endDate" onChange={onChangeEnd}/>
+                   </div>
                   </div>
                 </div>
+
               </div>
             </ModalBody>
 
-            <ModalFooter className="modal-buttons">
+            <ModalFooter className="modal-buttons-nc">
               <Button variant="ghost" onClick={onCloseNewPost}>
                 Close
               </Button>
@@ -250,9 +251,10 @@ function NewPost({onCloseNewPost, isOpenNewPost}) {
           </form>
         </ModalContent>
       </Modal>
+      {/* } */}
     </>
   );
 }
 
-export default NewPost;
+export default NewChallenge;
 

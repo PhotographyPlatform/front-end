@@ -1,0 +1,42 @@
+.modal-report {
+  height: 60% !important;
+}
+
+.modal {
+  padding: 15px;
+  background-color: aquamarine;
+
+  &-form {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+}
+
+.counter-flex {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.title-input {
+  width: 100%;
+  border: 1.5px solid #e2e8f0;
+  transition: border;
+  padding: 10px;
+  border-radius: 6px;
+  margin-top: 10px;
+
+  &:focus {
+    border-color: #256ad2;
+    outline: #256ad2;
+  }
+}
+
+.modal-buttons-r{
+  margin-top: 5%;
+  button{
+    margin-right: 10px;
+  }
+}
