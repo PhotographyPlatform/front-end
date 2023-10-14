@@ -7,7 +7,9 @@ import { configureStore } from '@reduxjs/toolkit';
 import searchReducer from "./reducers/Search";
 import { MessagesReducer } from "./reducers/chat/messages.reducer";
 import { ChatListReducer } from "./reducers/chat/chatList.reducer";
+import { FavoriteReducer } from "./reducers/favorite/favorite";
 import postReducer from './reducers/basicActions/post'
+
 
 // import thunk from 'redux-thunk';
 
@@ -26,7 +28,7 @@ import postReducer from './reducers/basicActions/post'
 
 const store = configureStore({
 
-    reducer: { user: user, search: searchReducer, messages: MessagesReducer, ChatList: ChatListReducer, profile: profile, refresh: refresh, post: postReducer  }
+    reducer: { user: user, search: searchReducer, messages: MessagesReducer, ChatList: ChatListReducer, profile: profile, refresh: refresh, post: postReducer ,Favorite: FavoriteReducer }
 
 })
 

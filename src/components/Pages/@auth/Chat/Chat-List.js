@@ -1,50 +1,28 @@
 import { SearchIcon } from '@chakra-ui/icons'
-import { Avatar, Heading, Text , Container, HStack, Box, Card, Divider, Input, InputGroup, InputRightElement} from '@chakra-ui/react'
+import { Avatar, Heading, Text , Container, HStack, Box, Card, Divider, Input, InputGroup, InputRightElement, Button} from '@chakra-ui/react'
 import axios from 'axios'
-import jwtDecode from 'jwt-decode'
 import React, { useEffect, useState } from 'react'
+import jwtDecode from 'jwt-decode'
 import cookie from 'react-cookies';
 import { Link, useParams } from 'react-router-dom'
 import { homeSocket } from '../../../../App'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchUserListRedux, getNotification } from '../../../../store/reducers/chat/chatList.reducer'
+import { dispatchSearchUserList, fetchUserListRedux, getNotification } from '../../../../store/reducers/chat/chatList.reducer'
+import { TbUserSearch  } from 'react-icons/tb';
 
-export default function ChatList({ render}) {
-     const [userList, setUserList] = useState([])
-     const [messageCount, setMessageCount] = useState([])
+
+export default function ChatList({ render , setShowfolowingList}) {
      let params = useParams()
-
+     const cookieData = cookie.load('user_session')
+     const token = jwtDecode(cookieData)
+     const userId = token.userId
 
      // redux
      const dispatch = useDispatch()
      const state = useSelector(state => state.ChatList)
 
-     const cookieData = cookie.load('user_session')
-     const token = jwtDecode(cookieData)
-     const userId = token.userId
-     
-     const fetchUserList = async () => {
-          const res = await axios.get(`http://localhost:3002/messegeslist/${userId}`)        
-          setUserList(res.data.data)
-          const result = res.data.data
-          let msgCount = []
 
-          for (const ele of result) {
-               
-               let filter = ele.messages.filter(ele => ele.read === false)
-               msgCount.push({ userInfo: ele.data.username, nonRead: filter.length })
-          }
-          console.log(msgCount , 'count');
-     }
      
-     // useEffect(() => {
-          
-     //      homeSocket.on('msgNotificaton', msg => {
-     //           dispatch(fetchUserListRedux(userId))
-     //      })
-     // }, [])
-     
-     //  render
 
      useEffect(() => {
           dispatch(fetchUserListRedux(userId))
@@ -57,27 +35,34 @@ export default function ChatList({ render}) {
           return +userInfo[0].nonRead
      }
 
+
      
   return (
   
 //     <Container className='ChatList' width={{md : '200px' , lg : '400px'}} gap={'10px'} display={'flex'} flexDirection={'column'} mx={'20px'} py={'20px'}>
         <>
-        <InputGroup>
-               <InputRightElement pointerEvents='none'>
+        <InputGroup gap={'10px'}>
+                 <Button onClick={() => setShowfolowingList(value => !value)} borderColor={'gray.300'} borderWidth={'1px'} borderStyle={'solid'} bg={'transparent'} _hover={{ bg: 'white' }}>
+                      <TbUserSearch size={'30px'}/>
+                 </Button>
+
+               <InputRightElement pointerEvents='none' >
                     <SearchIcon color='gray.300' />
                     
                </InputRightElement>
-               <Input className="searchBar-chat" placeholder='search'/>
+                 {/* <Input className="searchBar-chat" placeholder='search' borderColor={'gray.300'} borderWidth={'1px'} borderStyle={'solid'}/> */}
+                 <Input onChange={(e) => dispatch(e.target.value !== '' ? dispatchSearchUserList(e.target.value)
+                         : fetchUserListRedux(userId))}
+                         className="searchBar-chat" placeholder='search' borderColor={'gray.300'} borderWidth={'1px'} borderStyle={'solid'} />
           </InputGroup>
           
           <Container  className="ChatList-cont">
           {    state.UserList && 
                state.UserList.map((ele ) => (
                     <Container key={ele.data.id} width={'100%'} p={0} >
-                              <Divider />
+                              <Divider borderColor={'#00000020'} borderBottomWidth={'2px'} />
                               <Link to={`/messages/${ele.data.id}`}>
                                    
-                              {/* <ChakraLink as={ReactRouterLink} to={`/messages/${ele.data.id}`}>go</ChakraLink> */}
                                    <HStack className="list-item" alignItems={{ lg : 'center' ,xl :'flex-start'}} position={'relative'}>
                                         <Avatar size={'md'} name={ele.data.username} src={ ele.data.img || 'https://cdn-icons-png.flaticon.com/512/1053/1053244.png'} />
                                         <Box className="item-detailes" display={'flex'} flexDirection={'column'} alignItems={'flex-start'}  marginLeft={'10px'} >

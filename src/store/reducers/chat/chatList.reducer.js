@@ -6,7 +6,9 @@ const initialStete = {
      UserList: [],
      userNotification: {},
      userInfo: {},
-     AllNotification : 0
+     AllNotification: 0,
+     folowingChatList: [],
+     SearchFolowingChatList:[]
 }
 
 
@@ -15,13 +17,26 @@ export const ChatListReducer = (state = initialStete , actions) => {
      // console.log('payload' , payload);
 
      switch (type) {
+          // UserList
           case 'GetUserList':
                return { ...state, UserList: payload.UserList, userNotification: payload.userNotification }
+          case 'SearchUserList':
+               let filterUserList = state.UserList.filter(ele => ele.data.username.includes(payload))
+               return { ...state, UserList: filterUserList }
+          
+          // UserInfo and Notification
           case 'UserInfo':
                return {...state , userInfo : payload }
           case 'AllNotification':
-               // console.log('AllNotification' , payload);
-               return {...state , AllNotification : payload }
+               return { ...state, AllNotification: payload }
+          
+          // FolowingChatList
+          case 'FolowingChatList':
+               return {...state , folowingChatList : payload}
+          case 'SearchFolowingChatList':
+               let filter = state.folowingChatList.filter(ele => ele.name.includes(payload))
+               return { ...state, folowingChatList: filter }
+          
           default:
               return state
      }
@@ -81,4 +96,34 @@ export const getNotification = (cookieData) =>  async (dispatch) => {
      } catch (err) {
        console.log(err);
      }
-   }
+}
+
+
+
+export const fetchFolowingChatList = (cookieData) => async dispatch => {
+     try {
+          const response = await axios.get('http://localhost:3002/profile/following', { headers: { Authorization: `Bearer ${cookieData}` } })
+          dispatch(dispatchFolowingChatList(response.data.Following))
+     } catch (err) {
+          console.log(err);
+     }
+}
+export const dispatchFolowingChatList = (data) => {
+     return {
+          type: 'FolowingChatList',
+          payload : data
+     }
+}
+export const dispatchSearchFolowingChatList = (data) => {
+     return {
+          type: 'SearchFolowingChatList',
+          payload : data
+     }
+}
+export const dispatchSearchUserList = (data) => {
+     return {
+          type: 'SearchUserList',
+          payload : data
+     }
+}
+

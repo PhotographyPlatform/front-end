@@ -1,5 +1,5 @@
 import React from 'react';
-import SideNavBar from './SideNavBar';
+// import SideNavBar from './SideNavBar';
 import './LayoutBody.scss';
 
 function Layout({ children }) {
@@ -7,7 +7,7 @@ function Layout({ children }) {
         <div className='custome-layout'>
 
             <div className='side-nav-layout'>
-                <SideNavBar />
+                {/* <SideNavBar /> */}
             </div>
 
             <div className='children-layout'>
