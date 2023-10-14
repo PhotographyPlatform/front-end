@@ -34,12 +34,14 @@ import Challenges from './components/Pages/Challenges';
 
 
 // socket assets 
-
+const port = 3002;
 const host = "http://localhost:3002";
 const homeHost = "http://localhost:3002/home";
+const nameSpacehost = `http://localhost:${port}/notification`;
 
 export const socket = io.connect(host, { transports: ["websocket"] });
 export const homeSocket = io.connect(homeHost, { transports: ["websocket"] });
+export const notificationAction = io.connect(nameSpacehost, { transports: ["websocket"] });
 
 
 function App() {
@@ -68,21 +70,21 @@ function App() {
     homeSocket.on('msgNotificaton', msg => {
       dispatch(getNotification(cookieData))
     })
+
   }, [])
-  
-  // useEffect(() => {
-  //     dispatch(getNotification(cookieData))
-  // }, [params])
+
+
 
 
 
   useEffect(() => {
     homeSocket.emit("joinHomeRoom", userId);
-    dispatch(getNotification(cookieData))
-
+    dispatch(getNotification(cookieData));
+    //notification Action (post, Like , Follow )
+    notificationAction.emit(userId);
   }, [Logged]);
 
-  
+
 
   return (
     <div className="App">
@@ -98,7 +100,7 @@ function App() {
               <Route path='/messages/:id' element={<MessagePage render={render} setRender={setRender} />} />
               <Route path='/chat' element={<Chat />} />
               <Route path="/userProfile" element={<UsersProfile />} />
-              
+
             </Routes>
           </SidebarWithHeader>
         ) :

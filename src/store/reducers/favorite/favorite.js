@@ -45,6 +45,7 @@ export const addFavoritePost = (cookieData , postid) => async dispatch => {
      try {
           const res = await axios.post(`${url}/favorites`, {postid}, { headers: { Authorization: `Bearer ${cookieData}` } })
           dispatch(dispatchFavoritePost(res.data.favorites))
+          console.log('favorites, Added Sucssufully', res)
      } catch (err) {
           console.log(err);
      }
@@ -61,6 +62,8 @@ export const removeFavorite = (cookieData , id) => async dispatch =>{
      try {
           const res = await axios.delete(`${url}/favorites/${id}`, { headers: { Authorization: `Bearer ${cookieData}` } })
           dispatch(dispatchRemoveFavorite(id))
+          console.log('favorites, removed Sucssufully', res)
+
      } catch (err) {
           console.log(err);
      }

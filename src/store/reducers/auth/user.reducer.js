@@ -46,27 +46,23 @@ export default (state = USER_STATE, action) => {
 }
 
 export const logOut = () => ({
-  type: "LOG_OUT",
+    type: "LOG_OUT",
 });
 
 export const signin = (user) => ({
-  type: "SIGN_IN",
-  payload: user,
+    type: "SIGN_IN",
+    payload: user,
 });
 
 export const id = (id) => ({
-  type: "id",
-  payload: id,
+    type: "id",
+    payload: id,
 });
 
 export const uderData = (user) => ({
-  type: "USER_DATA",
-  payload: user,
+    type: "USER_DATA",
+    payload: user,
 });
-
-export const DecodeToken = () => ({
-    type: 'DECODE_TOKEN'
-})
 
 export const DecodeToken = () => ({
     type: 'DECODE_TOKEN'

@@ -10,9 +10,10 @@ import './actionSection.scss'
 import { useSelector, useDispatch } from 'react-redux';
 import { setLike, removeLike } from '../../../../../../store/reducers/basicActions/post';
 import { handleCommentActive } from '../../../../../../store/reducers/basicActions/post';
+import { addFavoritePost, removeFavorite, fetchFavoritePosts } from '../../../../../../store/reducers/favorite/favorite';
 import jwtDecode from "jwt-decode";
 import cookies from 'react-cookies';
-function ActionSection(props) {
+function ActionSection(photoId) {
     // Like Button State
     const [liked, setLiked] = useState(false);
     const [fav, setFav] = useState(false);
@@ -46,6 +47,7 @@ function ActionSection(props) {
     // Search  if the user already add like
     useEffect(() => {
         if (userId) {
+
             if (Array.isArray(likeList)) {
                 for (const item of likeList) {
                     if (item.userid === userId) {
@@ -58,8 +60,41 @@ function ActionSection(props) {
 
     }, []);
 
-    // likeList, userId, postCurrentId
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                await dispatch(fetchFavoritePosts(session_user));
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        };
+        fetchData();
 
+    }, []);
+
+    const favoriteList = useSelector((state) => state.Favorite.favoritePosts
+    );
+
+    console.log("IDDDD current photo ", photoId);
+    useEffect(() => {
+        if (userId) {
+
+            if (Array.isArray(favoriteList)) {
+                for (const item of favoriteList) {
+                    if (item.userid === userId && postCurrentId === item.id) {
+                        console.log(true)
+                        setFav(true);
+                        break;
+                    }
+                }
+            }
+        }
+
+    }, []);
+
+
+
+    console.log("llllllist", favoriteList)
 
     const toggleLike = async () => {
         if (liked === true) {
@@ -70,12 +105,14 @@ function ActionSection(props) {
         }
         setLiked(!liked);
     };
+    // Faviorites 
 
     const toggleFav = async () => {
         if (liked === true) {
-            await dispatch(removeLike(postCurrentId))
+            await dispatch(removeFavorite(session_user, postCurrentId))
+
         } else {
-            await dispatch(setLike(postCurrentId))
+            await dispatch(addFavoritePost(session_user, postCurrentId))
 
         }
         setFav(!fav);
