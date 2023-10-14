@@ -12,8 +12,6 @@ import { useNavigate } from "react-router-dom";
 import { Spinner } from "@chakra-ui/react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import "./Results.scss";
-import { Box, CircularProgress, Spinner } from "@chakra-ui/react";
-import { ArrowBackIcon } from "@chakra-ui/icons";
 import { decodeToken } from "react-jwt";
 
 
@@ -50,7 +48,13 @@ function Results() {
         setLoading(true);
         const response = axios.post("http://localhost:3002/search", obj);
         response.then((data) => {
-          setSearchresults(data.data);
+          const searchUsers = data.data.users;
+          const searchPosts = data.data.posts.filter(item => !item.challengeID&&!item.challengeName);
+          const searchResult = {
+            users: searchUsers,
+            posts: searchPosts
+          };
+          setSearchresults(searchResult);
           setLoading(false);
         });
       }

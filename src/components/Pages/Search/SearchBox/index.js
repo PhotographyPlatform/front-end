@@ -18,8 +18,8 @@ function SerachBox() {
   return (
     <div className="searchbox-container">
       <div className="search-des">
-        <p className="search-des_first-paragraph"><span className="search-des_span">Search for anything you want</span> it can be any word.. a username, a category</p> 
-        <p className="search-des_second-paragraph"> type or anything</p>
+        <p className="search-des_first-paragraph"><span className="search-des_span">Search for anything you want</span> you can search through the users and the posts: </p> 
+        {/* <p className="search-des_second-paragraph"> </p> */}
       </div>
       <div className="search-bar">
         <Search2Icon className="search-icon"/>

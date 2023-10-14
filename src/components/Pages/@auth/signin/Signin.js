@@ -24,7 +24,7 @@ import {
 } from '@chakra-ui/react'
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 
-import { signin } from '../../../../store/reducers/auth/user.reducer'
+import { DecodeToken, signin } from '../../../../store/reducers/auth/user.reducer'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import React, { useEffect, useState } from 'react'
