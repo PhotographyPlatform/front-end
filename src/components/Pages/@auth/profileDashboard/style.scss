@@ -1,0 +1,12 @@
+.btn {
+    background-color: rgb(53, 92, 235) !important;
+}
+
+.btnClose {
+    background-color: rgb(255, 45, 45) !important;
+    color: white !important;
+
+    &:hover {
+        color: black !important;
+    }
+}

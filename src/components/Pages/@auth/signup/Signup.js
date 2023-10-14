@@ -50,16 +50,14 @@ export default function SignUp() {
             //     birthday: e.target.bday.value,
             //     username: e.target.username.value
             // }
-
             const obj = {
-                email: e.target.email.value,
-                firstName: e.target.fname.value,
-                lastName: e.target.lname.value,
-                password: e.target.password.value,
-                address: e.target.address.value,
-                gender: e.target.options.value,
-                birthday: e.target.bday.value,
-                username: e.target.username.value
+                email: 'tamarihamza4@gmail.com',
+                firstName: 'hamza',
+                lastName: 'tamari',
+                password: '123',
+                address: 'amman',
+                birthday: '1999-12 - 12',
+                username: 'hamza.tamari'
             }
             localStorage.setItem('email', obj.email)
             const signUp = await axios.post('http://localhost:3002/signup', obj)

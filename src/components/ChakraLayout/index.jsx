@@ -45,6 +45,7 @@ import NewPost from '../components/NewPost';
 import { IoMdAddCircle } from 'react-icons/io';
 import { BsFillChatDotsFill } from 'react-icons/bs';
 import FavoritePage from '../Pages/@auth/FavoritePage/FavoritePage';
+import UsersProfile from '../Pages/@auth/profileDashboard/UsersProfile';
 
 
 
@@ -76,7 +77,7 @@ function SidebarContent({ onClose, ...rest }) {
             {...rest}
         >
             <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-               
+
                 <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
                     Logo
                 </Text>
@@ -137,6 +138,7 @@ function SidebarWithHeader() {
                     <Route path="/favorite" element={<FavoritePage />} />
                     <Route path='/chat' element={<Chat />} />
                     <Route path='/messages/:id' element={<MessagePage render={render} setRender = {setRender} />} />
+                    <Route path="/userProfile" element={<UsersProfile />} />
                     {/* <Route path="/addpost" element={<Profile />} /> */}
                     <Route path="*" element={<NotFound />} />
                 </Routes>

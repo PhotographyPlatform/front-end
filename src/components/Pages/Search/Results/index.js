@@ -5,13 +5,17 @@ import {
   setActiveCategory,
   setSearchWord,
 } from "../../../../store/reducers/Search";
-import "./Results.scss";
 import Posts from "../../../components/posts";
 import Users from "./Users";
 import Cookies from "react-cookies";
 import { useNavigate } from "react-router-dom";
-import { CircularProgress, Spinner } from "@chakra-ui/react";
+import { Spinner } from "@chakra-ui/react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
+import "./Results.scss";
+import { Box, CircularProgress, Spinner } from "@chakra-ui/react";
+import { ArrowBackIcon } from "@chakra-ui/icons";
+import { decodeToken } from "react-jwt";
+
 
 function Results() {
   const navigate = useNavigate();
@@ -21,8 +25,20 @@ function Results() {
   const [searchresults, setSearchresults] = useState({});
   const [searchCategoryresults, setSearchCategoryresults] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [isdragging, setIsdragging] = useState(false);
 
-  console.log(searchresults);
+  // handle the user profile 
+  const profileHandler = (id) => {
+    Cookies.remove('id')
+    Cookies.save('id', id)
+    const token = Cookies.load('user_session')
+    const parsed = decodeToken(token)
+    if (id === parsed.userId) {
+      navigate('/profile')
+    } else {
+      navigate('/userProfile')
+    }
+  }
 
   useEffect(() => {
     const obj = {
@@ -35,9 +51,6 @@ function Results() {
         const response = axios.post("http://localhost:3002/search", obj);
         response.then((data) => {
           setSearchresults(data.data);
-          // console.log(obj, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-          // console.log(data.data, "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
-          // console.log(data, "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
           setLoading(false);
         });
       }
@@ -70,96 +83,25 @@ function Results() {
     dispatch(setActiveCategory(""));
   };
 
-  // const test = [
-  //   {
-  //     id: 1,
-  //     imgurl: "https://images.pexels.com/photos/2760519/pexels-photo-2760519.jpeg?auto=compress&cs=tinysrgb&w=600",
-  //     userid: 2,
-  //     title: "rome at sunset",
-  //     contant: "i took this photo yesterday when i was in Rome at sunset, it was so beautiful",
-  //     challengeName: null,
-  //     challengeID: null,
-  //     category: [
-  //       "colors",
-  //       "nature",
-  //       "colors"
-  //     ],
-  //     createdAt: "2023-10-07T17:04:16.288Z",
-  //     updatedAt: "2023-10-07T17:04:16.288Z"
-  //   },
-  //   {
-  //     id: 1,
-  //     imgurl: "https://images.pexels.com/photos/2760519/pexels-photo-2760519.jpeg?auto=compress&cs=tinysrgb&w=600",
-  //     userid: 2,
-  //     title: "rome at sunset",
-  //     contant: "i took this photo yesterday when i was in Rome at sunset, it was so beautiful",
-  //     challengeName: null,
-  //     challengeID: null,
-  //     category: [
-  //       "colors",
-  //       "nature",
-  //       "colors"
-  //     ],
-  //     createdAt: "2023-10-07T17:04:16.288Z",
-  //     updatedAt: "2023-10-07T17:04:16.288Z"
-  //   },
-  //   {
-  //     id: 1,
-  //     imgurl: "https://images.pexels.com/photos/2760519/pexels-photo-2760519.jpeg?auto=compress&cs=tinysrgb&w=600",
-  //     userid: 2,
-  //     title: "rome at sunset",
-  //     contant: "i took this photo yesterday when i was in Rome at sunset, it was so beautiful",
-  //     challengeName: null,
-  //     challengeID: null,
-  //     category: [
-  //       "colors",
-  //       "nature",
-  //       "colors"
-  //     ],
-  //     createdAt: "2023-10-07T17:04:16.288Z",
-  //     updatedAt: "2023-10-07T17:04:16.288Z"
-  //   },
-  //   {
-  //     id: 1,
-  //     imgurl: "https://images.pexels.com/photos/2760519/pexels-photo-2760519.jpeg?auto=compress&cs=tinysrgb&w=600",
-  //     userid: 2,
-  //     title: "rome at sunset",
-  //     contant: "i took this photo yesterday when i was in Rome at sunset, it was so beautiful",
-  //     challengeName: null,
-  //     challengeID: null,
-  //     category: [
-  //       "colors",
-  //       "nature",
-  //       "colors"
-  //     ],
-  //     createdAt: "2023-10-07T17:04:16.288Z",
-  //     updatedAt: "2023-10-07T17:04:16.288Z"
-  //   },
-  //   {
-  //     id: 1,
-  //     imgurl: "https://images.pexels.com/photos/2760519/pexels-photo-2760519.jpeg?auto=compress&cs=tinysrgb&w=600",
-  //     userid: 2,
-  //     title: "rome at sunset",
-  //     contant: "i took this photo yesterday when i was in Rome at sunset, it was so beautiful",
-  //     challengeName: null,
-  //     challengeID: null,
-  //     category: [
-  //       "colors",
-  //       "nature",
-  //       "colors"
-  //     ],
-  //     createdAt: "2023-10-07T17:04:16.288Z",
-  //     updatedAt: "2023-10-07T17:04:16.288Z"
-  //   },
-  // ];
+  function handleMouseMove(e){
+    const tagsBox = document.querySelector(".nav-tags");
+    if(isdragging){ 
+      tagsBox.classList.add("dragging");
+      tagsBox.scrollLeft -= e.movementX;
+    }
+  }
+  
+  function stopDragging(){
+    const tagsBox = document.querySelector(".nav-tags");
+    setIsdragging(false);
+    tagsBox.classList.remove("dragging");    
+  }
 
-  // function clickHandler(id){
-  //   Cookies.remove('id');
-  //   Cookies.save('id', id);
-  //   if(id){
-  //     navigate('/userProfile');
-  //   }
-  // }
+  function moveSliderOnClick(button){
+    const tagsBox = document.querySelector(".nav-tags");
+    tagsBox.scrollLeft += button==='left' ? -350 : 350;
+    
+  }
 
   return (
     <div className="result-container">
@@ -202,23 +144,13 @@ function Results() {
               for the search word '{state.searchWord}'
             </i>
           </small>
-          {/* {!loading ? (
-            <ul>
-              {searchresults.users &&
-                searchresults.users.map((item) => (
-                  <li key={item.id}>{item.username}</li>
-                ))}
-            </ul>
-          ) : (
-            <Spinner thickness='3px' speed='0.65s' emptyColor='gray.200' color='blue.500' size='xl' />
-          )} */}
 
-          <div className="all-users-flex">
+          <div className="all-users-flex" >
             {!loading ? (
               searchresults.users &&
               searchresults.users.map((item) => (
-                // <Text onClick={()=>clickHandler(item.id)}>{item.username}</Text>
                 <Users
+                  handler={profileHandler}
                   id={item.id}
                   key={item.id}
                   username={item.username}
@@ -245,11 +177,7 @@ function Results() {
               for the search word '{state.searchWord}'
             </i>
           </small>
-          {/* { !loading ? <ul>
-          {searchresults.posts &&
-            searchresults.posts.map((item) => <li key={item.id}>{item.title}</li>)}
-        </ul> : 'Loading...'} */}
-
+        
           {!loading ? (
             searchresults.posts && <Posts posts={searchresults.posts} />
           ) : (
@@ -266,19 +194,22 @@ function Results() {
 
       {state.searchWord === "" && state.activeCategory !== "" && (
         <div>
-          {/* <p>category result: </p>
-        { !loading ? <ul>
-          {searchCategoryresults &&
-            searchCategoryresults.map((item) => <li key={item.id}>{item.title}</li>)}
-        </ul> : 'Loading...'} */}
+          
+          <div className="tag-navigator">
+            <div className="tag-navigator-arrow"><h4 className="arrow" onClick={()=>moveSliderOnClick('left')}>&#60;</h4></div>
+            <ul className="nav-tags" onMouseMove={handleMouseMove} onMouseDown={()=>setIsdragging(true)} onMouseUp={stopDragging}>
+            {state.categories.map(item => <li className="nav-tag" onClick={()=>dispatch(setActiveCategory(item.name))}>{item.name}</li>)}
+            </ul>
+            <div className="tag-navigator-arrow"><h4 className="arrow" onClick={()=>moveSliderOnClick('right')}>&#62;</h4></div>
+          </div>
 
-          {/* <p>category result: </p> */}
           <small>
             <i>
               {searchCategoryresults ? searchCategoryresults.length : 0} posts
               found containing the category '{state.activeCategory}'
             </i>
           </small>
+
           {!loading ? (
             <Posts posts={searchCategoryresults} />
           ) : (
@@ -290,7 +221,7 @@ function Results() {
               size="xl"
             />
           )}
-          {/* { !loading ? <Posts posts={test}/> : 'Loading...'} */}
+          
         </div>
       )}
     </div>
