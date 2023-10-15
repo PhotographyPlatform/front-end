@@ -9,7 +9,7 @@ function ChallengesList({challenges, setIsViewClicked, setSelectedChallenge}) {
   }
 
   return (
-    <div class="card mb-3">
+    <div class="card card-ch-li mb-3">
       <img
         src="https://images.pexels.com/photos/3225517/pexels-photo-3225517.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
         class="card-img-top"

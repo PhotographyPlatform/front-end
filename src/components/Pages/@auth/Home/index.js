@@ -1,82 +1,75 @@
-import React from 'react';
-import './profile.scss'
-import {
-    Card,
-    CardHeader,
-    CardBody,
-    CardFooter,
-    Flex,
-    Avatar,
-    Heading,
-    Text,
-    IconButton,
-    Image,
-    Button,
-    Box,
-} from '@chakra-ui/react';
-import { BsThreeDotsVertical } from 'react-icons/bs'; // Import the BsThreeDotsVertical icon
-import { BiLike, BiChat, BiShare } from 'react-icons/bi'; // Import the BiLike, BiChat, and BiShare icons
-import { homeSocket } from '../../../../App';
-
+import React, { useEffect, useState } from "react";
+import { homeSocket } from "../../../../App";
+import { Search2Icon } from "@chakra-ui/icons";
+import { setSearchWord } from "../../../../store/reducers/Search";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
+import Posts from "../../../components/posts";
+import "./Home.scss";
+import { decodeToken } from "react-jwt";
+import cookies from "react-cookies";
+import axios from "axios";
 
 function Home() {
+  const [homePosts, sethomePosts] = useState([]);
 
-    return (
-        <div className='auth-profile'>
-            <Card maxW='md'>
-                <CardHeader>
-                    <Flex spacing='4'>
-                        <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-                            <Avatar name='Segun Adebayo' src='https://bit.ly/sage-adebayo' />
+  const dispatch = useDispatch();
+  const Navigator = useNavigate();
 
-                            <Box>
-                                <Heading size='sm'>Segun Adebayo</Heading>
-                                <Text>Creator, Chakra UI</Text>
-                            </Box>
-                        </Flex>
-                        <IconButton
-                            variant='ghost'
-                            colorScheme='gray'
-                            aria-label='See menu'
-                            icon={<BsThreeDotsVertical />}
-                        />
-                    </Flex>
-                </CardHeader>
-                <CardBody>
-                    <Text>
-                        With Chakra UI, I wanted to sync the speed of development with the speed
-                        of design. I wanted the developer to be just as excited as the designer to
-                        create a screen.
-                    </Text>
-                </CardBody>
-                <Image
-                    objectFit='cover'
-                    src='https://images.unsplash.com/photo-1531403009284-440f080d1e12?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80'
-                    alt='Chakra UI'
-                />
+  const setSearchWorldHandler = (e) => {
+    const value = e.target.value;
+    if (e.key === "Enter" && value.trim() !== "") {
+      dispatch(setSearchWord(e.target.value));
+      Navigator("/search");
+    }
+  };
 
-                <CardFooter
-                    justify='space-between'
-                    flexWrap='wrap'
-                    sx={{
-                        '& > button': {
-                            minW: '136px',
-                        },
-                    }}
-                >
-                    <Button flex='1' variant='ghost' leftIcon={<BiLike />}>
-                        Like
-                    </Button>
-                    <Button flex='1' variant='ghost' leftIcon={<BiChat />}>
-                        Comment
-                    </Button>
-                    <Button flex='1' variant='ghost' leftIcon={<BiShare />}>
-                        Share
-                    </Button>
-                </CardFooter>
-            </Card>
+  const token = cookies.load("user_session");
+  const parsedToken = decodeToken(token);
+
+  console.log(parsedToken.userId);
+
+  useEffect(() => {
+    try {
+      const response = axios.get(
+        `http://localhost:3002/fullyFeeds/${parsedToken.userId}`
+      );
+      response.then((data) => {
+        console.log(data, "!!!!!!!!!!!!!!!");
+        sethomePosts(data.data);
+      });
+    } catch (e) {
+      console.log("error while fetching home posts");
+    }
+  }, []);
+
+  return homePosts.length!==0 ? (
+    <div className="auth-profile">
+      <div className="search-bar-home">
+        <Search2Icon className="search-icon-home" />
+        <input
+          type="search"
+          placeholder="Type your search.."
+          maxLength={30}
+          onKeyDown={setSearchWorldHandler}
+        />
+      </div>
+      <Posts posts={homePosts} />
+    </div>
+  ) : (
+    <div className="welcome">
+      <div className="welcome-container">
+        <h1>Welcome 😺</h1>
+        <p>
+          It looks like you are new here, please press on the button below so
+          you can search and discover more
+        </p>
+        <div>
+          <button onClick={()=>Navigator("/search")}>Discover 🚀</button>
         </div>
-    )
+      </div>
+    </div>
+  );
 }
 
-export default Home
+export default Home;
