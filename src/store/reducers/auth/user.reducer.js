@@ -1,10 +1,8 @@
-/* eslint-disable */
-
 import cookies from 'react-cookies';
 import CryptoJS from 'crypto-js';
 import { useDispatch } from 'react-redux'
-
 import jwtDecode from "jwt-decode";
+
 const session_user = cookies.load('user_session');
 let decoded = null;
 
@@ -14,8 +12,9 @@ if (session_user) {
 
 const USER_STATE = {
     user: [],
-    token: { decoded }
+    token: decoded
 }
+
 
 export default (state = USER_STATE, action) => {
     const { type, payload } = action
@@ -33,7 +32,7 @@ export default (state = USER_STATE, action) => {
         case 'DECODE_TOKEN':
             const Detoken = cookies.load('user_session');
             const decoded = jwtDecode(Detoken);
-            console.log(decoded);
+
             return { ...state, token: decoded };
         case 'LOG_OUT':
             cookies.remove('user_session')
@@ -46,26 +45,24 @@ export default (state = USER_STATE, action) => {
     }
 }
 
-
 export const logOut = () => ({
-    type: 'LOG_OUT'
-})
+    type: "LOG_OUT",
+});
 
 export const signin = (user) => ({
-    type: 'SIGN_IN',
-    payload: user
-})
+    type: "SIGN_IN",
+    payload: user,
+});
 
 export const id = (id) => ({
-    type: 'id',
-    payload: id
-})
-
+    type: "id",
+    payload: id,
+});
 
 export const uderData = (user) => ({
-    type: 'USER_DATA',
-    payload: user
-})
+    type: "USER_DATA",
+    payload: user,
+});
 
 export const DecodeToken = () => ({
     type: 'DECODE_TOKEN'
@@ -73,4 +70,3 @@ export const DecodeToken = () => ({
 
 
 /* eslint-enable */
-

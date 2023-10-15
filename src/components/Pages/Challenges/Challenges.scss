@@ -1,0 +1,30 @@
+.challenges-container{
+    margin: auto;
+    width: 65%;
+    // width: 67%;
+    display: flex;
+    flex-direction: row;
+    gap: 70px;
+    // gap: 90px;
+    flex-wrap: wrap;
+}
+
+.challenges-header{
+    font-weight: bold;
+    margin-top: 40px;
+    margin-bottom: 80px;
+}
+
+.challenges-cd-header{
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+.back-button{
+    width: 90%;
+    margin: auto;
+    display: flex;
+    justify-content: start;
+    padding-top: 50px;
+}
+

@@ -52,6 +52,9 @@ import { useDispatch } from 'react-redux';
 import { getNotification } from '../../store/reducers/chat/chatList.reducer';
 import cookie from 'react-cookies';
 import jwtDecode from 'jwt-decode';
+import Challenges from '../Pages/Challenges';
+import { MdOutlinePartyMode } from 'react-icons/md';
+
 
 
 
@@ -61,6 +64,7 @@ const LinkItems = [
     { name: 'Home', icon: FiHome, path: '/' },
     { name: 'Profile', icon: FiTrendingUp, path: '/profile' },
     { name: 'Search', icon: FiCompass, path: '/search' },
+    { name: 'challenges', icon: MdOutlinePartyMode, path: '/challenges' },
     { name: 'Add Post', icon: FiCompass, path: '/addpost' },
     { name: 'Favourites', icon: FiStar , path : '/favorite' },
     {name: 'Chat', icon: BsFillChatDotsFill, path: '/chat'},
@@ -156,11 +160,13 @@ function SidebarWithHeader() {
                     <Route path='/chat' element={<Chat />} />
                     <Route path='/messages/:id' element={<MessagePage render={render} setRender = {setRender} />} />
                     <Route path="/userProfile" element={<UsersProfile />} />
+
                     {
                         role === 'admin' &&
                         <Route path="/admin/user" element={<AdminPosts/>} />
                     }
                     {/* <Route path="/admin/posts" element={<AdminPosts/>} /> */}
+                    <Route path="/challenges" element={<Challenges />} />
                     {/* <Route path="/addpost" element={<Profile />} /> */}
                     <Route path="*" element={<NotFound />} />
                 </Routes>

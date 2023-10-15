@@ -10,10 +10,6 @@
     }
   }
   
-  // .modal-np {
-  //   // height: 90%;
-  // }
-
   .upload-image-container {
     display: flex;
     flex-direction: column;
@@ -74,6 +70,20 @@
       border-color:#256ad2;
       outline: #256ad2;
     }
+  }
+
+  .input-disabled{
+    width: 100%;
+    border: 1.5px solid #e2e8f0;
+    transition: border;
+    padding: 10px;
+    border-radius: 6px;
+    margin-top: 10px;
+
+  }
+
+  .input-disabled:hover{
+    cursor: not-allowed;
   }
   
   .tags-container {
@@ -169,9 +179,9 @@
   .empty-img-input{
     color:red;
   }
-  
-  .modal-buttons{
-    margin-top: 10%;
+
+  .modal-buttons-cp{
+    margin: 10% 0;
     button{
       margin-right: 10px;
     }

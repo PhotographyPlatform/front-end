@@ -30,15 +30,18 @@ import UsersProfile from './components/Pages/@auth/profileDashboard/UsersProfile
 
 import SidebarWithHeader from './components/ChakraLayout';
 import { dispatchAllNotification, fetchUserListRedux, getNotification } from './store/reducers/chat/chatList.reducer';
+import Challenges from './components/Pages/Challenges';
 
 
 // socket assets 
-
+const port = 3002;
 const host = "http://localhost:3002";
 const homeHost = "http://localhost:3002/home";
+const nameSpacehost = `http://localhost:${port}/notification`;
 
 export const socket = io.connect(host, { transports: ["websocket"] });
 export const homeSocket = io.connect(homeHost, { transports: ["websocket"] });
+export const notificationAction = io.connect(nameSpacehost, { transports: ["websocket"] });
 
 
 function App() {
@@ -67,11 +70,10 @@ function App() {
     homeSocket.on('msgNotificaton', msg => {
       dispatch(getNotification(cookieData))
     })
+
   }, [])
-  
-  // useEffect(() => {
-  //     dispatch(getNotification(cookieData))
-  // }, [params])
+
+
 
 
 
@@ -80,7 +82,7 @@ function App() {
     dispatch(getNotification(cookieData))
   }, [Logged]);
 
-  
+
 
   return (
     <div className="App">
@@ -92,10 +94,11 @@ function App() {
               <Route path="/" element={<AuthHome />} />
               <Route path="/profile" element={<Profile />} />
               <Route path='/searchs' element={<Search />} />
+              <Route path="/challenges" element={<Challenges />} />
               <Route path='/messages/:id' element={<MessagePage render={render} setRender={setRender} />} />
               <Route path='/chat' element={<Chat />} />
               <Route path="/userProfile" element={<UsersProfile />} />
-              
+
             </Routes>
           </SidebarWithHeader>
         ) :

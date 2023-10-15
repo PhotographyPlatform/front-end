@@ -6,21 +6,36 @@ import { removePost } from '../../../../../../store/reducers/basicActions/post';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDisclosure } from '@chakra-ui/react';
 import ViewPost from '../..';
+import jwtDecode from "jwt-decode";
+import cookies from 'react-cookies';
+
 function PostOption({ postId, postOwnerId, onClose }) {
 
     const dispatch = useDispatch();
     const numEffect = useSelector((state) => state.post.numEffect);
-    const userId = useSelector((state) => state.user.token.decoded.userId);
 
-    // const { isOpen: isOpenViewPost, onOpen: onOpenViewPost, onClose: onCloseViewPost } = useDisclosure();
+
+    const session_user = cookies.load('user_session');
+    let decoded = null;
+
+    if (session_user) {
+        decoded = jwtDecode(session_user);
+    }
+    // const userId = useSelector((state) => state.user?.token?.userId ?? 1);
+    const userId = decoded.userId;
+
+
 
     const [allow, setAllow] = useState(false);
 
     useEffect(() => {
-        if (postOwnerId === userId) {
-            setAllow(true);
+        if (userId) {
+            if (postOwnerId === userId) {
+                setAllow(true);
+            }
         }
-    }, [postOwnerId, userId])
+
+    }, [])
 
     function handleRemovepost() {
         dispatch(removePost(postId))
