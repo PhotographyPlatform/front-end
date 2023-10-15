@@ -66,7 +66,7 @@ function NewPost({ onCloseNewPost, isOpenNewPost }) {
 
     const newPost = {
       imgurl: e.target.elements.fileInput.value,
-      userid: 1,
+      userid: 3,
       title: e.target.elements.title.value,
       contant: e.target.elements.descript.value,
       category: tags,

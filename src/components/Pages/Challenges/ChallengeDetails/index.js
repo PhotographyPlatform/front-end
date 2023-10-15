@@ -29,7 +29,7 @@ function ChallengeDetails({ selectedChallenge }) {
   return (
     <>
       {!isViewParticipationsClicked ? (
-        <div className="challenge-details">
+        <div className="challenge-details card-ch-li">
           <div class="card card-cd mb-3">
             <img
               src="https://images.pexels.com/photos/3225517/pexels-photo-3225517.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
@@ -85,7 +85,7 @@ function ChallengeDetails({ selectedChallenge }) {
           </div>
         </div>
       ) : (
-        allPosts.length===0 ? <i>there are no posts yet for the challenge '{selectedChallenge.title}'</i> : <Posts posts={allPosts}/>
+        allPosts.length===0 ? <i>there are no posts for the challenge '{selectedChallenge.title}' yet</i> : <Posts posts={allPosts}/>
       )}
     </>
   );

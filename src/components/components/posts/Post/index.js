@@ -1,6 +1,6 @@
-import './Post.scss';
 import ViewPost from '../../../Pages/Post/ViewPost';
 import { useDisclosure } from '@chakra-ui/react';
+import './Post.scss';
 
 
 //props

@@ -8,7 +8,7 @@ function SerachBox() {
 
   const dispatch = useDispatch();
 
-  const addTagHandler = (e) => {
+  const setSearchWorldHandler = (e) => {
     const value = e.target.value;
     if (e.key === "Enter" && value.trim() !== "") {
       dispatch(setSearchWord(e.target.value));
@@ -27,7 +27,7 @@ function SerachBox() {
           type="search"
           placeholder="Type your search.."
           maxLength={30}
-          onKeyDown={addTagHandler}
+          onKeyDown={setSearchWorldHandler}
         />
       </div>
     </div>
