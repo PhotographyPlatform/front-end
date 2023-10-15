@@ -54,6 +54,7 @@ import cookie from 'react-cookies';
 import jwtDecode from 'jwt-decode';
 import Challenges from '../Pages/Challenges';
 import { MdOutlinePartyMode } from 'react-icons/md';
+import AdminReports from '../Admin/Reports/Reports';
 
 
 
@@ -160,10 +161,12 @@ function SidebarWithHeader() {
                     <Route path='/chat' element={<Chat />} />
                     <Route path='/messages/:id' element={<MessagePage render={render} setRender = {setRender} />} />
                     <Route path="/userProfile" element={<UsersProfile />} />
-
                     {
                         role === 'admin' &&
-                        <Route path="/admin/user" element={<AdminPosts/>} />
+                        <>
+                            <Route path="/admin/user" element={<AdminPosts/>} />
+                            <Route path="/admin/reports" element={<AdminReports/>} />
+                        </>
                     }
                     {/* <Route path="/admin/posts" element={<AdminPosts/>} /> */}
                     <Route path="/challenges" element={<Challenges />} />
