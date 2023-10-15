@@ -79,9 +79,7 @@ function App() {
 
   useEffect(() => {
     homeSocket.emit("joinHomeRoom", userId);
-    dispatch(getNotification(cookieData));
-    //notification Action (post, Like , Follow )
-    notificationAction.emit(userId);
+    dispatch(getNotification(cookieData))
   }, [Logged]);
 
 

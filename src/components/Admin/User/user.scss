@@ -1,0 +1,38 @@
+.adminUserMain{
+     width:100% ;
+     height: 80vh;
+     padding: 20px;
+     display: flex;
+     justify-content: flex-start;
+     align-items: center;
+     flex-direction: column;
+    
+     .adminUserContainer{
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+          gap: 60px;
+          width: 90%;
+          height: 90%;
+          // background-color: red;
+          position: relative;
+
+          .adminUserinput{
+               display: flex;
+               justify-content: center;
+               align-items: center;
+               flex-direction: column;
+               gap: 30px;
+               width: 60%;
+               height: 60%;
+               background-color: white;
+               box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+               border-radius: 20px;
+               .admin-user-input{
+                    width: 50%;
+               }
+          }
+     }
+}
+

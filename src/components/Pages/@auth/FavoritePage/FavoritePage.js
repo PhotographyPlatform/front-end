@@ -58,7 +58,7 @@ export default function FavoritePage() {
                <Heading as={'h3'}>Favorites</Heading>
           </Box>
           <Divider  borderBottomWidth={'3px'} borderColor={'#00000040'}  marginTop={'5px'}/>
-          <Box className='favoriteItems' justifyContent={{base : 'center', '2xl' : 'flex-start'}}>
+          <Box className='favoriteItems' justifyContent={{base : 'center', xl : 'center' }}>
                {
                     selector.favoritePosts &&
                     selector.favoritePosts.map(ele =>(
