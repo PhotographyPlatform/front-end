@@ -9,11 +9,9 @@ import Posts from "../../../components/posts";
 import Users from "./Users";
 import Cookies from "react-cookies";
 import { useNavigate } from "react-router-dom";
-import { Spinner } from "@chakra-ui/react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import "./Results.scss";
 import { Box, CircularProgress, Spinner } from "@chakra-ui/react";
-import { ArrowBackIcon } from "@chakra-ui/icons";
 import { decodeToken } from "react-jwt";
 
 
