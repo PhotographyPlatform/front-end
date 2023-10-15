@@ -31,6 +31,7 @@ import UsersProfile from './components/Pages/@auth/profileDashboard/UsersProfile
 import SidebarWithHeader from './components/ChakraLayout';
 import { dispatchAllNotification, fetchUserListRedux, getNotification } from './store/reducers/chat/chatList.reducer';
 import Challenges from './components/Pages/Challenges';
+import Home from './components/Pages/Home/Home';
 
 
 // socket assets 
@@ -86,7 +87,10 @@ function App() {
 
   return (
     <div className="App">
+      
       <ThemeProvider theme={theme}>
+        
+
         {decodeAuth && decodeAuth.userId ? (
           <SidebarWithHeader>
             <Routes>

@@ -102,9 +102,11 @@ export const getNotification = (cookieData) =>  async (dispatch) => {
 
 export const fetchFolowingChatList = (cookieData) => async dispatch => {
      try {
-          const response = await axios.get('http://localhost:3002/profile/following', { headers: { Authorization: `Bearer ${cookieData}` } })
+          const response = await axios.get('http://localhost:3002/Following', { headers: { Authorization: `Bearer ${cookieData}` } })
+          // const response = await axios.get('http://localhost:3002/profile/following', { headers: { Authorization: `Bearer ${cookieData}` } })
           dispatch(dispatchFolowingChatList(response.data.Following))
      } catch (err) {
+          console.log('================');
           console.log(err);
      }
 }
