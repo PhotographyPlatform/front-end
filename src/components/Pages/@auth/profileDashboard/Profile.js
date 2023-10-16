@@ -69,6 +69,7 @@ function Profile() {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const refreshState = useSelector(state => state.refresh)
     console.log(refreshState);
+
     const handleClick = () => {
         onOpen()
     }
@@ -168,10 +169,12 @@ function Profile() {
                         }
                         <Button
                             position="absolute"
-                            left={['85%', '90%', '93%', '96%']}
+                            left={['85%', '90%', '93%', '95%']}
                             top={['100%', '100%', '100%', '100%']}
 
-                            bg='Background'
+                            // bg='Background'
+                            backgroundColor='blue'
+                            color='white'
                             onClick={handleClick}
                         >
                             <BsFillPencilFill />

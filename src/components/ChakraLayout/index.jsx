@@ -46,6 +46,8 @@ import { IoMdAddCircle } from 'react-icons/io';
 import { BsFillChatDotsFill } from 'react-icons/bs';
 import FavoritePage from '../Pages/@auth/FavoritePage/FavoritePage';
 import UsersProfile from '../Pages/@auth/profileDashboard/UsersProfile';
+import Mystory from '../Pages/@auth/stories/Mystory';
+import Otherstories from '../Pages/@auth/stories/Otherstories';
 import User from '../Admin/User/User';
 import AdminPosts from '../Admin/Posts/Posts';
 import { useDispatch } from 'react-redux';
@@ -54,7 +56,6 @@ import cookie from 'react-cookies';
 import jwtDecode from 'jwt-decode';
 import Challenges from '../Pages/Challenges';
 import { MdOutlinePartyMode } from 'react-icons/md';
-
 
 
 
@@ -160,6 +161,7 @@ function SidebarWithHeader() {
                     <Route path='/chat' element={<Chat />} />
                     <Route path='/messages/:id' element={<MessagePage render={render} setRender = {setRender} />} />
                     <Route path="/userProfile" element={<UsersProfile />} />
+//                     <Route path="/story" element={<Mystory />} />
 
                     {
                         role === 'admin' &&
@@ -168,8 +170,10 @@ function SidebarWithHeader() {
                     {/* <Route path="/admin/posts" element={<AdminPosts/>} /> */}
                     <Route path="/challenges" element={<Challenges />} />
                     {/* <Route path="/addpost" element={<Profile />} /> */}
+                    <Route path="/otherStory/:id" element={<Otherstories />} />
                     <Route path="*" element={<NotFound />} />
                 </Routes>
+
             </Box>
         </Box>
     );

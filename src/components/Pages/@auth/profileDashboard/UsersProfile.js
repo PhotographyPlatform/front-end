@@ -7,7 +7,6 @@ import OthersModal from './OthersModal';
 
 function UsersProfile() {
     const [data, setData] = useState({});
-    console.log(data);
     const [showFollowersModal, setShowFollowersModal] = useState(false);
     const [showFollowingModal, setShowFollowingModal] = useState(false);
     const [toggle, setToggle] = useState(false)
