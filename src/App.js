@@ -4,7 +4,7 @@ import Container from './components/Pages/@auth/index';
 import Cookies from 'react-cookies';
 import { decodeToken } from 'react-jwt';
 import Layout from './components/Layout';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useParams } from 'react-router-dom';
 import Profile from './components/Pages/@auth/profileDashboard/Profile';
 import Messages from './components/Pages/@auth/Chat/Messages';
 import Chat from './components/Pages/@auth/Chat/Chat';
@@ -30,15 +30,18 @@ import UsersProfile from './components/Pages/@auth/profileDashboard/UsersProfile
 import Mystory from '../src/components/Pages/@auth/stories/Mystory'
 import SidebarWithHeader from './components/ChakraLayout';
 import { dispatchAllNotification, fetchUserListRedux, getNotification } from './store/reducers/chat/chatList.reducer';
+import Challenges from './components/Pages/Challenges';
 
 
 // socket assets 
-
+const port = 3002;
 const host = "http://localhost:3002";
 const homeHost = "http://localhost:3002/home";
+const nameSpacehost = `http://localhost:${port}/notification`;
 
 export const socket = io.connect(host, { transports: ["websocket"] });
 export const homeSocket = io.connect(homeHost, { transports: ["websocket"] });
+export const notificationAction = io.connect(nameSpacehost, { transports: ["websocket"] });
 
 
 function App() {
@@ -48,6 +51,8 @@ function App() {
   const dispatch = useDispatch();
   const notificationState = useSelector((state) => state.ChatList.AllNotification);
   const [render, setRender] = useState(true)
+  let params = useParams()
+
 
   const Logged = userState.isLogged;
   let userId = null
@@ -65,14 +70,16 @@ function App() {
     homeSocket.on('msgNotificaton', msg => {
       dispatch(getNotification(cookieData))
     })
+
   }, [])
+
+
 
 
 
   useEffect(() => {
     homeSocket.emit("joinHomeRoom", userId);
     dispatch(getNotification(cookieData))
-
   }, [Logged]);
 
 
@@ -87,10 +94,11 @@ function App() {
               <Route path="/" element={<AuthHome />} />
               <Route path="/profile" element={<Profile />} />
               <Route path='/searchs' element={<Search />} />
+              <Route path="/challenges" element={<Challenges />} />
               <Route path='/messages/:id' element={<MessagePage render={render} setRender={setRender} />} />
               <Route path='/chat' element={<Chat />} />
               <Route path="/userProfile" element={<UsersProfile />} />
-              <Route path='/story' element={<Mystory />} />
+//               <Route path='/story' element={<Mystory />} />
             </Routes>
           </SidebarWithHeader>
         ) :

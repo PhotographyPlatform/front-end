@@ -1,12 +1,43 @@
-import React from 'react';
-import { BiSolidLike } from 'react-icons/bi';
-import { FaRegComment } from 'react-icons/fa';
-import { BiBookmarkHeart } from 'react-icons/bi';
+import React, { useEffect } from 'react';
 import CommentSection from './CommentSection';
-import { GrMoreVertical } from 'react-icons/gr';
+import ActionSection from './ActionSection';
 import ViewPostCategories from './ViewPostCategories';
+import PostOption from './PostOption';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchPostData } from '../../../../../store/reducers/basicActions/post';
 import './detailsPost.scss'
-function ViewPostParentDetails() {
+import { DecodeToken } from '../../../../../store/reducers/auth/user.reducer';
+
+
+function ViewPostParentDetails({ details, onClose }) {
+
+
+    const { id, imgurl, userid, title, contant, challengeName, challengeID, category, createdAt, updatedAt, } = details;
+    const dispatch = useDispatch();
+    // dispatch(DecodeToken());
+
+    const numEffect = useSelector((state) => state.post.numEffect);
+
+    // const decodedToken = useSelector((state) => state.user);
+
+
+
+    useEffect(() => {
+        // dispatch(setLoading(true));
+        dispatch(fetchPostData(id))
+            .then(() => { })
+
+            .catch((error) => { });
+
+    }, [numEffect]);
+    // 
+    // const postData = useSelector((state) => state.post);
+
+
+
+
+
+
     return (
         <div className='viewpost-parent-details'>
             <div className='viewpost-img'>
@@ -16,26 +47,26 @@ function ViewPostParentDetails() {
                 <section className='viewpost-section-details'>
 
                     <div className='viewpost-title'>
-                        <h3>Gorgeous Image</h3>
+                        <h3>{title}</h3>
                         <div className='viewpost-icon-details'>
-                            <GrMoreVertical size={30} />
+                            <PostOption postId={id} postOwnerId={userid} onClose={onClose} />
                         </div>
                     </div>
                     <p className='viewpost-description'>
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nam voluptates ullam deserunt omnis, expedita et cumque, dolorem eos fuga rem quis voluptatibus veniam molestiae amet enim! Voluptas dolor incidunt cumque.
+                        {contant}
                     </p>
 
                     <div className='viewpost-category'>
-                        <ViewPostCategories />
+                        <ViewPostCategories category={category} />
                     </div>
-                    <div className='viewpost-basic-actions'>
-                        <BiSolidLike size={32} />
-                        <FaRegComment size={32} />
-                        <BiBookmarkHeart size={32} />
+                    <div className='viewpost-basic-actions' >
+
+                        <ActionSection photoId={id} />
+
                     </div>
                 </section>
                 <section>
-                    <CommentSection />
+                    <CommentSection photoId={id} />
                 </section>
             </div>
         </div>

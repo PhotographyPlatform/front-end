@@ -10,6 +10,10 @@
     }
   }
   
+  // .modal-np {
+  //   // height: 90%;
+  // }
+
   .upload-image-container {
     display: flex;
     flex-direction: column;
@@ -32,15 +36,50 @@
       }
     }
   }
+
+  .ulpoad-dec{
+    text-align: center;
+  }
   
   .counter-flex {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
   }
+
+  .title-input{
+    width: 100%;
+    border: 1.5px solid #e2e8f0;
+    transition: border;
+    padding: 10px;
+    border-radius: 6px;
+    margin-top: 10px;
+
+    &:focus {
+      border-color:#256ad2;
+      outline: #256ad2;
+    }
+
+  }
+  
+  .empty-title-input {
+    width: 100%;
+    border: 1.5px solid red;
+    transition: border;
+    padding: 10px;
+    border-radius: 6px;
+    margin-top: 10px;
+
+    &:focus {
+      border-color:#256ad2;
+      outline: #256ad2;
+    }
+  }
   
   .tags-container {
-    border: 1px solid #e2e8f0;
+    box-sizing: content-box;
+    border: 1.5px solid #e2e8f0;
+    transition: border;
     padding: 10px;
     border-radius: 6px;
     margin-top: 10px;
@@ -48,8 +87,12 @@
     align-items: center;
     flex-wrap: wrap;
     gap: 5px;
+
+    &:focus-within {
+      border: 1.5px solid #256ad2;
+    }
   
-    .tags-item {
+    .tags-item{
       background-color: rgb(229, 229, 229);
       display: inline-block;
       padding: 5px 7.5px;
@@ -75,6 +118,7 @@
       border: none;
       outline: none;
     }
+
   }
   
   .suggestions {
@@ -96,4 +140,39 @@
       }
     }
   }
+
+  .empty-tag-input{
+    border: 1.5px solid red;
+    box-sizing: content-box;
+    transition: border;
+    padding: 10px;
+    border-radius: 6px;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
+
+    .tag-input {
+      flex-grow: 1;
+      padding: 5px 0;
+      border: none;
+      outline: none;
+    }
+
+    &:focus-within {
+      border-color:#256ad2;
+      outline: #256ad2;
+    }
+  }
+
+  .empty-img-input{
+    color:red;
+  }
   
+  .modal-buttons{
+    margin-top: 10%;
+    button{
+      margin-right: 10px;
+    }
+  }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
     IconButton,
     Avatar,
@@ -31,10 +31,18 @@ import {
     FiBell,
     FiChevronDown,
 } from 'react-icons/fi';
+import { useSelector } from 'react-redux';
 
 
 
-function NavItem({ icon, children, ...rest }) {
+function NavItem({ name, icon, children, ...rest }) {
+    
+    const notificationState = useSelector((state) => state.ChatList.AllNotification);
+
+    // useEffect(() => {
+    //     console.log('dddddddddddddddddddd');
+    // }, [notificationState])
+    
     return (
         <Box
             as="a"
@@ -56,14 +64,16 @@ function NavItem({ icon, children, ...rest }) {
                 {...rest}
             >
                 {icon && (
-                    <Icon
-                        mr="4"
-                        fontSize="16"
-                        _groupHover={{
-                            color: 'white',
-                        }}
-                        as={icon}
-                    />
+                    name !== 'Chat' ? <Icon mr="4"  fontSize="20"  _groupHover={{ color: 'white', }} as={icon} /> 
+                    : (
+                        <Box position={'relative'} >
+                            <Box position={'absolute'} display={notificationState ? 'inline-flex' : 'none'} pb={'5px'} bg={'red'} minW={'20px'} h={'20px'} borderRadius={'50%'} justifyContent={'center'} alignItems={'center'} top={'-13px'} color={'white'} right={'8px'}>
+                                <Text m={0}>{notificationState}</Text>
+                            </Box>
+                            <Icon mr="4" fontSize="20" _groupHover={{color: 'white',}} as={icon} />
+                        </Box>
+                    )
+                    
                 )}
                 {children}
             </Flex>

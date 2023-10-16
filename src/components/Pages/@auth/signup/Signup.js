@@ -57,7 +57,7 @@ export default function SignUp() {
                 password: '123',
                 address: 'amman',
                 birthday: '1999-12 - 12',
-                username: 'hamza.tamari'
+                username: 'moh'
             }
             localStorage.setItem('email', obj.email)
             const signUp = await axios.post('http://localhost:3002/signup', obj)

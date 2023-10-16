@@ -6,7 +6,7 @@ import "./search.scss";
 import Results from "./Results";
 
 function Search() {
-  const dispatch = useDispatch();
+  
   const state = useSelector((state) => state.search)
 
   return (
