@@ -13,7 +13,6 @@ import "./Results.scss";
 import { Box, CircularProgress, Spinner } from "@chakra-ui/react";
 import { decodeToken } from "react-jwt";
 import { ArrowBackIcon } from '@chakra-ui/icons';
-import { Spinner } from "@chakra-ui/react";
 
 function Results() {
   const navigate = useNavigate();

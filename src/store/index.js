@@ -1,39 +1,34 @@
-import { createStore, combineReducers, applyMiddleware } from "redux";
-import user from "./reducers/auth/user.reducer";
-import profile from './reducers/profile/profile.reducer'
-import refresh from './reducers/profile/refresh'
-import thunk from './middleWare/thunk'
 import { configureStore } from '@reduxjs/toolkit';
+import userReducer from "./reducers/auth/user.reducer";
+import profileReducer from './reducers/profile/profile.reducer';
+import refreshReducer from './reducers/profile/refresh';
 import searchReducer from "./reducers/Search";
+import storiesReducer from './reducers/stories/stories.reducer';
+import postReducer from './reducers/basicActions/post';
+
 import { MessagesReducer } from "./reducers/chat/messages.reducer";
 import { ChatListReducer } from "./reducers/chat/chatList.reducer";
-import stories from './reducers/stories/stories.reducer'
 import { FavoriteReducer } from "./reducers/favorite/favorite";
-import postReducer from './reducers/basicActions/post'
 
-import notifiSlice from './reducers/notificationAction';
+import notificationSlice from './reducers/notificationAction';
 
 const store = configureStore({
     reducer: {
-        user: user,
+        user: userReducer,
         search: searchReducer,
         messages: MessagesReducer,
         ChatList: ChatListReducer,
-        profile: profile,
-        refresh: refresh,
+        profile: profileReducer,
+        refresh: refreshReducer,
         post: postReducer,
         Favorite: FavoriteReducer,
-        notification: notifiSlice,
-       stories: stories
-    },
+        notification: notificationSlice,
+        stories: storiesReducer
+    }
 });
 
 export default store;
 
-
-
-    reducer: { user: user, search: searchReducer, messages: MessagesReducer, ChatList: ChatListReducer, profile: profile, refresh: refresh, post: postReducer ,Favorite: FavoriteReducer }
-})
 
 
 
