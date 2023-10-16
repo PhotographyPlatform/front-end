@@ -7,8 +7,10 @@ import { configureStore } from '@reduxjs/toolkit';
 import searchReducer from "./reducers/Search";
 import { MessagesReducer } from "./reducers/chat/messages.reducer";
 import { ChatListReducer } from "./reducers/chat/chatList.reducer";
+import stories from './reducers/stories/stories.reducer'
 import { FavoriteReducer } from "./reducers/favorite/favorite";
 import postReducer from './reducers/basicActions/post'
+
 import notifiSlice from './reducers/notificationAction';
 
 const store = configureStore({
@@ -22,12 +24,16 @@ const store = configureStore({
         post: postReducer,
         Favorite: FavoriteReducer,
         notification: notifiSlice,
+       stories: stories
     },
 });
 
 export default store;
 
 
+
+    reducer: { user: user, search: searchReducer, messages: MessagesReducer, ChatList: ChatListReducer, profile: profile, refresh: refresh, post: postReducer ,Favorite: FavoriteReducer }
+})
 
 
 
