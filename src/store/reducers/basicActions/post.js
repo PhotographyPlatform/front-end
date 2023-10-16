@@ -40,7 +40,6 @@ export const { setPostData, setLoading, setLikeList, setCommentsList, setNumEffe
 
 export const fetchPostData = (postId) => async (dispatch) => {
     try {
-
         dispatch(setLoading(true));
         const response = await axios.get(`${BASE_URL}/getAllPostData/${postId}`);
         dispatch(setPostData(response.data));
@@ -120,12 +119,7 @@ export const setComment = (comment) => async (dispatch) => {
 
         const response = await axios.post(`${BASE_URL}/notification/comment`, comment, { headers });
         console.log('Comment posted successfully:', response.data);
-
-
-
         dispatch(fetchPostData());
-
-
     } catch (error) {
         console.log("There is an error when posting the comment: ", error);
     } finally {

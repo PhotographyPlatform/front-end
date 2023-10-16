@@ -14,7 +14,9 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import cookies from 'react-cookies';
 import "./NewPost.scss";
+import cookies from 'react-cookies';
 
+import jwtDecode from "jwt-decode";
 function NewPost({ onCloseNewPost, isOpenNewPost }) {
 
   const TitleLimit = 65;
@@ -121,7 +123,29 @@ function NewPost({ onCloseNewPost, isOpenNewPost }) {
     }
   
 
+
     const tagsString = tags.join(", ");
+
+    const session_user = cookies.load('user_session');
+    let decoded = null;
+
+    if (session_user) {
+      decoded = jwtDecode(session_user);
+    }
+    // const userId = useSelector((state) => state.user?.token?.userId ?? 1);
+    const userId = decoded.userId;
+
+
+    const newPost = {
+      imgurl: e.target.elements.fileInput.value,
+
+      userid: userId,
+
+      title: e.target.elements.title.value,
+      contant: e.target.elements.descript.value,
+      category: tags,
+    };
+
 
     const formData = new FormData();
     formData.append('image', fileInputRef.current.files[0]);

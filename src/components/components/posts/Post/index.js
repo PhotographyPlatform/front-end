@@ -9,7 +9,9 @@ import axios from 'axios';
 //{ id, imgurl, userid, title, contant, challengeName, challengeID, category, createdAt, updatedAt }
 
 function Post(props) {
-  
+
+ 
+  const { id, imgurl, userid, title, contant, challengeName, challengeID, category, createdAt, updatedAt, } = props;
   const { isOpen: isOpenViewPost, onOpen: onOpenViewPost, onClose: onCloseViewPost } = useDisclosure();
   const { userid } = props;
 
@@ -35,8 +37,8 @@ function Post(props) {
       <ViewPost
         isOpenViewPost={isOpenViewPost}
         onCloseViewPost={onCloseViewPost}
-        data={{ ...props }}
-        
+        id={ id }
+
       />
 
       <img src={'https://images.pexels.com/photos/2760519/pexels-photo-2760519.jpeg?auto=compress&cs=tinysrgb&w=600'} alt='imgURL' />

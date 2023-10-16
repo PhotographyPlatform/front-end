@@ -16,6 +16,7 @@ function FollowersModal({ followers, following }) {
     const [userId, setID] = useState(null)
     const refreshState = useSelector(state => state.refresh)
     console.log(refreshState);
+    
     const handleID = id => {
         cookies.remove('id')
         cookies.save('id', id)

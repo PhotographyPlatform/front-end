@@ -6,7 +6,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { removeComment } from '../../../../../../../store/reducers/basicActions/post';
 import jwtDecode from "jwt-decode";
 import cookies from 'react-cookies';
+import Report from '../../../../../../components/Report';
+
+import { useDisclosure } from '@chakra-ui/react';
+
 function CommentOption({ item }) {
+    const { isOpen: isOpenReport, onOpen: onOpenReport, onClose: onCloseReport } = useDisclosure();
+
     const [allow, setAllow] = useState(false);
 
     const commntsParent = item;
@@ -23,7 +29,6 @@ function CommentOption({ item }) {
 
 
     const dispatch = useDispatch()
-    console.log("MENEU LIST COMMENT", userId)
     useEffect(() => {
         if (userId) {
             if (Array.isArray(commentState)) {
@@ -59,7 +64,12 @@ function CommentOption({ item }) {
                         <MenuItem style={{
                             fontSize: '12px',
                             padding: '2',
-                        }}>Report</MenuItem>
+                        }} onClick={() => {
+                            onOpenReport()
+                        }}>Report
+                            <Report onCloseReport={onCloseReport}
+                                isOpenReport={isOpenReport} actionId={commntsParent.comment.id} actionType={'comment'} />
+                        </MenuItem>
 
                         {allow && (
                             <MenuItem style={{

@@ -8,12 +8,15 @@ import SignUp from './signup/Signup';
 import Signin from './signin/Signin';
 import Header from '../../Header/Header';
 import Search from '../Search';
+
 function Container() {
   return (
     <div>
       <div>
         <Header />
         <Routes>
+
+         
           <Route path='/ss' element={<Search />} />
           <Route path='/code' element={<Code />} />
           <Route path='/forgetPassword' element={<ForgotPassword />} />

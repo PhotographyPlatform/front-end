@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
 
     Box,
@@ -46,10 +46,18 @@ import { IoMdAddCircle } from 'react-icons/io';
 import { BsFillChatDotsFill } from 'react-icons/bs';
 import FavoritePage from '../Pages/@auth/FavoritePage/FavoritePage';
 import UsersProfile from '../Pages/@auth/profileDashboard/UsersProfile';
+import Mystory from '../Pages/@auth/stories/Mystory';
+import Otherstories from '../Pages/@auth/stories/Otherstories';
+import User from '../Admin/User/User';
+import AdminPosts from '../Admin/Posts/Posts';
+import { useDispatch } from 'react-redux';
+import { getNotification } from '../../store/reducers/chat/chatList.reducer';
+import cookie from 'react-cookies';
+import jwtDecode from 'jwt-decode';
 import Challenges from '../Pages/Challenges';
 import { MdOutlinePartyMode } from 'react-icons/md';
 
-
+import NotifiList from './notificationList';
 
 
 // handle the Icon with Name and path 
@@ -59,8 +67,8 @@ const LinkItems = [
     { name: 'Search', icon: FiCompass, path: '/search' },
     { name: 'challenges', icon: MdOutlinePartyMode, path: '/challenges' },
     { name: 'Add Post', icon: FiCompass, path: '/addpost' },
-    { name: 'Favourites', icon: FiStar , path : '/favorite' },
-    {name: 'Chat', icon: BsFillChatDotsFill, path: '/chat'},
+    { name: 'Favourites', icon: FiStar, path: '/favorite' },
+    { name: 'Chat', icon: BsFillChatDotsFill, path: '/chat' },
     { name: 'Settings', icon: FiSettings },
 ];
 
@@ -87,16 +95,17 @@ function SidebarContent({ onClose, ...rest }) {
                 <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
             </Flex>
 
-            {LinkItems.map((link) => (
-                <Link key={link.path} to={link.path}>
-                    <NavItem icon={link.icon} name = {link.name}> {link.name}</NavItem>
+            {LinkItems.map((link, index) => (
+                //link path 
+                <Link key={index} to={link.path} >
+                    <NavItem icon={link.icon} name={link.name}> {link.name}</NavItem>
                 </Link>
             ))}
             {/* popup Modal */}
 
             <Link>
-                
-            
+
+
                 <NewPost onCloseNewPost={onCloseNewPost} isOpenNewPost={isOpenNewPost} />
                 <NavItem icon={IoMdAddCircle} onClick={onOpenNewPost}   >{'Add New Post'} </NavItem>
             </Link>
@@ -109,6 +118,17 @@ function SidebarContent({ onClose, ...rest }) {
 function SidebarWithHeader() {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [render, setRender] = useState(true)
+    const dispatch = useDispatch()
+
+    let role = null
+    let cookieData = null
+  
+    if (cookie.load('user_session')) {
+  
+      cookieData = cookie.load('user_session')
+      const token = jwtDecode(cookieData)
+        role = token.role
+    }
 
 
 
@@ -140,12 +160,21 @@ function SidebarWithHeader() {
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/favorite" element={<FavoritePage />} />
                     <Route path='/chat' element={<Chat />} />
-                    <Route path='/messages/:id' element={<MessagePage render={render} setRender = {setRender} />} />
+                    <Route path='/messages/:id' element={<MessagePage render={render} setRender={setRender} />} />
                     <Route path="/userProfile" element={<UsersProfile />} />
+//                     <Route path="/story" element={<Mystory />} />
+
+                    {
+                        role === 'admin' &&
+                        <Route path="/admin/user" element={<AdminPosts/>} />
+                    }
+                    {/* <Route path="/admin/posts" element={<AdminPosts/>} /> */}
                     <Route path="/challenges" element={<Challenges />} />
                     {/* <Route path="/addpost" element={<Profile />} /> */}
+                    <Route path="/otherStory/:id" element={<Otherstories />} />
                     <Route path="*" element={<NotFound />} />
                 </Routes>
+
             </Box>
         </Box>
     );
