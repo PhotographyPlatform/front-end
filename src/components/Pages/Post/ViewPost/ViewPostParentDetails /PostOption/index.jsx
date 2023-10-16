@@ -8,8 +8,13 @@ import { useDisclosure } from '@chakra-ui/react';
 import ViewPost from '../..';
 import jwtDecode from "jwt-decode";
 import cookies from 'react-cookies';
+import Report from '../../../../../components/Report';
+
+//onCloseNewPost, isOpenNewPost, actionId, actionType
+
 
 function PostOption({ postId, postOwnerId, onClose }) {
+    const { isOpen: isOpenReport, onOpen: onOpenReport, onClose: onCloseReport } = useDisclosure();
 
     const dispatch = useDispatch();
     const numEffect = useSelector((state) => state.post.numEffect);
@@ -61,7 +66,12 @@ function PostOption({ postId, postOwnerId, onClose }) {
                         <MenuItem style={{
                             fontSize: '15px',
                             padding: '2',
-                        }}>Report</MenuItem>
+                        }} onClick={() => {
+                            onOpenReport()
+                        }}>Report
+                            <Report onCloseReport={onCloseReport}
+                                isOpenReport={isOpenReport} actionId={postId} actionType={'post'} />
+                        </MenuItem>
 
                         {allow && (
 

@@ -13,6 +13,7 @@ import { handleCommentActive } from '../../../../../../store/reducers/basicActio
 import { addFavoritePost, removeFavorite, fetchFavoritePosts } from '../../../../../../store/reducers/favorite/favorite';
 import jwtDecode from "jwt-decode";
 import cookies from 'react-cookies';
+
 function ActionSection(photoId) {
     // Like Button State
     const [liked, setLiked] = useState(false);
@@ -46,19 +47,19 @@ function ActionSection(photoId) {
 
     // Search  if the user already add like
     useEffect(() => {
-        if (userId) {
 
-            if (Array.isArray(likeList)) {
-                for (const item of likeList) {
-                    if (item.userid === userId) {
-                        setLiked(true);
-                        break;
-                    }
+
+        if (Array.isArray(likeList)) {
+            for (const item of likeList) {
+                if (item.userid === userId) {
+                    setLiked(true);
+                    break;
                 }
             }
         }
 
-    }, []);
+
+    }, [userId]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -75,7 +76,6 @@ function ActionSection(photoId) {
     const favoriteList = useSelector((state) => state.Favorite.favoritePosts
     );
 
-    console.log("IDDDD current photo ", photoId);
     useEffect(() => {
         if (userId) {
 
@@ -94,7 +94,6 @@ function ActionSection(photoId) {
 
 
 
-    console.log("llllllist", favoriteList)
 
     const toggleLike = async () => {
         if (liked === true) {

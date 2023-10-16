@@ -31,7 +31,8 @@ import UsersProfile from './components/Pages/@auth/profileDashboard/UsersProfile
 import SidebarWithHeader from './components/ChakraLayout';
 import { dispatchAllNotification, fetchUserListRedux, getNotification } from './store/reducers/chat/chatList.reducer';
 import Challenges from './components/Pages/Challenges';
-
+import { setNewNotifi, setRead } from './store/reducers/notificationAction';
+import { setOldNotifi } from './store/reducers/notificationAction';
 
 // socket assets 
 const port = 3002;
@@ -41,6 +42,7 @@ const nameSpacehost = `http://localhost:${port}/notification`;
 
 export const socket = io.connect(host, { transports: ["websocket"] });
 export const homeSocket = io.connect(homeHost, { transports: ["websocket"] });
+
 export const notificationAction = io.connect(nameSpacehost, { transports: ["websocket"] });
 
 
@@ -51,6 +53,8 @@ function App() {
   const dispatch = useDispatch();
   const notificationState = useSelector((state) => state.ChatList.AllNotification);
   const [render, setRender] = useState(true)
+  const notifiRead = useSelector((state) => state.notification.read)
+
   let params = useParams()
 
 
@@ -73,15 +77,29 @@ function App() {
 
   }, [])
 
+  // Notification Action (Post, Like, Comment,  Follow)
+  notificationAction.emit("notification", userId);
+
+  const notificationEvent = `notification-${userId}`;
+  useEffect(() => {
+    notificationAction.emit("notification", userId);
+    notificationAction.on(notificationEvent, (payload) => {
+      dispatch(setOldNotifi(payload))
+    })
+    // notificationAction.disconnect();
+
+  }, [Logged])
 
 
 
+  notificationAction.on(`newRecord-${notificationEvent}`, payload => {
+    dispatch(setNewNotifi(payload))
+  })
 
   useEffect(() => {
     homeSocket.emit("joinHomeRoom", userId);
     dispatch(getNotification(cookieData));
     //notification Action (post, Like , Follow )
-    notificationAction.emit(userId);
   }, [Logged]);
 
 
