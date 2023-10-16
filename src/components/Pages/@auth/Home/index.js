@@ -31,8 +31,14 @@ function Home() {
 
   useEffect(() => {
     try {
+      const token = cookies.load('user_session');
       const response = axios.get(
-        `http://localhost:3002/fullyFeeds/${parsedToken.userId}`
+        `http://localhost:3002/home`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
+        }
       );
       response.then((data) => {
         console.log(data, "!!!!!!!!!!!!!!!");
