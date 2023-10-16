@@ -27,7 +27,7 @@ import {
   ThemeProvider,
 } from '@chakra-ui/react'
 import UsersProfile from './components/Pages/@auth/profileDashboard/UsersProfile';
-
+import Mystory from '../src/components/Pages/@auth/stories/Mystory'
 import SidebarWithHeader from './components/ChakraLayout';
 import { dispatchAllNotification, fetchUserListRedux, getNotification } from './store/reducers/chat/chatList.reducer';
 
@@ -75,7 +75,7 @@ function App() {
 
   }, [Logged]);
 
-  
+
 
   return (
     <div className="App">
@@ -90,7 +90,7 @@ function App() {
               <Route path='/messages/:id' element={<MessagePage render={render} setRender={setRender} />} />
               <Route path='/chat' element={<Chat />} />
               <Route path="/userProfile" element={<UsersProfile />} />
-              
+              <Route path='/story' element={<Mystory />} />
             </Routes>
           </SidebarWithHeader>
         ) :

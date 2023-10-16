@@ -40,6 +40,8 @@ import NotFound from '../Pages/NotFound';
 import NewPost from '../components/NewPost';
 import { IoMdAddCircle } from 'react-icons/io';
 import UsersProfile from '../Pages/@auth/profileDashboard/UsersProfile';
+import Mystory from '../Pages/@auth/stories/Mystory';
+import Otherstories from '../Pages/@auth/stories/Otherstories';
 
 
 
@@ -148,9 +150,12 @@ function SidebarWithHeader() {
                     <Route path="/" element={<AuthHome />} />
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/userProfile" element={<UsersProfile />} />
+                    <Route path="/story" element={<Mystory />} />
                     {/* <Route path="/addpost" element={<Profile />} /> */}
+                    <Route path="/otherStory/:id" element={<Otherstories />} />
                     <Route path="*" element={<NotFound />} />
                 </Routes>
+
             </Box>
         </Box>
     );
