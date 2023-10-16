@@ -10,25 +10,30 @@ import { ChatListReducer } from "./reducers/chat/chatList.reducer";
 import stories from './reducers/stories/stories.reducer'
 import { FavoriteReducer } from "./reducers/favorite/favorite";
 import postReducer from './reducers/basicActions/post'
-// import thunk from 'redux-thunk';
 
-// const reducers = combineReducers({ user });
-
-
-// const store = () => {
-//     return createStore(reducers, applyMiddleware(thunk))
-// }
-
-// export default store()
-
-
-
-// toolkit Store 
+import notifiSlice from './reducers/notificationAction';
 
 const store = configureStore({
+    reducer: {
+        user: user,
+        search: searchReducer,
+        messages: MessagesReducer,
+        ChatList: ChatListReducer,
+        profile: profile,
+        refresh: refresh,
+        post: postReducer,
+        Favorite: FavoriteReducer,
+        notification: notifiSlice,
+       stories: stories
+    },
+});
 
-    reducer: { user: user, search: searchReducer, messages: MessagesReducer, ChatList: ChatListReducer, profile: profile, refresh: refresh, post: postReducer ,Favorite: FavoriteReducer , stories: stories }
+export default store;
+
+
+
+    reducer: { user: user, search: searchReducer, messages: MessagesReducer, ChatList: ChatListReducer, profile: profile, refresh: refresh, post: postReducer ,Favorite: FavoriteReducer }
 })
 
 
-export default store;
+

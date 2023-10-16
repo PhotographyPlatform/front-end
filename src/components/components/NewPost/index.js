@@ -13,7 +13,9 @@ import {
 import axios from "axios";
 import { useSelector } from "react-redux";
 import "./NewPost.scss";
+import cookies from 'react-cookies';
 
+import jwtDecode from "jwt-decode";
 function NewPost({ onCloseNewPost, isOpenNewPost }) {
 
   const TitleLimit = 65;
@@ -64,9 +66,23 @@ function NewPost({ onCloseNewPost, isOpenNewPost }) {
     if (tags.length === 0) setIsTagInputEmpty(true);
     e.target.elements.fileInput.value ? setisUploadImageInputEmpty(false) : setisUploadImageInputEmpty(true);
 
+    const session_user = cookies.load('user_session');
+    let decoded = null;
+
+    if (session_user) {
+      decoded = jwtDecode(session_user);
+    }
+    // const userId = useSelector((state) => state.user?.token?.userId ?? 1);
+    const userId = decoded.userId;
+
+
+
+
     const newPost = {
       imgurl: e.target.elements.fileInput.value,
-      userid: 3,
+
+      userid: userId,
+
       title: e.target.elements.title.value,
       contant: e.target.elements.descript.value,
       category: tags,

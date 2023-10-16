@@ -57,7 +57,7 @@ import jwtDecode from 'jwt-decode';
 import Challenges from '../Pages/Challenges';
 import { MdOutlinePartyMode } from 'react-icons/md';
 
-
+import NotifiList from './notificationList';
 
 
 // handle the Icon with Name and path 
@@ -67,8 +67,8 @@ const LinkItems = [
     { name: 'Search', icon: FiCompass, path: '/search' },
     { name: 'challenges', icon: MdOutlinePartyMode, path: '/challenges' },
     { name: 'Add Post', icon: FiCompass, path: '/addpost' },
-    { name: 'Favourites', icon: FiStar , path : '/favorite' },
-    {name: 'Chat', icon: BsFillChatDotsFill, path: '/chat'},
+    { name: 'Favourites', icon: FiStar, path: '/favorite' },
+    { name: 'Chat', icon: BsFillChatDotsFill, path: '/chat' },
     { name: 'Settings', icon: FiSettings },
 ];
 
@@ -95,16 +95,17 @@ function SidebarContent({ onClose, ...rest }) {
                 <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
             </Flex>
 
-            {LinkItems.map((link) => (
-                <Link key={link.path} to={link.path}>
-                    <NavItem icon={link.icon} name = {link.name}> {link.name}</NavItem>
+            {LinkItems.map((link, index) => (
+                //link path 
+                <Link key={index} to={link.path} >
+                    <NavItem icon={link.icon} name={link.name}> {link.name}</NavItem>
                 </Link>
             ))}
             {/* popup Modal */}
 
             <Link>
-                
-            
+
+
                 <NewPost onCloseNewPost={onCloseNewPost} isOpenNewPost={isOpenNewPost} />
                 <NavItem icon={IoMdAddCircle} onClick={onOpenNewPost}   >{'Add New Post'} </NavItem>
             </Link>
@@ -159,7 +160,7 @@ function SidebarWithHeader() {
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/favorite" element={<FavoritePage />} />
                     <Route path='/chat' element={<Chat />} />
-                    <Route path='/messages/:id' element={<MessagePage render={render} setRender = {setRender} />} />
+                    <Route path='/messages/:id' element={<MessagePage render={render} setRender={setRender} />} />
                     <Route path="/userProfile" element={<UsersProfile />} />
 //                     <Route path="/story" element={<Mystory />} />
 

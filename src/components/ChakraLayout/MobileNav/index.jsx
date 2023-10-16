@@ -36,9 +36,7 @@ import { logOut, uderData } from '../../../store/reducers/auth/user.reducer'
 import Cookies from 'react-cookies';
 import { useNavigate } from 'react-router';
 import { getImages } from '../../../store/reducers/profile/profile.reducer';
-
-
-
+import NotifiList from '../notificationList';
 function MobileNav({ onOpen, ...rest }) {
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -58,8 +56,8 @@ function MobileNav({ onOpen, ...rest }) {
     };
     const handleProfile = () => {
         navigate('/profile');
-
     };
+
     return (
         <Flex
             ml={{ base: 0, md: 60 }}
@@ -89,9 +87,10 @@ function MobileNav({ onOpen, ...rest }) {
                 Stories
             </Text>
 
-            <HStack spacing={{ base: '0', md: '6' }}>
-
-                <IconButton size="lg" variant="ghost" aria-label="open menu" icon={<FiBell />} />
+            <HStack spacing={{ base: '0', md: '6' }} >
+                {/* <IconButton size="lg" variant="ghost" aria-label="open menu" /> */}
+                {/* <NotifiList size="lg" variant="ghost" aria-label="open menu" icon={<FiBell />} /> */}
+                <NotifiList />
                 <Flex alignItems={'center'}>
                     <Menu>
                         {

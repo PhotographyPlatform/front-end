@@ -1,0 +1,141 @@
+$primary-bg-color: #f4f4f4; // Define your primary background color variable
+$active-bg-color: #d6d6d6; // Define your active background color variable
+$scrollbar-bg-color: #f4f4f4; // Define your scrollbar background color variable
+$scrollbar-thumb-color: #888; // Define your scrollbar thumb color variable
+$scrollbar-thumb-hover-color: #555; // Define your scrollbar thumb hover color variable
+
+.notifi-parent {
+    box-sizing: border-box;
+    width: 370px !important;
+    text-align: left;
+    height: 300px;
+    max-height: 100%;
+
+    h5 {
+        padding: 5px;
+        margin-left: 20px;
+        margin-right: 20px;
+        display: flex;
+        justify-content: space-between;
+
+        .rotate-icon {
+            color: #230000;
+        }
+    }
+
+    .notifi-scroll {
+        overflow-y: scroll;
+        max-height: 80%;
+    }
+
+    ul {
+        all: unset;
+        list-style: none;
+        max-height: 100%;
+        overflow-y: scroll;
+
+        .notifi-new {
+            background-color: $primary-bg-color;
+
+        }
+
+        li {
+            border: 2px solid transparent;
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+
+            SVG {
+                font-size: 24px;
+            }
+
+            // padding: 7px;
+            height: 50px;
+            padding-left: 20px;
+            padding-top: 7px;
+            padding-bottom: 7px;
+
+            div {
+                margin-left: 20px;
+            }
+
+            b {
+                margin-right: 4px;
+            }
+
+            span {
+                position: sticky;
+                font-size: 12px;
+                left: 330px;
+            }
+
+            &.active {
+                background-color: $primary-bg-color; // Use the active background color variable
+            }
+
+            transition: background-color 0.3s;
+
+            &:hover {
+                border: 2px solid rgb(184, 184, 184);
+                background-color: $primary-bg-color; // Use the primary background color variable
+            }
+        }
+    }
+}
+
+.notifi-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: $scrollbar-thumb-color $scrollbar-bg-color; // Use scrollbar color variables
+
+    &::-webkit-scrollbar {
+        width: 4px !important;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: $scrollbar-bg-color; // Use scrollbar background color variable
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: $scrollbar-thumb-color; // Use scrollbar thumb color variable
+        border-radius: 2px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background-color: $scrollbar-thumb-hover-color; // Use scrollbar thumb hover color variable
+    }
+}
+
+
+.notifi-red {
+    z-index: 1;
+    position: relative;
+    margin-left: -18px;
+    margin-top: 4px;
+    color: red;
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%; // Make it a circle
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+// Define the none style to hide the element
+.notifi-none {
+
+
+    // width: 20px;
+    // height: 20px;
+    // background-color: red($color: #000000);
+    // color: red;
+    display: none; 
+}
+
+.notifi-icon {
+        // display: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row-reverse;
+}

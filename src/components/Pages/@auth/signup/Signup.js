@@ -51,13 +51,13 @@ export default function SignUp() {
             //     username: e.target.username.value
             // }
             const obj = {
-                email: 'tamarihamza4@gmail.com',
-                firstName: 'hamza',
-                lastName: 'tamari',
+                email: 'moh122@gmail.com',
+                firstName: 'Mohammad',
+                lastName: 'Attallah',
                 password: '123',
                 address: 'amman',
                 birthday: '1999-12 - 12',
-                username: 'moh'
+                username: 'osama'
             }
             localStorage.setItem('email', obj.email)
             const signUp = await axios.post('http://localhost:3002/signup', obj)

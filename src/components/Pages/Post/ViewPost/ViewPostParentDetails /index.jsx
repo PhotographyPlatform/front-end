@@ -9,34 +9,11 @@ import './detailsPost.scss'
 import { DecodeToken } from '../../../../../store/reducers/auth/user.reducer';
 
 
-function ViewPostParentDetails({ details, onClose }) {
-
-
-    const { id, imgurl, userid, title, contant, challengeName, challengeID, category, createdAt, updatedAt, } = details;
-    const dispatch = useDispatch();
-    // dispatch(DecodeToken());
-
-    const numEffect = useSelector((state) => state.post.numEffect);
-
-    // const decodedToken = useSelector((state) => state.user);
-
-
-
-    useEffect(() => {
-        // dispatch(setLoading(true));
-        dispatch(fetchPostData(id))
-            .then(() => { })
-
-            .catch((error) => { });
-
-    }, [numEffect]);
-    // 
-    // const postData = useSelector((state) => state.post);
-
-
-
-
-
+function ViewPostParentDetails({ post, onClose }) {
+    console.log("CurrenttPOST", post.curre)
+    const postDetails = useSelector((state) => state.post.postDetails);
+    
+    const { id, imgurl, userid, title, contant, challengeName, challengeID, category, createdAt, updatedAt, } = postDetails[0];
 
     return (
         <div className='viewpost-parent-details'>
@@ -57,7 +34,7 @@ function ViewPostParentDetails({ details, onClose }) {
                     </p>
 
                     <div className='viewpost-category'>
-                        <ViewPostCategories category={category} />
+                        <ViewPostCategories category={category} onClose={onClose} />
                     </div>
                     <div className='viewpost-basic-actions' >
 
