@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import cookies from 'react-cookies';
 import "./NewPost.scss";
 import cookies from 'react-cookies';
 
@@ -38,12 +39,23 @@ function NewPost({ onCloseNewPost, isOpenNewPost }) {
 
   const handleFileInputChange = () => {
     const fileNameSpan = document.getElementById("fileName");
+    const previewImage = document.getElementById("previewImage");
     const fileInput = fileInputRef.current;
 
     if (fileInput.files.length > 0) {
       fileNameSpan.textContent = fileInput.files[0].name;
+      const selectedFile = fileInput.files[0];
+        if (selectedFile.type.startsWith("image/")) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            previewImage.src = e.target.result;
+            previewImage.style.display = "block";
+          };
+          reader.readAsDataURL(selectedFile);
+        }
     } else {
       fileNameSpan.textContent = "";
+      previewImage.style.display = "none";
     }
     setisUploadImageInputEmpty(false);
   };
@@ -58,13 +70,61 @@ function NewPost({ onCloseNewPost, isOpenNewPost }) {
     setisDecEmpty(false);
   };
 
+  // const onSubmitHandler = async (e) => {
+  //   e.preventDefault();
+
+  //   if (e.target.elements.title.value === '') setisTitleInputEmpty(true);
+  //   if (e.target.elements.descript.value === '') setisDecEmpty(true);
+  //   if (tags.length === 0) setIsTagInputEmpty(true);
+  //   e.target.elements.fileInput.value ? setisUploadImageInputEmpty(false) : setisUploadImageInputEmpty(true);
+
+  //   const newPost = {
+  //     imgurl: e.target.elements.fileInput.value,
+  //     userid: 3,
+  //     title: e.target.elements.title.value,
+  //     contant: e.target.elements.descript.value,
+  //     category: tags,
+  //   };
+
+  //   if (newPost.imgurl && newPost.title && newPost.contant && newPost.category.length) {
+  //     try {
+  //       const response = await axios.post(
+  //         "http://localhost:3002/v1/newPostCOll",
+  //         newPost
+  //       );
+  //       if (response.status === 201) {
+  //         onCloseNewPost();
+  //         toast({
+  //           position: 'top-left',
+  //           title: 'Post created',
+  //           description: "your post has been created succefully",
+  //           status: 'success',
+  //           duration: 9000,
+  //           isClosable: true,
+  //         });
+  //         setTags([]);
+  //       }
+  //     } catch (error) {
+  //       console.error("error when adding a new post: ", error);
+  //     }
+
+  //   }
+  // };
+
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-
+  
     if (e.target.elements.title.value === '') setisTitleInputEmpty(true);
     if (e.target.elements.descript.value === '') setisDecEmpty(true);
     if (tags.length === 0) setIsTagInputEmpty(true);
-    e.target.elements.fileInput.value ? setisUploadImageInputEmpty(false) : setisUploadImageInputEmpty(true);
+    if (!fileInputRef.current.files[0]) {
+      setisUploadImageInputEmpty(true);
+      return;
+    }
+  
+
+
+    const tagsString = tags.join(", ");
 
     const session_user = cookies.load('user_session');
     let decoded = null;
@@ -74,8 +134,6 @@ function NewPost({ onCloseNewPost, isOpenNewPost }) {
     }
     // const userId = useSelector((state) => state.user?.token?.userId ?? 1);
     const userId = decoded.userId;
-
-
 
 
     const newPost = {
@@ -88,30 +146,44 @@ function NewPost({ onCloseNewPost, isOpenNewPost }) {
       category: tags,
     };
 
-    if (newPost.imgurl && newPost.title && newPost.contant && newPost.category.length) {
-      try {
-        const response = await axios.post(
-          "http://localhost:3002/v1/newPostCOll",
-          newPost
-        );
-        if (response.status === 201) {
-          onCloseNewPost();
-          toast({
-            position: 'top-left',
-            title: 'Post created',
-            description: "your post has been created succefully",
-            status: 'success',
-            duration: 9000,
-            isClosable: true,
-          });
-          setTags([]);
-        }
-      } catch (error) {
-        console.error("error when adding a new post: ", error);
-      }
 
+    const formData = new FormData();
+    formData.append('image', fileInputRef.current.files[0]);
+    formData.append('userid', 3);
+    formData.append('title', e.target.elements.title.value);
+    formData.append('contant', e.target.elements.descript.value);
+    formData.append('category', tagsString);
+    
+    try {
+      const token = cookies.load('user_session');
+      const response = await axios.post(
+        "http://localhost:3002/notification/post",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
+        }
+      );
+  
+      console.log(response, '88888888888888888888888888888888888');
+      if (response.status === 201) {
+        onCloseNewPost();
+        toast({
+          position: 'top-left',
+          title: 'Post created',
+          description: "your post has been created successfully",
+          status: 'success',
+          duration: 9000,
+          isClosable: true,
+        });
+        setTags([]);
+      }
+    } catch (error) {
+      console.error("error when adding a new post: ", error);
     }
   };
+  
 
   const addTagHandler = (e) => {
     const value = e.target.value;
@@ -169,6 +241,10 @@ function NewPost({ onCloseNewPost, isOpenNewPost }) {
                   />
                   <div className="ulpoad-dec">
                     <p>Upload your image here</p>
+                    <div className="review-img-title">
+                      <img id="previewImage" src="" alt="yourimage" className="review-img"/>
+                      <span id="fileName"></span>
+                    </div>
                     <label
                       htmlFor="fileInput"
                       className="upload-image-container_ulpoader"
@@ -177,7 +253,6 @@ function NewPost({ onCloseNewPost, isOpenNewPost }) {
                     </label>
                   </div>
                   {isUploadImageInputEmpty && <span className="empty-img-input">!! you must upload an image !!</span>}
-                  <span id="fileName"></span>
                 </div>
 
                 <div className="modal-item">
