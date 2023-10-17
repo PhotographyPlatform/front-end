@@ -51,14 +51,15 @@ import FollowersModal from './FollowersModal'
 import './style.scss'
 import axios from 'axios';
 import { setTrue } from '../../../../store/reducers/profile/refresh';
-
+import Posts from '../../../components/posts';
 function Profile() {
     const [profileImage, setprofileImage] = useState(null);
     const [heroImage, setheroImage] = useState(null);
     const [showFollowersModal, setShowFollowersModal] = useState(false);
     const [showFollowingModal, setShowFollowingModal] = useState(false);
     const [updateObj, setObj] = useState({})
-    const [images, setImage] = useState([])
+    const [images, setPost] = useState([])
+    console.log(images);
     const navigate = useNavigate()
     const state = useSelector(state => state.user)
     const image = useSelector(state => state.profile)
@@ -129,10 +130,23 @@ function Profile() {
         }
     }, [userData, refreshState])
 
+    const fetchData = async () => {
+        try {
+            const token = cookies.load('user_session');
+            const response = await axios.get('http://localhost:3002/getallPostUser', {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+
+            setPost(response.data.posts)
+        } catch (error) {
+            console.error('Error fetching images:', error);
+        }
+    }
+
     useEffect(() => {
-        axios.get('https://api.slingacademy.com/v1/sample-data/photos').then(data => {
-            setImage(data.data.photos);
-        })
+        fetchData()
     }, [])
 
     return (
@@ -360,10 +374,11 @@ function Profile() {
                 <Divider />
             </Container >
             <HStack flexWrap='wrap' display='flex' justifyContent='flex-start' alignItems='center'>
-                {images &&
+                {/* {images &&
                     images.map((item, index) => (
-                        <Image key={index} src={item.url} width='30%' />
-                    ))}
+                        <Image key={index} src={item.imgurl} width='30%' />
+                    ))} */}
+                <Posts posts={images} />
             </HStack>
         </>
     )
