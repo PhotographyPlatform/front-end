@@ -76,7 +76,10 @@ function Otherstories({ id, setSelectedStoryId }) {
     return (
         <div>
             <Modal isOpen={isOpen} onClose={close}>
-                <ModalOverlay />
+                <ModalOverlay
+                    bg='blackAlpha.300'
+                    backdropFilter='blur(10px) '
+                />
                 <ModalContent>
                     <ModalHeader></ModalHeader>
                     <ModalCloseButton />

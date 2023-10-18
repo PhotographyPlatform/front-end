@@ -86,7 +86,10 @@ export default function Mystory({ MystoryHandler }) {
     return (
         <Container display='flex' justifyContent='space-between'>
             <Modal isOpen={isOpen} onClose={close}>
-                <ModalOverlay />
+                <ModalOverlay
+                    bg='blackAlpha.300'
+                    backdropFilter='blur(10px) '
+                />
                 <ModalContent>
                     <ModalHeader></ModalHeader>
                     <ModalCloseButton />
@@ -98,7 +101,7 @@ export default function Mystory({ MystoryHandler }) {
                                     defaultInterval={5000}
                                     loop={true}
                                     width={400}
-                                    height={600}
+                                    height={580}
                                 />
                             ) : (
                                 <Text>No story</Text>

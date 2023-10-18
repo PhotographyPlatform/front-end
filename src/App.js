@@ -120,7 +120,7 @@ function App() {
               <Route path='/messages/:id' element={<MessagePage render={render} setRender={setRender} />} />
               <Route path='/chat' element={<Chat />} />
               <Route path="/userProfile" element={<UsersProfile />} />
-//               <Route path='/story' element={<Mystory />} />
+             
             </Routes>
           </SidebarWithHeader>
         ) :

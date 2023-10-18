@@ -12,6 +12,7 @@ function FollowersModal({ followers, following }) {
     const dispatch = useDispatch()
     const { isOpen, onOpen, onClose } = useDisclosure()
     const profileState = useSelector(state => state.profile)
+    console.log(profileState,'sssssss');
     const [show, setShow] = useState(false)
     const [userId, setID] = useState(null)
     const refreshState = useSelector(state => state.refresh)
@@ -67,7 +68,7 @@ function FollowersModal({ followers, following }) {
                         <ModalHeader>Followers</ModalHeader>
                         <ModalCloseButton />
                         <ModalBody>
-                            <UnorderedList display='flex' justifyContent='space-between' flexDirection='column'>
+                            <UnorderedList display='flex' justifyContent='space-between' flexDirection='column' gap='12px'>
                                 {
                                     profileState.followers.followers.map(follow => (
                                         <Box display='flex' justifyContent='space-between' paddingBottom='15px'>
@@ -76,14 +77,14 @@ function FollowersModal({ followers, following }) {
                                                 alignItems="center" cursor='pointer'
                                                 _hover={{ color: 'gray' }}
                                                 justifyContent='space-between'>
-                                                <Avatar size='md' />
+                                                <Avatar size='md' src={follow.img}/>
                                                 <Text ml="5">{follow.name}</Text>
                                             </Box>
                                             <Button onClick={() => handleRemove(follow.id)} backgroundColor='blue'
                                                 color='white'
                                                 size='sm'
                                             >
-                                                remove Follower
+                                                Remove
                                             </Button>
                                         </Box>
                                     ))
@@ -108,7 +109,7 @@ function FollowersModal({ followers, following }) {
                         <ModalHeader>Following</ModalHeader>
                         <ModalCloseButton />
                         <ModalBody>
-                            <UnorderedList>
+                            <UnorderedList  display='flex'  flexDirection='column' gap='12px'>
                                 {
                                     profileState.following.Following.map(follow => (
                                         <Box display='flex' justifyContent='space-between'>
@@ -116,7 +117,7 @@ function FollowersModal({ followers, following }) {
                                                 alignItems="center" cursor='pointer'
                                                 _hover={{ color: 'gray' }}
                                                 justifyContent='space-between'>
-                                                <Avatar size='md' />
+                                                <Avatar size='md' src={follow.img}/>
                                                 <Text ml="5">{follow.name}</Text>
                                             </Box>
                                             <Button onClick={() => handleUnFollow(follow.id)} backgroundColor='red'

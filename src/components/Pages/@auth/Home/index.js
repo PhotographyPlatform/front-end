@@ -16,7 +16,7 @@ import {
     Box,
     Container,
     Input,
-    Divider
+    Divider,
 } from '@chakra-ui/react';
 import { getOtherStories, uploadImage } from '../../../../store/reducers/stories/stories.reducer';
 import { BsFillPencilFill, BsThreeDotsVertical } from 'react-icons/bs';
@@ -29,6 +29,7 @@ import Otherstories from '../stories/Otherstories';
 import { uderData } from '../../../../store/reducers/auth/user.reducer';
 import Cookies from 'react-cookies'
 import Mystory from '../stories/Mystory';
+import { Carousel } from 'react-bootstrap';
 function Home() {
     const dispatch = useDispatch()
     const [selectedStoryId, setSelectedStoryId] = useState(null);
@@ -69,25 +70,44 @@ function Home() {
 
 
     return (
-        <Container maxW="5xl">
-            <Heading>Stories</Heading>
+        <>
             {
-                <Box padding="75px" display="flex" justifyContent="space-evenly">
+                <Box display="flex" justifyContent='flex-start' alignItems='center' gap='40px' paddingLeft='10px'>
                     {
                         image.allImages &&
-                        <Avatar
-                            size="xl"
-                            src={image.allImages.profileImg}
-                            cursor="pointer"
-                            onClick={() => MystoryHandler(true)}
-                        />
+                        <Box position='relative'>
+                            <Button
+                                as="label"
+                                htmlFor="file"
+                                position='absolute'
+                                zIndex='1'
+                                size={['sm', 'md', 'md', 'md']}
+                                left={'71%'}
+                                top={'70%'}
+                                backgroundColor='blue'
+                                color='white'
+                                className='btn'
+                                rounded='30px'
+                                maxW='0.5'
+                                cursor='pointer'
+                                _hover={{ bg: 'hoverColor' }}
+                            >
+                                <BsFillPencilFill />
+                            </Button>
+                            <Avatar
+                                size={['lg', 'xl', 'xl']}
+                                src={image.allImages.profileImg}
+                                cursor="pointer"
+                                onClick={() => MystoryHandler(true)}
+                            />
+                        </Box>
                     }
 
                     {following &&
                         following.Following.map((story) => (
                             <Box>
                                 <Avatar
-                                    size="xl"
+                                    size={['lg', 'xl', 'xl']}
                                     src={story.img}
                                     cursor="pointer"
                                     onClick={() => storyHandler(story.id)}
@@ -100,26 +120,10 @@ function Home() {
                                         setImage(event.target.files[0]);
                                     }}
                                 />
-
                             </Box>
                         ))
                     }
-                    <Button
-                        as="label"
-                        htmlFor="file"
-                        position="absolute"
-                        left={['85%', '90%', '93%', '41%']}
-                        top={['100%', '100%', '100%', '26%']}
-                        backgroundColor='blue'
-                        color='white'
-                        className='btn'
-                        rounded='30px'
-                        maxW='0.5'
-                        cursor='pointer'
-                        _hover={{ bg: 'hoverColor' }}
-                    >
-                        <BsFillPencilFill/>
-                    </Button>
+
                 </Box>
             }
             <Divider orientation='horizontal' />
@@ -179,7 +183,7 @@ function Home() {
             </div>
             {selectedStoryId ? <Otherstories id={selectedStoryId} setSelectedStoryId={setSelectedStoryId} /> : null}
             {myStory ? < Mystory MystoryHandler={MystoryHandler} /> : null}
-        </Container>
+        </>
     )
 
     // import React, { useEffect, useState } from "react";

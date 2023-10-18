@@ -122,19 +122,19 @@ function SidebarWithHeader() {
 
     let role = null
     let cookieData = null
-  
+
     if (cookie.load('user_session')) {
-  
-      cookieData = cookie.load('user_session')
-      const token = jwtDecode(cookieData)
+
+        cookieData = cookie.load('user_session')
+        const token = jwtDecode(cookieData)
         role = token.role
     }
 
 
 
     return (
-        <Box minH="100vh" bg={useColorModeValue('gray.300', 'gray.900')}>
-            <SidebarContent onClose={() => onClose()} display={{ base: 'none', md: 'block' }} />
+        <Box minH="100vh" >
+            <SidebarContent onClose={() => onClose()} display={{ base: 'none', md: 'block' }}   style={{ backgroundColor: '#DBE2EF' }}/>
             <Drawer
                 isOpen={isOpen}
                 placement="left"
@@ -143,13 +143,13 @@ function SidebarWithHeader() {
                 onOverlayClick={onClose}
                 size="full"
             >
-                <DrawerContent>
+                <DrawerContent >
                     <SidebarContent onClose={onClose} />
                 </DrawerContent>
             </Drawer>
             {/* mobilenav */}
             <MobileNav onOpen={onOpen} />
-            <Box ml={{ base: 0, md: 60 }} p="4">
+            <Box ml={{ base: 0, md: 60 }} p="4"  style={{ backgroundColor: '#F9F7F7' }}>
 
                 {/* Body App js */}
 
@@ -166,7 +166,7 @@ function SidebarWithHeader() {
 
                     {
                         role === 'admin' &&
-                        <Route path="/admin/user" element={<AdminPosts/>} />
+                        <Route path="/admin/user" element={<AdminPosts />} />
                     }
                     {/* <Route path="/admin/posts" element={<AdminPosts/>} /> */}
                     <Route path="/challenges" element={<Challenges />} />
