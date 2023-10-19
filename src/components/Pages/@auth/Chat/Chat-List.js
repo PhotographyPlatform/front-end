@@ -65,7 +65,7 @@ export default function ChatList({ render , setShowfolowingList}) {
                               <Link to={`/messages/${ele.data.id}`}>
                                    
                                    <HStack className="list-item" alignItems={{ lg : 'center' ,xl :'flex-start'}} position={'relative'}>
-                                        <Avatar size={'md'} name={ele.data.username} src={ ele.data.img || 'https://cdn-icons-png.flaticon.com/512/1053/1053244.png'} />
+                                        <Avatar size={'md'}  src={ ele.data.img} />
                                         <Box className="item-detailes" display={'flex'} flexDirection={'column'} alignItems={'flex-start'}  marginLeft={'10px'} >
                                              <Heading  textTransform={'capitalize'} as={'h5'} fontSize={'medium'}  className='name'>{ele.data.username}</Heading>
                                              <Text className='item-cont' fontSize={'15px'} textAlign={'left'} display={{base : 'none' , lg : 'none' , xl : 'inline-block'}}  >{

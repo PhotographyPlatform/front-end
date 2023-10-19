@@ -11,21 +11,22 @@
           display: flex;
           justify-content: center;
           align-items: center;
-          width: 60%;
+          // width: 60%;
           height: 100%;
           .hero-content{
                display: flex;
                justify-content: center;
                align-items: flex-start;
                flex-direction: column;
-               width: 70%;
+               // width: 70%;
                padding: 10px;
                color: white;
                text-align: start;
                font-family: "Helvetica Neue", HelveticaNeue, Helvetica, FreeSans, Arial, sansserif;
+               gap: 10px;
 
                h2{
-                    font-size: 40px;
+                    // font-size: 40px;
                     font-family: "Helvetica Neue", HelveticaNeue, Helvetica, FreeSans, Arial, sansserif;
 
                }
@@ -70,7 +71,7 @@
                     align-items: flex-start;
                     flex-direction: column;
                     gap: 20px;
-                    width: 23%;
+                    width: 300px;
                     text-align: center;
                     p, h2 {
                          text-align: start;
@@ -87,7 +88,7 @@
 
 .Section_Two_main{
      width: 100%;
-     height: 400px;
+     // height: 400px;
      background-image: url('./assets/pexels-eberhard-grossgasteiger-2098428.jpg');
      background-size: cover; 
      background-position: center; 
@@ -107,13 +108,13 @@
      .Section_Two_icon{
           // background-color: rgb(12, 239, 232);
           background-color: rgb(255 117 12);
-          width: 100px;
-          height: 100px;
+          // width: 100px;
+          // height: 100px;
           border-radius: 50%;
           display: flex;
           justify-content: center;
           align-items: center;
-          font-size: 70px;
+          // font-size: 70px;
      }
      .Section_Two_Heading{
           color: white;
@@ -122,7 +123,7 @@
           align-items: center;
           h1{
 
-               font-size: 50px;
+               // font-size: 50px;
                font-family: "Helvetica Neue", HelveticaNeue, Helvetica, FreeSans, Arial, sansserif;
           }
      }
@@ -130,7 +131,7 @@
 
 .Section_Three_main{
      width: 100%;
-     height: 900px;
+     min-height: 900px;
      display: flex;
      justify-content: center;
      align-items: center;
@@ -140,42 +141,42 @@
           justify-content: flex-start;
           align-items: center;
           flex-direction: column;
-          width: 95%;
+          max-width: 1200px;
           height: 100%;
           gap: 30px;
-          flex-wrap: wrap;
+          // flex-wrap: wrap;
+          .Section_Three_Photos_1{
+               display: flex;
+               justify-content: center;
+               align-items: center;
+               width: 100%;
+               gap: 10px;
+               flex-wrap: wrap;
 
+               div{
+                    background-size: cover;
+                    background-position: center; 
+                    background-repeat: no-repeat;
+                    width: 250px;
+                    height: 350px;
+               }
+          }
           .Section_Three_Photos{
                display: flex;
                justify-content: center;
                align-items: center;
-               flex-direction: column;
+               // flex-direction: column;
                width: 100%;
                height: 80%;
                gap: 20px;
-               .Section_Three_Photos_1{
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    width: 100%;
-                    gap: 10px;
-                    flex-wrap: wrap;
-
-                    div{
-                         background-size: cover; /* This will make sure the image covers the entire container */
-                         background-position: center; /* This will center the image within the container */
-                         background-repeat: no-repeat;
-                         width: 250px;
-                         height: 350px;
-                    }
-               }
+               
           }
      }
 }
 
 .Section_Four_main{
      width: 100%;
-     height: 400px;
+     // height: 400px;
      background-image: url('./assets/pexels-elijah-o\'donnell-3473569.jpg');
      background-size: cover; 
      background-position: center; 
@@ -195,13 +196,13 @@
      .Section_Four_icon{
           // background-color: rgb(12, 239, 232);
           background-color: rgb(69, 69, 124);
-          width: 100px;
-          height: 100px;
+          // width: 100px;
+          // height: 100px;
           border-radius: 50%;
           display: flex;
           justify-content: center;
           align-items: center;
-          font-size: 60px;
+          // font-size: 60px;
           color: white;
      }
      .Section_Four_Heading{
@@ -211,7 +212,7 @@
           align-items: center;
           h1{
 
-               font-size: 50px;
+               // font-size: 50px;
                font-family: "Helvetica Neue", HelveticaNeue, Helvetica, FreeSans, Arial, sansserif;
           }
      }
@@ -227,7 +228,7 @@
 
      .Section_Five_cont{
           display: flex;
-          justify-content: flex-start;
+          justify-content: center;
           align-items: center;
           flex-direction: column;
           gap: 30px;
@@ -240,32 +241,33 @@
           align-items: center;
           flex-direction: column;
           gap: 15px;
-          width: 70%;
+          // width: 70%;
           h2{
-               font-size: 30px;
+               // font-size: 30px;
           }
           button{
                border-radius: 30px;
-               width: 200px;
-               height: 60px;
+               // width: 200px;
+               // height: 60px;
                font-family: "Helvetica Neue", HelveticaNeue, Helvetica, FreeSans, Arial, sansserif;
-               font-size: 24px;
-               background-color: rgba(0, 0, 0, 0.864);
+               // font-size: 24px;
+               background-color: rgba(0, 0, 0, 0.864) ;
                color: white;
           }
      }
      .Section_Five_img{
           background-size: cover; 
+          background-size: contain; 
           background-position: center; 
           background-repeat: no-repeat;
-          width: 650px;
-          height: 300px;
+          // width: 650px;
+          // height: 300px;
      }
 }
 
 .Section_Six_main{
      width: 100%;
-     height: 400px;
+     // height: 400px;
      background-image: url('./assets/pexels-julia-larson-6456264.jpg');
      background-size: cover; 
      background-position: center; 
@@ -285,13 +287,13 @@
      }
      .Section_Six_icon{
           background-color: rgb(228, 64, 89);
-          width: 100px;
-          height: 100px;
+          // width: 100px;
+          // height: 100px;
           border-radius: 50%;
           display: flex;
           justify-content: center;
           align-items: center;
-          font-size: 60px;
+          // font-size: 60px;
           color: white;
      }
      .Section_Six_Heading{
@@ -301,7 +303,7 @@
           align-items: center;
           h1{
 
-               font-size: 50px;
+               // font-size: 50px;
                font-family: "Helvetica Neue", HelveticaNeue, Helvetica, FreeSans, Arial, sansserif;
           }
      }
@@ -309,7 +311,7 @@
 
 .Section_Seven_main{
      width: 100%;
-     height: 600px;
+     min-height: 600px;
      display: flex;
      justify-content: center;
      align-items: center;
@@ -318,15 +320,15 @@
           width: 90%;
           height: 100%;
           display: flex;
-          justify-content: space-between;
+          justify-content: center;
           align-items: center;
           flex-wrap: wrap;
-          gap: 40px;
+          gap: 100px;
           .Section_Seven_img_cont{
-               width: 600px;
-               height: 500px;
+               // width: 600px;
+               // height: 500px;
                .Section_Seven_img{
-                    background-size: cover; 
+                    background-size: contain; 
                     background-position: center; 
                     background-repeat: no-repeat;
                     width: 100%;
@@ -336,23 +338,23 @@
           .Section_Seven_icon{
                display: flex;
                justify-content: center;
-               align-items: flex-start;
+               // align-items: flex-start;
                flex-direction: column;
-               width: 600px;
+               // width: 600px;
                gap: 15px;
                p{
-                    text-align: start;
-                    font-size: 18px;
+                    // text-align: start;
+                    // font-size: 18px;
                }
                h2{
-                    font-size: 40px;
+                    // font-size: 40px;
                }
                button{
                     border-radius: 30px;
-                    width: 200px;
-                    height: 60px;
+                    // width: 200px;
+                    // height: 60px;
                     font-family: "Helvetica Neue", HelveticaNeue, Helvetica, FreeSans, Arial, sansserif;
-                    font-size: 24px;
+                    // font-size: 24px;
                     background-color: rgba(0, 0, 0, 0.864);
                     color: white;
                }
@@ -362,7 +364,7 @@
 
 .Section_Eight_main{
      width: 100%;
-     height: 350px;
+     min-height: 350px;
      background-color: rgb(69, 69, 124);
      display: flex;
      justify-content: space-between;    
@@ -371,27 +373,28 @@
      padding-top: 30px;
      
      .Section_Eight_icon{
-          width: 60%;
+          // width: 60%;
           height: 60%;
           display: flex;
           justify-content: center;
           align-items: center;
           flex-direction: column;
           gap: 15px;
+          padding-bottom: 30px;
           p{
                font-size: 18px;
                color: white;
           }
           h2{
-               font-size: 35px;
+               // font-size: 35px;
                color: white;
           }
           button{
                border-radius: 30px;
-               width: 200px;
-               height: 50px;
+               // width: 200px;
+               // height: 50px;
                font-family: "Helvetica Neue", HelveticaNeue, Helvetica, FreeSans, Arial, sansserif;
-               font-size: 24px;
+               // font-size: 24px;
                background-color:white;
                color: rgba(0, 0, 0, 0.864);
           }
