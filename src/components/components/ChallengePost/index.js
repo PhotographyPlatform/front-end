@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import cookies from 'react-cookies';
 import "./ChallengePost.scss";
 
 function ChallengePost({onCloseNewPost, isOpenNewPost, ChallengeName, challengeId, setIsNewPostAdded}) {
@@ -34,14 +35,25 @@ function ChallengePost({onCloseNewPost, isOpenNewPost, ChallengeName, challengeI
 
   const allowedTags = useSelector((state) => state.search.categories.map(item => item.name));
 
-  const handleFileInputChange = () => {
+const handleFileInputChange = () => {
     const fileNameSpan = document.getElementById("fileName");
+    const previewImage = document.getElementById("previewImage");
     const fileInput = fileInputRef.current;
 
     if (fileInput.files.length > 0) {
       fileNameSpan.textContent = fileInput.files[0].name;
+      const selectedFile = fileInput.files[0];
+        if (selectedFile.type.startsWith("image/")) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            previewImage.src = e.target.result;
+            previewImage.style.display = "block";
+          };
+          reader.readAsDataURL(selectedFile);
+        }
     } else {
       fileNameSpan.textContent = "";
+      previewImage.style.display = "none";
     }
     setisUploadImageInputEmpty(false);
   };
@@ -56,13 +68,16 @@ function ChallengePost({onCloseNewPost, isOpenNewPost, ChallengeName, challengeI
     setisDecEmpty(false);
   };
 
-  const onSubmitHandler = async (e) => {
+  const onSubmitHandler = async (e) => {//////////////////////////////////////////////////////////////////////////////////////////////////
     e.preventDefault();
 
-    if(e.target.elements.title.value === '') setisTitleInputEmpty(true);
-    if(e.target.elements.descript.value === '') setisDecEmpty(true);
-    if(tags.length === 0) setIsTagInputEmpty(true);
-    e.target.elements.fileInput.value ? setisUploadImageInputEmpty(false) : setisUploadImageInputEmpty(true);
+    if (e.target.elements.title.value === '') setisTitleInputEmpty(true);
+    if (e.target.elements.descript.value === '') setisDecEmpty(true);
+    if (tags.length === 0) setIsTagInputEmpty(true);
+    if (!fileInputRef.current.files[0]) {
+      setisUploadImageInputEmpty(true);
+      return;
+    }
 
     const newPost = {
       imgurl: e.target.elements.fileInput.value,
@@ -74,30 +89,48 @@ function ChallengePost({onCloseNewPost, isOpenNewPost, ChallengeName, challengeI
       challengeName: ChallengeName
     };
 
-    if (newPost.imgurl && newPost.title && newPost.contant && newPost.category.length) {
-    try {
-      setIsNewPostAdded(true);
-      const response = await axios.post(
-        "http://localhost:3002/v1/newPostCOll",
-        newPost
-        );
-      if(response.status === 201){
-        onCloseNewPost();
-        toast({
-          position:'top-left',
-          title: 'Post created',
-          description: "your post has been created succefully",
-          status: 'success',
-          duration: 9000,
-          isClosable: true,
-        });
-        setTags([]);
-      }
-      setIsNewPostAdded(false);
-    } catch (error) {
-      console.error(`error when adding a new post for a the challenge '${ChallengeName}'`, error);
-    }
+    const tagsString = tags.join(", ");
 
+    const formData = new FormData();
+    formData.append('image', fileInputRef.current.files[0]);
+    formData.append('userid', 3);
+    formData.append('title', e.target.elements.title.value);
+    formData.append('contant', e.target.elements.descript.value);
+    formData.append('challengeID', challengeId);
+    formData.append('challengeName', ChallengeName);
+    formData.append('category', tagsString);
+
+    if (newPost.imgurl && newPost.title && newPost.contant && newPost.category.length) {
+      try {
+        setIsNewPostAdded(true);
+        const token = cookies.load('user_session');
+        const response = await axios.post(
+          "http://localhost:3002/notification/post",
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            }
+          }
+        );
+    
+        console.log(response, '88888888888888888888888888888888888');
+        if (response.status === 201) {
+          onCloseNewPost();
+          toast({
+            position: 'top-left',
+            title: 'Post created',
+            description: "your post has been created successfully",
+            status: 'success',
+            duration: 9000,
+            isClosable: true,
+          });
+          setTags([]);
+        }
+        setIsNewPostAdded(false);
+      } catch (error) {
+        console.error(`error when adding a new post for a the challenge '${ChallengeName}'`, error);
+      }
   }
   };
 
@@ -146,7 +179,7 @@ function ChallengePost({onCloseNewPost, isOpenNewPost, ChallengeName, challengeI
           <form onSubmit={onSubmitHandler}>
             <ModalBody>
               <div className="modal-form">
-                <div className="upload-image-container modal-item">
+              <div className="upload-image-container modal-item">
                   <input
                     type="file"
                     name="fileInput"
@@ -157,6 +190,10 @@ function ChallengePost({onCloseNewPost, isOpenNewPost, ChallengeName, challengeI
                   />
                   <div className="ulpoad-dec">
                     <p>Upload your image here</p>
+                    <div className="review-img-title">
+                      <img id="previewImage" src="" alt="yourimage" className="review-img"/>
+                      <span id="fileName"></span>
+                    </div>
                     <label
                       htmlFor="fileInput"
                       className="upload-image-container_ulpoader"
@@ -165,7 +202,6 @@ function ChallengePost({onCloseNewPost, isOpenNewPost, ChallengeName, challengeI
                     </label>
                   </div>
                   {isUploadImageInputEmpty && <span className="empty-img-input">!! you must upload an image !!</span>}
-                  <span id="fileName"></span>
                 </div>
 
                 <div className="modal-item">

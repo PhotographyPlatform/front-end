@@ -21,7 +21,7 @@ function Category() {
 
     return (
         <div className="search-category-container">
-            <p>Or, you can browse the available categories to discover and find more</p>
+            <p>You can browse all the available categories to discover and find more</p>
             <div className="categories">
                 {loading ? (
                     <Spinner thickness='3px' speed='0.65s' emptyColor='gray.200' color='blue.500' size='xl' />

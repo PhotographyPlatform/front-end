@@ -36,31 +36,36 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 30px;
+  // gap: 5px;
+  color: gray;
 
   &-container{
-    padding: 75px;
+    // padding: 75px;
     border-radius: 25px;
-    background-color: rgb(243, 243, 243);
-    box-shadow: 6px 3px 15px rgb(187, 187, 187);
+    // background-color: rgb(243, 243, 243);
+    // box-shadow: 6px 3px 15px rgb(187, 187, 187);
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 30px;
+    gap: 5px;
 
     p{
       // font-size: 20px;
     }
 
     button{
-      background-color: #355ceb;
-      padding: 20px 50px;
-      color: white;
-      border-radius: 15px;
+      color: #112D4E;
+      border-bottom: 1px solid #112D4E;
+      padding: 2px 20px;
       font-size: 20px;
-
+      margin-top: 20px;
+      transition: all 0.3s;
+      
       &:hover{
-        background-color: #7996ff!important;
+        background-color:#112D4E;
+        color: white;
+        box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.253);
+        transition: all 0.3s;
     }
     }
   }

@@ -11,7 +11,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin: 5%;
+  margin: 2% 3%;
 }
 
 .search-results {
@@ -27,18 +27,50 @@
   gap: 10px;
 }
 
+.users-section{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 25px;
+  padding: 50px;
+  background-color: rgba(255, 255, 255, 0.368);
+}
+
+.posts-section{
+  margin-top: 30px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 25px;
+  padding-top: 50px;
+  background-color: rgba(255, 255, 255, 0.368);
+}
+
 .all-users-flex {
   width: 100%;
   display: flex;
   justify-content: space-evenly;
   gap: 20px;
   flex-wrap: wrap;
-  margin: 6% 0;
+  margin-top: 6%;
 }
 
 .bla {
   display: flex;
   gap: 50px;
+}
+
+.tag-navigator-cont{
+  height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.368);
+  border-radius: 25px;
 }
 
 .tag-navigator {
@@ -57,24 +89,25 @@
 
     &:first-child {
       left: 0;
-      background: linear-gradient(90deg, #cbd5e0 80%, transparent);
+      background: linear-gradient(90deg, #dee4eb 70%, transparent);
     }
 
     &:last-child {
       right: 0;
       justify-content: flex-end;
-      background: linear-gradient(-90deg, #cbd5e0 80%, transparent);
+      background: linear-gradient(-90deg, #dee4eb 70%, transparent);
     }
 
     .arrow {
-      width: 55px;
-      height: 55px;
+      width: 50px;
+      height: 50px;
       cursor: pointer;
-      line-height: 50px;
+      line-height: 45px;
       text-align: center;
-      background-color: rgb(220, 220, 220);
+      background-color: rgb(250, 250, 250);
       border-radius: 50%;
       font-size: 30px;
+      margin-bottom: 0;
 
       &:first-child {
         margin-left: 15px;
@@ -91,12 +124,14 @@
   }
 
   .nav-tags {
-    padding-left: 120px;
+    padding-left: 110px;
+    padding-right: 110px;
     display: flex;
     list-style: none;
     gap: 15px;
     overflow-x: hidden;
     scroll-behavior: smooth;
+    margin-bottom: 0;
 
     &.dragging{
       scroll-behavior: auto;
@@ -110,7 +145,7 @@
     .nav-tag {
       white-space: nowrap;
       padding: 10px 25px;
-      background-color: rgb(220, 220, 220);
+      background-color: rgb(250, 250, 250);
       border-radius: 20px;
       display: flex;
       justify-content: center;
