@@ -179,7 +179,7 @@ export default function Messages({setRender}) {
                          
                <HStack className='message-field' my={'20px'} width={'100%'} display={'flex'} justifyContent={'space-between'} alignItems={'flex-start'}>
                     <Box display={'flex'} >
-                         <Avatar size={'sm'} name='Dan Abrahmov' src={userInfo?.img} />
+                         <Avatar size={'sm'} name='Dan Abrahmov' src={userImg?.profileImg} />
                          <Input ref={inputEle}  width={{base :'200px' ,sm : '250px', md: '400px' , lg : '430px' ,'2xl' : '630px' }} border={'none'} _focusVisible={'none'} fontSize={'17px'} onChange={(e) => setValue(e.target.value)} placeholder='Type message' />
                     </Box>
                     <Box display={'flex'}>
@@ -190,7 +190,7 @@ export default function Messages({setRender}) {
 
                          </Button>
                          <Button onClick={send} bg={'transparent'} gap={'15px'} variant = 'solid' >
-                              <IoSend color='#3b71ca' size={22} />
+                              <IoSend color='#3F72AF' size={22} />
                          </Button>
                     </Box>
                </HStack>

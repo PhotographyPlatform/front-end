@@ -27,6 +27,7 @@ import { PasswordField } from './passwordFiled/Password'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import React, { useState } from 'react'
+import Header_Inhansed from '../../Header_Inhansed/Header_Inhansed'
 const VARIANT_COLOR = 'teal'
 
 export default function SignUp() {
@@ -70,7 +71,9 @@ export default function SignUp() {
         }
     }
 
-    return (
+    return ( 
+        <>
+        <Header_Inhansed color={'#29383b'} bg={'white' } />
         <Container maxW="2xl" py={{ base: '12', md: '24' }} px={{ base: '0', sm: '8' }}>
             <form onSubmit={submitHandler}>
 
@@ -179,6 +182,7 @@ export default function SignUp() {
                 </AlertDialogContent>
             </AlertDialog>
 
-        </Container >
+            </Container >
+            </>
     )
 }

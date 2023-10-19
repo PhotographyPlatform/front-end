@@ -74,12 +74,10 @@ function App() {
 
   }, [])
 
-
-
-
-
+  
+  homeSocket.emit("joinHomeRoom", userId);
+  
   useEffect(() => {
-    homeSocket.emit("joinHomeRoom", userId);
     dispatch(getNotification(cookieData))
   }, [Logged]);
 

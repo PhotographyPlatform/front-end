@@ -10,7 +10,7 @@ import {
   useColorMode,
   Heading,
   Text,
-  Link,
+  // Link,
   FormControl,
   FormLabel,
   Input,
@@ -26,18 +26,21 @@ import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 
 import { DecodeToken, signin } from '../../../../store/reducers/auth/user.reducer'
 import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { PasswordField } from '../signup/passwordFiled/Password';
 import CryptoJS from 'crypto-js';
+import Header_Inhansed from '../../Header_Inhansed/Header_Inhansed';
 
 const VARIANT_COLOR = 'teal'
 
 const Signin = () => {
 
   return (
+    
     <ColorModeProvider>
+      <Header_Inhansed color={'#29383b'} bg={'white' }/>
       <CSSReset />
       <LoginArea />
     </ColorModeProvider>
@@ -85,7 +88,7 @@ const LoginHeader = () => {
     <Box textAlign='center'>
       <Heading>Pixel Time</Heading>
       <Text color="fg.muted" fontSize='17px'>
-        Don't have an account? <Link href="/signup" color={`${VARIANT_COLOR}.500`}>Sign up</Link>
+        Don't have an account? <Link to="/signup" color={`${VARIANT_COLOR}.500`}>Sign up</Link>
       </Text>
     </Box>
   )

@@ -10,6 +10,7 @@ import Section_Five from './Section_Five/Section_Five'
 import Section_Six from './Section_Six/Section_Six'
 import Section_Seven from './Section_Seven/Section_Seven'
 import Section_Eight from './Section_Eight/Section_Eight'
+import Header_Inhansed from '../Header_Inhansed/Header_Inhansed'
 
 export default function Home() {
   return (
