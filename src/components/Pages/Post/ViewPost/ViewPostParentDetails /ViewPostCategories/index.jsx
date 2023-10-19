@@ -1,20 +1,43 @@
 import React from 'react';
 import './viewPostCategories.scss'
-// import 
+import { setActiveCategory } from '../../../../../../store/reducers/Search';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'
+function ViewPostCategories({ category, onClose }) {
 
-function ViewPostCategories(props) {
-    console.log('Category Components', props)
-    console.log(props)
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    async function handleClick() {
+
+        onClose();
+    }
+
+
     return (
         <ul className='category-container-viewpost'>
             {/* onClick={() => dispatch(setActiveCategory(category.name)) */}
 
-            {props.category.map((category, index) => (
-                <li key={index} className='category-card' >
+            {
+                category&&
+                category.map((category, index) => (
+                <span className='category-card' onClick={() => { navigate('/search'); dispatch(setActiveCategory(category)); handleClick(); }} >
+                    {/* < Link to="/search" key={index}> */}
                     {category}
-                </li>
-            ))}
-        </ul>
+
+                    {/* </Link> */}
+
+                </span>
+
+            ))
+            }
+        </ul >
+
+        //      onClick = {() => {
+        //     handleRemovepost();
+        //     onClose();
+        // }
+
 
 
     );

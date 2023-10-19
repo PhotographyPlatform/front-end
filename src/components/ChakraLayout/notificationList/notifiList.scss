@@ -1,0 +1,195 @@
+// @import 'global-styles';
+
+$primary-bg-color: #F9F7F7;
+$active-bg-color: #3F72AF;
+$scrollbar-bg-color: #112D4E;
+$scrollbar-thumb-color: #3F72AF;
+$scrollbar-thumb-hover-color: #DBE2EF;
+$hover-color-notifi: #DBE2EF;
+$heading-font: 'Open Sans', sans-serif;
+$body-font: 'Raleway', sans-serif;
+
+
+.notifi {
+    background-color: $primary-bg-color !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+}
+
+.notifi-parent {
+    box-sizing: border-box;
+    width: 360px !important;
+    text-align: left;
+    height: 320px;
+    max-height: 100%;
+    background-color: $primary-bg-color;
+    color: $scrollbar-bg-color;
+    padding: 5px;
+
+    h5 {
+        font-family: $heading-font ;
+        padding: 5px;
+        margin-left: 20px;
+        margin-right: 20px;
+        display: flex;
+        justify-content: space-between;
+
+
+        .rotate-icon {
+            color: $scrollbar-bg-color;
+        }
+    }
+
+    .notifi-scroll {
+        overflow-y: scroll;
+        max-height: 80%;
+    }
+
+    ul {
+        all: unset;
+        list-style: none;
+        max-height: 100%;
+        overflow-y: scroll;
+        font-family: $body-font !important;
+
+        .notifi-new {
+            background-color: $hover-color-notifi;
+
+            &:hover {
+                border: 2px solid $scrollbar-thumb-color;
+            }
+
+        }
+
+        li {
+            margin-top: 4px;
+            border: 2px solid transparent;
+            border-radius: 10px;
+            padding-top: 4px !important;
+            padding-left: 10px;
+            padding-right: 10px;
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+
+            SVG {
+                border-radius: 50px;
+                padding: 5px;
+                background-color: $scrollbar-thumb-hover-color;
+                font-size: 34px;
+                color: $active-bg-color;
+            }
+
+            // padding: 7px;
+            height: 50px;
+            padding-left: 20px;
+            padding-top: 7px;
+            padding-bottom: 7px;
+
+            div {
+                margin-left: 18px;
+            }
+
+            b {
+                margin-right: 4px;
+            }
+
+            span {
+                position: sticky;
+                font-size: 12px;
+                left: 340px;
+            }
+
+            &.active {
+                background-color: $hover-color-notifi;
+            }
+
+            transition: background-color 0.3s;
+
+            &:hover {
+                background-color: $hover-color-notifi;
+
+                SVG {
+                    background-color: $primary-bg-color;
+                }
+            }
+        }
+    }
+}
+
+.notifi-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: $active-bg-color;
+    opacity: 0.4;
+    .notifi-empty-p {
+        margin-top: 20px;
+        font-size: 16px;
+        h4 {
+            font-size: 22px;
+            margin-bottom: 18px;
+        }
+        p{
+            font-size: 10px;
+        }
+    }
+
+    text-align: center;
+}
+
+.notifi-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: $scrollbar-thumb-color $scrollbar-bg-color;
+
+    &::-webkit-scrollbar {
+        width: 4px !important;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: $primary-bg-color;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: $scrollbar-thumb-color;
+        border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background-color: $scrollbar-thumb-hover-color;
+    }
+}
+
+.notifi-red {
+    z-index: 1;
+    position: relative;
+    margin-left: -18px;
+    margin-top: 4px;
+    color: red;
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+// Define the none style to hide the element
+.notifi-none {
+
+
+    // width: 20px;
+    // height: 20px;
+    // background-color: red($color: #000000);
+    // color: red;
+    display: none;
+}
+
+.notifi-icon {
+    // display: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row-reverse;
+}

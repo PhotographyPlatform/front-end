@@ -4,10 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Follow, getFollowing, getProfile, unFollow } from '../../../../store/reducers/profile/profile.reducer';
 import cookies from 'react-cookies';
 import OthersModal from './OthersModal';
-
+import { useNavigate } from 'react-router';
+import { AiFillMessage } from 'react-icons/ai';
+import placeholder from '../../../assets/cover-1.png'
 function UsersProfile() {
     const [data, setData] = useState({});
-    console.log(data);
+    const navigate = useNavigate()
     const [showFollowersModal, setShowFollowersModal] = useState(false);
     const [showFollowingModal, setShowFollowingModal] = useState(false);
     const [toggle, setToggle] = useState(false)
@@ -74,12 +76,11 @@ function UsersProfile() {
 
 
     return (
-        <Container maxW="2xl">
+        <div style={{ backgroundColor: '#F9F7F7' }}>
             {data.user && (
                 <Stack
                     as={Box}
                     spacing={{ base: 8, md: 16 }}
-                    py={{ base: 1, md: 3 }}
                 >
                     <Stack
                         direction={'column'}
@@ -89,33 +90,54 @@ function UsersProfile() {
                         position={'relative'}
                     >
                         <Image
-                            src={data.user.heroImg}
+                            src={data.user.heroImg || placeholder}
                             objectFit="cover"
-                            maxW={{ base: '700px', md: '715px', lg: '1200px', xl: '1260px' }}
-                            width={{ base: '700px', md: '715px', lg: '950px', xl: '1035px' }}
-                            height="300px"
+                            maxW={['100%', '100%', '100%', '100%', '100%']}
+                            width={['100%', '100%', '100%', '1000px', '1260px']}
+                            height="350px"
                         />
                         <Avatar
                             position="absolute"
-                            top={{ base: '88%', sm: '90%', md: '93%', lg: '90%' }}
-                            size={{ base: 'md', sm: 'lg', md: 'xl' }}
+                            top={['83%', '85%', '85%', '85%']}
+                            size={['xl', 'xl', '2xl']}
                             src={data.user.img}
                         />
                     </Stack>
                     <Stack>
-                        <div key={data.user.id}>
-                            <Text fontSize="3xl">{data.user.username}</Text>
+                        <Box key={data.user.id} marginTop='1%'>
+                            <Text fontSize="3xl" marginBottom='0'>{data.user.username}</Text>
                             <Text fontSize="2xl">{data.user.address}</Text>
-                            {
-                                toggle ?
-                                    <Button onClick={handleFollow} style={{ transition: 'background-color 0.3s ease' }}>
-                                        unFollow
-                                    </Button> :
-                                    <Button onClick={handleFollow}>
-                                        Follow
-                                    </Button>
-                            }
-                            <HStack justifyContent="center" gap="30px">
+                            <Box justifyContent='center' gap='10px' display='flex'>
+                                {
+                                    toggle ?
+                                        <Button onClick={handleFollow} className='btn-hover' style={{
+                                            transition: 'background-color 0.3s ease',
+                                            backgroundColor: 'white',
+                                            color: '#3F72AF',
+                                            borderColor: '#3F72AF',
+                                            borderWidth: '1px',
+                                            borderStyle: 'solid',
+                                        }}>
+                                            Following
+                                        </Button> :
+                                        <Button onClick={handleFollow} className='btn-hover2' style={{
+                                            transition: 'background-color 0.3s ease',
+                                            backgroundColor: '#3F72AF',
+                                            color: '#F9F7F7',
+                                            borderColor: '#112D4E',
+                                            borderWidth: '1px',
+                                            borderStyle: 'solid',
+                                        }}>
+                                            Follow
+                                        </Button>
+                                }
+                                <Button className='btn-hover2' style={{
+                                    transition: 'background-color 0.3s ease',
+                                    backgroundColor: '#3F72AF',
+                                    color: '#F9F7F7',
+                                }} onClick={() => { navigate(`/messages/${data.user.id}`) }}><AiFillMessage /></Button>
+                            </Box>
+                            <HStack justifyContent="center" gap="30px" paddingTop='10px'>
                                 <Text fontSize="xl"
                                     fontWeight="bold"
                                     cursor='pointer'
@@ -133,14 +155,16 @@ function UsersProfile() {
                                     Following <Text>{data.following.Count}</Text>
                                 </Text>
                             </HStack>
-                        </div>
+                        </Box>
                     </Stack>
                     <Divider />
+
                 </Stack>
+
             )}
             {showFollowersModal && data.followers.Count !== 0 ? <OthersModal followers={data.followers} /> : null}
             {showFollowingModal && data.following.Count !== 0 ? <OthersModal following={data.following} /> : null}
-        </Container>
+        </div>
     );
 }
 

@@ -8,18 +8,30 @@ import {
   ModalBody,
   ModalCloseButton,
   Button,
-  useToast 
+  useToast
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import "./Report.scss";
+import cookies from 'react-cookies';
+import jwtDecode from "jwt-decode";
+function Report({ onCloseReport, isOpenReport, actionId, actionType }) {
 
-function Report({onCloseNewPost, isOpenNewPost, actionId, actionType}) {
-  
+
+
+  // Cookies  
+  const session_user = cookies.load('user_session');
+  let decoded = null;
+  if (session_user) {
+    decoded = jwtDecode(session_user);
+  }
+  const userId = decoded.userId;
+
+
   const desLimit = 200;
 
   const [desCounter, setDesCounter] = useState(0);
-  
+
   const toast = useToast();
 
   const onChangeDetails = (e) => {
@@ -30,7 +42,7 @@ function Report({onCloseNewPost, isOpenNewPost, actionId, actionType}) {
     e.preventDefault();
 
     const report = {
-      userId: 2, //cookies
+      userId: userId,
       actionId: actionId,//props
       actionType: actionType,//props
       categories: e.target.elements.categories.value,
@@ -42,10 +54,10 @@ function Report({onCloseNewPost, isOpenNewPost, actionId, actionType}) {
         "http://localhost:3002/v1/reportCollection",
         report
       );
-      if(response.status === 201){
-        onCloseNewPost();
+      if (response.status === 201) {
+        onCloseReport();
         toast({
-          position:'top-left',
+          position: 'top-left',
           title: 'Submitted',
           description: "thanks for your feedback",
           status: 'success',
@@ -61,7 +73,7 @@ function Report({onCloseNewPost, isOpenNewPost, actionId, actionType}) {
   return (
     <>
 
-      <Modal isOpen={isOpenNewPost} onClose={onCloseNewPost} size="xl">
+      <Modal isOpen={isOpenReport} onClose={onCloseReport} size="xl">
         <ModalOverlay />
         <ModalContent className="modal modal-report">
           <ModalHeader className="modal-title">Report</ModalHeader>
@@ -107,7 +119,7 @@ function Report({onCloseNewPost, isOpenNewPost, actionId, actionType}) {
             </ModalBody>
 
             <ModalFooter className="modal-buttons-r">
-              <Button variant="ghost" onClick={onCloseNewPost}>
+              <Button variant="ghost" onClick={onCloseReport}>
                 Close
               </Button>
               <Button type="submit" colorScheme="blue" mr={3}>

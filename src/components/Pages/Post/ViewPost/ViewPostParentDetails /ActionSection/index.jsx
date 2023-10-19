@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BiSolidLike } from 'react-icons/bi';
+import { BiSolidLike, BiComment } from 'react-icons/bi';
 import { FaRegComment } from 'react-icons/fa';
 import { BiBookmarkHeart, BiLike } from 'react-icons/bi';
 import { BsBookmark, BsFillBookmarkCheckFill } from 'react-icons/bs';
@@ -13,6 +13,7 @@ import { handleCommentActive } from '../../../../../../store/reducers/basicActio
 import { addFavoritePost, removeFavorite, fetchFavoritePosts } from '../../../../../../store/reducers/favorite/favorite';
 import jwtDecode from "jwt-decode";
 import cookies from 'react-cookies';
+
 function ActionSection(photoId) {
     // Like Button State
     const [liked, setLiked] = useState(false);
@@ -46,19 +47,19 @@ function ActionSection(photoId) {
 
     // Search  if the user already add like
     useEffect(() => {
-        if (userId) {
 
-            if (Array.isArray(likeList)) {
-                for (const item of likeList) {
-                    if (item.userid === userId) {
-                        setLiked(true);
-                        break;
-                    }
+
+        if (Array.isArray(likeList)) {
+            for (const item of likeList) {
+                if (item.userid === userId) {
+                    setLiked(true);
+                    break;
                 }
             }
         }
 
-    }, []);
+
+    }, [userId]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -75,14 +76,12 @@ function ActionSection(photoId) {
     const favoriteList = useSelector((state) => state.Favorite.favoritePosts
     );
 
-    console.log("IDDDD current photo ", photoId);
     useEffect(() => {
         if (userId) {
 
             if (Array.isArray(favoriteList)) {
                 for (const item of favoriteList) {
                     if (item.userid === userId && postCurrentId === item.id) {
-                        console.log(true)
                         setFav(true);
                         break;
                     }
@@ -94,7 +93,6 @@ function ActionSection(photoId) {
 
 
 
-    console.log("llllllist", favoriteList)
 
     const toggleLike = async () => {
         if (liked === true) {
@@ -129,14 +127,16 @@ function ActionSection(photoId) {
                         {liked ? <BiSolidLike size={22} /> : <BiLike size={22} />}
 
                     </div>
-                    <span>{likeList.length}</span>
+                    <span>
+                        {likeList.length > 0 && likeList.length}
+                    </span>
                 </div>
 
                 <div
                     className={`action-button comment-button ${isActive ? 'active' : ''}`}
                     onClick={handleCommentClick}
                 >
-                    <FaRegComment size={22} />
+                    <BiComment size={22} />
                 </div>
                 <div className="bookmark-button , action-button" onClick={toggleFav}>
                     {fav ? <BsFillBookmarkCheckFill size={22} /> : <BsBookmark size={22} />}

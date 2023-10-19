@@ -1,5 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+
+
 import Container from './components/Pages/@auth/index';
 import Cookies from 'react-cookies';
 import { decodeToken } from 'react-jwt';
@@ -27,12 +29,12 @@ import {
   ThemeProvider,
 } from '@chakra-ui/react'
 import UsersProfile from './components/Pages/@auth/profileDashboard/UsersProfile';
-
+import Mystory from '../src/components/Pages/@auth/stories/Mystory'
 import SidebarWithHeader from './components/ChakraLayout';
 import { dispatchAllNotification, fetchUserListRedux, getNotification } from './store/reducers/chat/chatList.reducer';
 import Challenges from './components/Pages/Challenges';
-import Home from './components/Pages/Home/Home';
-
+import { setNewNotifi, setRead } from './store/reducers/notificationAction';
+import { setOldNotifi } from './store/reducers/notificationAction';
 
 // socket assets 
 const port = 3002;
@@ -42,6 +44,7 @@ const nameSpacehost = `http://localhost:${port}/notification`;
 
 export const socket = io.connect(host, { transports: ["websocket"] });
 export const homeSocket = io.connect(homeHost, { transports: ["websocket"] });
+
 export const notificationAction = io.connect(nameSpacehost, { transports: ["websocket"] });
 
 
@@ -52,6 +55,10 @@ function App() {
   const dispatch = useDispatch();
   const notificationState = useSelector((state) => state.ChatList.AllNotification);
   const [render, setRender] = useState(true)
+  const notifiRead = useSelector((state) => state.notification.read)
+
+  const [notifiOff, setnotifiOff] = useState(true)
+
   let params = useParams()
 
 
@@ -74,13 +81,40 @@ function App() {
 
   }, [])
 
+  // Notification Action (Post, Like, Comment,  Follow)
+  notificationAction.emit("notification", userId);
 
+
+
+  const notificationEvent = `notification-${userId}`;
+
+  notificationAction.emit("notification", userId);
+
+  notificationAction.on(`newRecord-${notificationEvent}`, payload => {
+
+    dispatch(setNewNotifi(payload));
+
+
+  })
+
+  useEffect(() => {
+    if (notifiOff) {
+      notificationAction.on(notificationEvent, (payload) => {
+        dispatch(setOldNotifi(payload));
+      })
+    }
+    // notificationAction.disconnect();
+
+  }, [Logged])
 
 
 
   useEffect(() => {
     homeSocket.emit("joinHomeRoom", userId);
+
+
     dispatch(getNotification(cookieData))
+
   }, [Logged]);
 
 

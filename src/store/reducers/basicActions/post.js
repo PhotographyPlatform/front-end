@@ -16,6 +16,9 @@ const postSlice = createSlice({
     },
     reducers: {
         setPostData(state, action) {
+            state.commentsList = null;
+            state.postDetails = null;
+            console.log("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS",state.postDetails)
             state.postDetails = action.payload;
         },
         setLoading(state, action) {
@@ -25,6 +28,7 @@ const postSlice = createSlice({
             state.likeList = action.payload;
         },
         setCommentsList(state, action) {
+            state.commentsList = null;
             state.commentsList = action.payload;
         },
         setNumEffectt(state) {
@@ -40,7 +44,6 @@ export const { setPostData, setLoading, setLikeList, setCommentsList, setNumEffe
 
 export const fetchPostData = (postId) => async (dispatch) => {
     try {
-
         dispatch(setLoading(true));
         const response = await axios.get(`${BASE_URL}/getAllPostData/${postId}`);
         dispatch(setPostData(response.data));
@@ -72,15 +75,15 @@ export const removePost = (postId) => async (dispatch) => {
     } catch (error) {
         console.log("There is an error when removing the Post: ", error);
     } finally {
-        dispatch(setNumEffectt())
+        // dispatch(setNumEffectt())
     }
 };
 
 
 export const fetchComments = (commentsList) => async (dispatch) => {
     try {
+        dispatch(setLoading(true));
         const commentsData = [];
-
         for (const item of commentsList) {
             const response = await axios.get(`${BASE_URL}/v1/newUserCOll/${item.userid}`);
             const obj = {
@@ -92,6 +95,7 @@ export const fetchComments = (commentsList) => async (dispatch) => {
                 comment: {
                     id: item.id,
                     content: item.contant,
+                    createdAt: item.createdAt
                 },
             };
             commentsData.push(obj);
@@ -109,8 +113,6 @@ export const fetchComments = (commentsList) => async (dispatch) => {
 export const setComment = (comment) => async (dispatch) => {
     try {
         dispatch(setLoading(true));
-
-
         const userToken = Cookies.load('user_session');
 
         const headers = {
@@ -120,16 +122,13 @@ export const setComment = (comment) => async (dispatch) => {
 
         const response = await axios.post(`${BASE_URL}/notification/comment`, comment, { headers });
         console.log('Comment posted successfully:', response.data);
-
-
-
         dispatch(fetchPostData());
-
-
     } catch (error) {
         console.log("There is an error when posting the comment: ", error);
     } finally {
+        dispatch(setLoading(false));
         dispatch(setNumEffectt())
+
     }
 };
 
@@ -151,6 +150,8 @@ export const removeComment = (commentId) => async (dispatch) => {
     } catch (error) {
         console.log("There is an error when removing the comment: ", error);
     } finally {
+        dispatch(setLoading(false));
+
         dispatch(setNumEffectt())
     }
 };
