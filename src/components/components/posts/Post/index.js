@@ -13,7 +13,7 @@ function Post(props) {
  
   const { id, imgurl, userid, title, contant, challengeName, challengeID, category, createdAt, updatedAt, } = props;
   const { isOpen: isOpenViewPost, onOpen: onOpenViewPost, onClose: onCloseViewPost } = useDisclosure();
-  const { userid } = props;
+  // const { userid } = props;
 
   const [userImg, setUserImg] = useState('');
   const [username, setUsername] = useState('');
