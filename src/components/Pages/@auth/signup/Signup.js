@@ -27,6 +27,7 @@ import { PasswordField } from './passwordFiled/Password'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import React, { useState } from 'react'
+import Animation from '../signin/Animation'
 const VARIANT_COLOR = 'teal'
 
 export default function SignUp() {
@@ -71,7 +72,7 @@ export default function SignUp() {
     }
 
     return (
-        <Container maxW="2xl" py={{ base: '12', md: '24' }} px={{ base: '0', sm: '8' }}>
+        <Container maxW="2xl" py={{ base: '12', md: '24' }} px={{ base: '0', sm: '8' }} backgroundColor='white' >
             <form onSubmit={submitHandler}>
 
                 <Stack spacing="8">
@@ -178,7 +179,7 @@ export default function SignUp() {
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>
-
+            <Animation />
         </Container >
     )
 }
