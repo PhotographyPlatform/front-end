@@ -1,25 +1,41 @@
-$primary-bg-color: #f4f4f4; // Define your primary background color variable
-$active-bg-color: #d6d6d6; // Define your active background color variable
-$scrollbar-bg-color: #f4f4f4; // Define your scrollbar background color variable
-$scrollbar-thumb-color: #888; // Define your scrollbar thumb color variable
-$scrollbar-thumb-hover-color: #555; // Define your scrollbar thumb hover color variable
+// @import 'global-styles';
+
+$primary-bg-color: #F9F7F7;
+$active-bg-color: #3F72AF;
+$scrollbar-bg-color: #112D4E;
+$scrollbar-thumb-color: #3F72AF;
+$scrollbar-thumb-hover-color: #DBE2EF;
+$hover-color-notifi: #DBE2EF;
+$heading-font: 'Open Sans', sans-serif;
+$body-font: 'Raleway', sans-serif;
+
+
+.notifi {
+    background-color: $primary-bg-color !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+}
 
 .notifi-parent {
     box-sizing: border-box;
-    width: 370px !important;
+    width: 360px !important;
     text-align: left;
-    height: 300px;
+    height: 320px;
     max-height: 100%;
+    background-color: $primary-bg-color;
+    color: $scrollbar-bg-color;
+    padding: 5px;
 
     h5 {
+        font-family: $heading-font ;
         padding: 5px;
         margin-left: 20px;
         margin-right: 20px;
         display: flex;
         justify-content: space-between;
 
+
         .rotate-icon {
-            color: #230000;
+            color: $scrollbar-bg-color;
         }
     }
 
@@ -33,20 +49,34 @@ $scrollbar-thumb-hover-color: #555; // Define your scrollbar thumb hover color v
         list-style: none;
         max-height: 100%;
         overflow-y: scroll;
+        font-family: $body-font !important;
 
         .notifi-new {
-            background-color: $primary-bg-color;
+            background-color: $hover-color-notifi;
+
+            &:hover {
+                border: 2px solid $scrollbar-thumb-color;
+            }
 
         }
 
         li {
+            margin-top: 4px;
             border: 2px solid transparent;
+            border-radius: 10px;
+            padding-top: 4px !important;
+            padding-left: 10px;
+            padding-right: 10px;
             display: flex;
             align-items: center;
             font-size: 16px;
 
             SVG {
-                font-size: 24px;
+                border-radius: 50px;
+                padding: 5px;
+                background-color: $scrollbar-thumb-hover-color;
+                font-size: 34px;
+                color: $active-bg-color;
             }
 
             // padding: 7px;
@@ -56,7 +86,7 @@ $scrollbar-thumb-hover-color: #555; // Define your scrollbar thumb hover color v
             padding-bottom: 7px;
 
             div {
-                margin-left: 20px;
+                margin-left: 18px;
             }
 
             b {
@@ -66,45 +96,69 @@ $scrollbar-thumb-hover-color: #555; // Define your scrollbar thumb hover color v
             span {
                 position: sticky;
                 font-size: 12px;
-                left: 330px;
+                left: 340px;
             }
 
             &.active {
-                background-color: $primary-bg-color; // Use the active background color variable
+                background-color: $hover-color-notifi;
             }
 
             transition: background-color 0.3s;
 
             &:hover {
-                border: 2px solid rgb(184, 184, 184);
-                background-color: $primary-bg-color; // Use the primary background color variable
+                background-color: $hover-color-notifi;
+
+                SVG {
+                    background-color: $primary-bg-color;
+                }
             }
         }
     }
 }
 
+.notifi-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: $active-bg-color;
+    opacity: 0.4;
+    .notifi-empty-p {
+        margin-top: 20px;
+        font-size: 16px;
+        h4 {
+            font-size: 22px;
+            margin-bottom: 18px;
+        }
+        p{
+            font-size: 10px;
+        }
+    }
+
+    text-align: center;
+}
+
 .notifi-scroll {
     scrollbar-width: thin;
-    scrollbar-color: $scrollbar-thumb-color $scrollbar-bg-color; // Use scrollbar color variables
+    scrollbar-color: $scrollbar-thumb-color $scrollbar-bg-color;
 
     &::-webkit-scrollbar {
         width: 4px !important;
     }
 
     &::-webkit-scrollbar-track {
-        background: $scrollbar-bg-color; // Use scrollbar background color variable
+        background: $primary-bg-color;
     }
 
     &::-webkit-scrollbar-thumb {
-        background-color: $scrollbar-thumb-color; // Use scrollbar thumb color variable
-        border-radius: 2px;
+        background-color: $scrollbar-thumb-color;
+        border-radius: 10px;
     }
 
     &::-webkit-scrollbar-thumb:hover {
-        background-color: $scrollbar-thumb-hover-color; // Use scrollbar thumb hover color variable
+        background-color: $scrollbar-thumb-hover-color;
     }
 }
-
 
 .notifi-red {
     z-index: 1;
@@ -115,7 +169,7 @@ $scrollbar-thumb-hover-color: #555; // Define your scrollbar thumb hover color v
     width: 10px;
     height: 10px;
     background-color: red;
-    border-radius: 50%; // Make it a circle
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -129,11 +183,11 @@ $scrollbar-thumb-hover-color: #555; // Define your scrollbar thumb hover color v
     // height: 20px;
     // background-color: red($color: #000000);
     // color: red;
-    display: none; 
+    display: none;
 }
 
 .notifi-icon {
-        // display: none;
+    // display: none;
     display: flex;
     justify-content: center;
     align-items: center;

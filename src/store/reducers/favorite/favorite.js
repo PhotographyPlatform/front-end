@@ -43,6 +43,7 @@ const dispatchFavoritePosts = (data) => {
 
 export const addFavoritePost = (cookieData , postid) => async dispatch => {
      try {
+          console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%POST ID ",postid)
           const res = await axios.post(`${url}/favorites`, {postid}, { headers: { Authorization: `Bearer ${cookieData}` } })
           dispatch(dispatchFavoritePost(res.data.favorites))
           console.log('favorites, Added Sucssufully', res)

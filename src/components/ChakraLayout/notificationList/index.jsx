@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Menu, MenuButton, MenuList, MenuItem, IconButton } from "@chakra-ui/react";
 import { HamburgerIcon, AddIcon, ExternalLinkIcon, RepeatIcon, EditIcon } from "@chakra-ui/icons";
 import { useDisclosure } from "@chakra-ui/react";
@@ -7,72 +7,162 @@ import { FaRegComment } from 'react-icons/fa';
 import { BiLike } from 'react-icons/bi';
 import { RiUserFollowLine } from 'react-icons/ri';
 import { useSelector, useDispatch } from "react-redux";
-import {
-    FiBell,
-} from 'react-icons/fi';
-
+import { FiBell, } from 'react-icons/fi';
+import { useNavigate } from 'react-router-dom'
 import './notifiList.scss'
 import ViewPost from "../../Pages/Post/ViewPost";
 import { setRead } from "../../../store/reducers/notificationAction";
-
+import cookies from 'react-cookies'
+import { compileString } from "sass";
 function NotifiList() {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     const { isOpen: isOpenViewPost, onOpen: onOpenViewPost, onClose: onCloseViewPost } = useDisclosure();
 
-    const [active, setActive] = useState(false);
+    const [active, setActive] = useState(true);
+    const [newStateNotifi, setNewStateNotifi] = useState([]);
+    const [oldStateNotifi, setoldStateNotifi] = useState([]);
+
+    const navigate = useNavigate()
+    function handleProfile(id) {
+        cookies.remove('id');
+        cookies.save('id', id);
+        navigate('/userProfile')
+    }
 
     const dispatch = useDispatch()
+
+
     const notifiOld = useSelector((state) => state.notification.old)
     const notifiNew = useSelector((state) => state.notification.new)
     const notifiRead = useSelector((state) => state.notification.read)
 
+    const toggleItemNew = (item) => {
+        if (Array.isArray(newStateNotifi)) {
+            const itemExists = newStateNotifi.some((existingItem) => existingItem.id === item.id);
+            if (!itemExists) {
+
+                const filter = newStateNotifi.filter((item) => item.id !== item.id);
+                setNewStateNotifi(filter)
+                let updatedState = [...newStateNotifi, item];
+                updatedState = updatedState.reverse();
+                setNewStateNotifi(updatedState);
+
+            } else {
+            }
+        } else {
+            // setNewStateNotifi(item);
+
+        }
+
+    };
+
+    useEffect(() => {
+        toggleItemNew(notifiNew);
+    }, [notifiNew])
+
+    // useEffect(() => {
+    //     toggleItem(notifiNew);
+    // }, [notifiNew])
+
+
+
+
+
+
+
+
     // handle read 
-
-
-    const oldNotifications = notifiOld.length > 0 ? (
+    const oldNotifications = notifiOld.length > 1 ? (
         notifiOld.map((notification, index) => {
-            return (
-                <li key={index} onClick={onOpenViewPost}>
-                    {/* <ViewPost
-                        isOpenViewPost={isOpenViewPost}
-                        onCloseViewPost={onCloseViewPost}
-                        id={ notification.actionParentId }
-                    /> */}
+            if (notification.id) {
+                if (notification.actionType !== 'follow') {
+                    return (
+                        <li key={index} onClick={onOpenViewPost}>
+                            {/* onClick={onOpenViewPost} */}
+                            <ViewPost
+                                isOpenViewPost={isOpenViewPost}
+                                onCloseViewPost={onCloseViewPost}
+                                id={notification.actionParentId}
+                            />
+                            {getNotificationIcon(notification.message)}
+                            <div>{notification.message}</div>
+                            <span>{calculateTimeDifference(notification.createdAt)}</span>
 
-                    {getNotificationIcon(notification.message)}
-                    <div>{notification.message}</div>
-                    <span>{calculateTimeDifference(notification.createdAt)}</span>
-                </li>
-            );
+                        </li>
+                    );
+
+                } else {
+                    return (
+                        <li key={index} onClick={() => { handleProfile(notification.actionParentId) }} >
+                            {/* onClick = { navigate('/profile') } */}
+                            {getNotificationIcon(notification.message)}
+                            <div>{notification.message}</div>
+                            <span>{calculateTimeDifference(notification.createdAt)}</span>
+                        </li>
+                    )
+                }
+            } else {
+                // return <div className="notifi-empty">Notifications are empty</div>; // Added "return" here
+            }
         })
     ) : (
-        <div> Notifications are empty</div>
+        <div className="notifi-empty">
+            <FiBell size={100} />
+
+            <div className="notifi-empty-p">
+                <h4>Stay tuned for notifications  here! </h4>
+                Explore the platform and connect with amazing users
+            </div>
+        </div> // Handle the case when notifiOld is empty
     );
 
+    // New Notifications -----
 
-    const newNotifications = notifiNew.length > 0 ? (
+    const newNotifications = newStateNotifi.length > 0 ? (
+        newStateNotifi.map((notification, index) => {
+            if (notification.id) {
+                dispatch(setRead(false));
+                if (notification.actionType !== 'follow') {
+                    return (
+                        <li key={index} onClick={onOpenViewPost} className={" notifi-new"}>
+                            <ViewPost
+                                isOpenViewPost={isOpenViewPost}
+                                onCloseViewPost={onCloseViewPost}
+                                id={notification.actionParentId}
+                            />
+                            {getNotificationIcon(notification.message)}
+                            <div>{notification.message}</div>
+                            <span>{calculateTimeDifference(notification.createdAt)}</span>
+                        </li>
+                    );
+                } else {
+                    return (
+                        <li key={index} onClick={() => { handleProfile(notification.actionParentId) }} className={" notifi-new"}>
+                            {getNotificationIcon(notification.message)}
+                            <div>{notification.message}</div>
+                            <span>{calculateTimeDifference(notification.createdAt)}</span>
+                        </li>
+                    );
+                }
+            } else if (notification.actionType === 'follow') {
+                return (
+                    <li className='notifi-new' key={index} onClick={onOpenViewPost}>
+                        <ViewPost
+                            isOpenViewPost={isOpenViewPost}
+                            onCloseViewPost={onCloseViewPost}
+                            id={notification.actionParentId}
+                        />
+                        {getNotificationIcon(notification.message)}
+                        <div>{notification.message}</div>
+                        <span>{calculateTimeDifference(notification.createdAt)}</span>
+                    </li>
+                );
+            }
 
-        notifiNew.map((notification, index) => {
-            dispatch(setRead(false));
-            return (
-                <li className='notifi-new' key={index} >
-                    {/*                     //onClick={onOpenViewPost} */}
-                    {/* <ViewPost
-                        isOpenViewPost={isOpenViewPost}
-                        onCloseViewPost={onCloseViewPost}
-                        id={notification.actionParentId}
-                    /> */}
-
-                    {getNotificationIcon(notification.message)}
-                    <div>{notification.message}</div>
-                    <span>{calculateTimeDifference(notification.createdAt)}</span>
-                </li>
-            )
         })
     ) : (
-
-        <div> </div>
+        <div></div>
     );
 
     const handleMenuOpen = () => {
@@ -83,9 +173,10 @@ function NotifiList() {
 
     };
     // dispatch(setRead(true));
-    console.log("REEEEED", notifiRead)
     return (
-        <Menu>
+
+        <Menu className={"notifi"}>
+
             <div className="notifi-icon" onClick={() => {
                 handleMenuOpen();
                 onOpen();
@@ -95,13 +186,11 @@ function NotifiList() {
 
                 <MenuButton as={IconButton} aria-label="Options" icon={<FiBell size={25} />} variant="outline" />
             </div>
-            <MenuList isOpen={isOpen} onClose={onClose} >
+            <MenuList isOpen={isOpen} onClose={onClose} className={"notifi"}>
 
                 <section className="notifi-parent ">
                     <h5>Notifcations <FiBell className="rotate-icon" /></h5>
                     <hr />
-
-
 
                     <div className="notifi-scroll">
                         <ul >

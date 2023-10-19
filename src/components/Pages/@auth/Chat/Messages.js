@@ -15,6 +15,7 @@ import { homeSocket, socket } from '../../../../App';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUserInfo, fetchUserListRedux, getNotification } from '../../../../store/reducers/chat/chatList.reducer';
+import { getImages } from '../../../../store/reducers/profile/profile.reducer';
 
 
 
@@ -43,6 +44,7 @@ export default function Messages({setRender}) {
      const despatch = useDispatch()
      const selector = useSelector(state => state.ChatList)
      const userInfo = selector.userInfo.userInfo
+     const userImg = useSelector(state => state.profile.allImages)
 
      const messageHandeler = async () => {
           console.log(reciver , 'reciver' , userId , 'sender');
@@ -93,6 +95,7 @@ export default function Messages({setRender}) {
           messageHandeler() 
           despatch(fetchUserInfo(reciver, cookieData))
           despatch(fetchUserListRedux(userId))
+          despatch(getImages())
           // despatch(getNotification(cookieData))
           // homeSocket.on('msgNotificaton', msg => {
           // })
@@ -151,7 +154,7 @@ export default function Messages({setRender}) {
      <Box className="chat-container"  >  
           <Box maxH={'40px'}>
                <Box display={'flex'} alignItems={'center'} gap={'10px'}>
-                    <Avatar size={'sm'} src='https://cdn-icons-png.flaticon.com/512/1053/1053244.png' />
+                    <Avatar size={'sm'} src={userInfo?.img} />
                     <Text textTransform={'capitalize'} margin={0} >{userInfo?.username}</Text>
                </Box>
                <Divider  borderBottomWidth={'2px'} borderColor={'#00000020'}  marginTop={'7px'}/>
@@ -165,7 +168,7 @@ export default function Messages({setRender}) {
                                    <div  className={ele.who === 'sender' || ele.senderId === userId ? 'message outgoing' : 'message'}>
                                         <p>{ele.content}</p> 
 
-                                        <Avatar size={'sm'} src='https://cdn-icons-png.flaticon.com/512/1053/1053244.png'
+                                        <Avatar size={'sm'} src={ele.who === 'sender' || ele.senderId === userId ? userImg?.profileImg : userInfo?.img}
                                         className={ele.who === 'sender' || ele.senderId === userId ?'date-msg-out' : 'date-msg-in'}/>
                                    </div>
                                    <p className={ele.who === 'sender' || ele.senderId === userId ?'date-msg-out' : 'date-msg-in'}>{getData(ele.createdAt)}</p>
@@ -176,7 +179,7 @@ export default function Messages({setRender}) {
                          
                <HStack className='message-field' my={'20px'} width={'100%'} display={'flex'} justifyContent={'space-between'} alignItems={'flex-start'}>
                     <Box display={'flex'} >
-                         <Avatar size={'sm'} name='Dan Abrahmov' src='https://cdn-icons-png.flaticon.com/512/1053/1053244.png' />
+                         <Avatar size={'sm'} name='Dan Abrahmov' src={userInfo?.img} />
                          <Input ref={inputEle}  width={{base :'200px' ,sm : '250px', md: '400px' , lg : '430px' ,'2xl' : '630px' }} border={'none'} _focusVisible={'none'} fontSize={'17px'} onChange={(e) => setValue(e.target.value)} placeholder='Type message' />
                     </Box>
                     <Box display={'flex'}>

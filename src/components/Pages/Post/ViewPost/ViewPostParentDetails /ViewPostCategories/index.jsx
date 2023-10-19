@@ -18,7 +18,9 @@ function ViewPostCategories({ category, onClose }) {
         <ul className='category-container-viewpost'>
             {/* onClick={() => dispatch(setActiveCategory(category.name)) */}
 
-            {category.map((category, index) => (
+            {
+                category&&
+                category.map((category, index) => (
                 <span className='category-card' onClick={() => { navigate('/search'); dispatch(setActiveCategory(category)); handleClick(); }} >
                     {/* < Link to="/search" key={index}> */}
                     {category}

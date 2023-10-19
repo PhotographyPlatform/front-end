@@ -2,6 +2,7 @@
 .viewpost-grandparent {
     max-height: 50% !important;
     max-width: 80% !important;
+    border-radius: 1% !important;
 }
 
 .div-handler {
@@ -10,6 +11,7 @@
     // width: 600px !important;
     max-height: 100% !important;
     max-width: 100% !important;
+    border-radius: 1% !important;
 }
 
 .model-parent-viewpost {
@@ -17,6 +19,7 @@
     // all: unset !important;
     max-width: 65% !important;
     max-height: 100% !important;
+    border-radius: 1% !important;
 }
 
 .viewpost-header {}
@@ -24,6 +27,7 @@
 .viewpost-no-space {
     margin: 0 !important;
     padding: 0 !important;
+    border-radius: 1% !important;
 }
 
 
@@ -67,7 +71,7 @@ $large-screen: 1200px;
     .div-handler,
     .model-parent-viewpost {
         max-height: 100% !important;
-        max-width: 100% !important;
+        max-width: 80% !important;
     }
 
     .viewpost-grandparent {
@@ -89,7 +93,8 @@ $large-screen: 1200px;
     /* Define other SCSS styles as needed */
     .viewpost-grandparent {
         max-height: 50% !important;
-        max-width: 80% !important;
+        max-width: 60% !important;
+        border-radius: 3% !important;
     }
 
     .div-handler {
@@ -98,13 +103,15 @@ $large-screen: 1200px;
         // width: 600px !important;
         max-height: 100% !important;
         max-width: 100% !important;
+        border-radius: 1% !important;
     }
 
     .model-parent-viewpost {
         // max-width: 0% !important;
         // all: unset !important;
         max-width: 65% !important;
-        max-height: 100% !important;
+        max-height: 200% !important;
+        border-radius: 1% !important;
     }
 
     .viewpost-header {}
@@ -112,6 +119,7 @@ $large-screen: 1200px;
     .viewpost-no-space {
         margin: 0 !important;
         padding: 0 !important;
+        border-radius: 3% !important;
     }
 
 

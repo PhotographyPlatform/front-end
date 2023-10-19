@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
 
     Box,
@@ -13,6 +13,7 @@ import {
     Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay
 
 } from '@chakra-ui/react';
+
 import {
     FiHome,
     FiTrendingUp,
@@ -24,8 +25,9 @@ import {
 // Other Components  fro nav 
 import NavItem from './NavItem';
 import MobileNav from './MobileNav';
-
-
+import cookie from 'react-cookies'
+import { useDispatch } from 'react-redux';
+import jwtDecode from 'jwt-decode';
 // Popup  options 
 // import {useDisclosure } from '@chakra-ui/react';
 
@@ -46,16 +48,9 @@ import { IoMdAddCircle } from 'react-icons/io';
 import { BsFillChatDotsFill } from 'react-icons/bs';
 import FavoritePage from '../Pages/@auth/FavoritePage/FavoritePage';
 import UsersProfile from '../Pages/@auth/profileDashboard/UsersProfile';
-import Mystory from '../Pages/@auth/stories/Mystory';
-import Otherstories from '../Pages/@auth/stories/Otherstories';
-import User from '../Admin/User/User';
-import AdminPosts from '../Admin/Posts/Posts';
-import { useDispatch } from 'react-redux';
-import { getNotification } from '../../store/reducers/chat/chatList.reducer';
-import cookie from 'react-cookies';
-import jwtDecode from 'jwt-decode';
 import Challenges from '../Pages/Challenges';
 import { MdOutlinePartyMode } from 'react-icons/md';
+import AdminReports from '../Admin/Reports/Reports';
 
 import NotifiList from './notificationList';
 
@@ -122,19 +117,21 @@ function SidebarWithHeader() {
 
     let role = null
     let cookieData = null
-  
+
     if (cookie.load('user_session')) {
-  
-      cookieData = cookie.load('user_session')
-      const token = jwtDecode(cookieData)
+
+        cookieData = cookie.load('user_session')
+        const token = jwtDecode(cookieData)
         role = token.role
     }
 
 
 
+
+
     return (
-        <Box minH="100vh" bg={useColorModeValue('gray.300', 'gray.900')}>
-            <SidebarContent onClose={() => onClose()} display={{ base: 'none', md: 'block' }} />
+        <Box minH="100vh" >
+            <SidebarContent onClose={() => onClose()} display={{ base: 'none', md: 'block' }} style={{ backgroundColor: '#DBE2EF' }} />
             <Drawer
                 isOpen={isOpen}
                 placement="left"
@@ -143,13 +140,13 @@ function SidebarWithHeader() {
                 onOverlayClick={onClose}
                 size="full"
             >
-                <DrawerContent>
+                <DrawerContent >
                     <SidebarContent onClose={onClose} />
                 </DrawerContent>
             </Drawer>
             {/* mobilenav */}
             <MobileNav onOpen={onOpen} />
-            <Box ml={{ base: 0, md: 60 }} p="4">
+            <Box ml={{ base: 0, md: 60 }} p="4" style={{ backgroundColor: '#F9F7F7' }}>
 
                 {/* Body App js */}
 
@@ -162,19 +159,21 @@ function SidebarWithHeader() {
                     <Route path='/chat' element={<Chat />} />
                     <Route path='/messages/:id' element={<MessagePage render={render} setRender={setRender} />} />
                     <Route path="/userProfile" element={<UsersProfile />} />
-//                     <Route path="/story" element={<Mystory />} />
 
                     {
                         role === 'admin' &&
-                        <Route path="/admin/user" element={<AdminPosts/>} />
+
+                        <>
+                            {/* <Route path="/admin/user" element={<AdminPosts/>} /> */}
+                            <Route path="/admin/reports" element={<AdminReports />} />
+                        </>
+
                     }
-                    {/* <Route path="/admin/posts" element={<AdminPosts/>} /> */}
+
                     <Route path="/challenges" element={<Challenges />} />
                     {/* <Route path="/addpost" element={<Profile />} /> */}
-                    <Route path="/otherStory/:id" element={<Otherstories />} />
                     <Route path="*" element={<NotFound />} />
                 </Routes>
-
             </Box>
         </Box>
     );

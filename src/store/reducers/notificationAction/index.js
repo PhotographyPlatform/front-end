@@ -1,13 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import Cookies from "react-cookies";
-
+import { useDispatch } from 'react-redux';
 
 const notifiSlice = createSlice({
     name: 'post',
     initialState: {
         old: [],
-        new: [],
+        new: {},
         numEffect: 0,
         read: true,
         count: 0,
@@ -16,15 +16,13 @@ const notifiSlice = createSlice({
         setOldNotifi(state, action) {
             const newItem = action.payload;
 
-            if (!state.old.some(existingItem => existingItem.id === newItem.id)) {
+            if (!state.old.some(existingItem => existingItem.id === newItem.id) && !state.new !== newItem) {
                 state.old = [...state.old, newItem];
             }
         },
         setNewNotifi(state, action) {
-            const newItem = action.payload;
-            if (!state.new.some(existingItem => existingItem.id === newItem.id)) {
-                state.new = [...state.new, newItem];
-            }
+            state.setRead = false;
+            state.new = action.payload
         },
         setCountNotifi(state, action) {
             state.count = action.payload;

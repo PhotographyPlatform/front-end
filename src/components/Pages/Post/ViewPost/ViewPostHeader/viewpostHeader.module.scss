@@ -3,9 +3,9 @@
 .viewpost-header {
     display: flex;
     align-items: center;
-    padding: 10px;
+    padding: 5px;
     // justify-content:flex-end;
-    background-color: #f0f0f0;
+    background-image: linear-gradient(to left bottom, #f9f7f7, #f7f2f3, #f4eef1, #efeaf1, #e8e6f0, #e5e5ef, #e1e3ed, #dee2ec, #e0e2e9, #e1e2e7, #e2e2e4, #e2e2e2);
 
     .viewpost-img-postowner {
         width: 40px;
@@ -15,6 +15,7 @@
     }
 
     .viewpost-username-postowner {
+        font-size: 22px;
         font-weight: bold;
         margin-right: 10px;
     }
@@ -26,18 +27,24 @@
     }
 
     .svg {
+        font-size: 15px;
         margin-right: 10px;
         cursor: pointer;
         transition: color 0.3s;
+        color: #112D4E;
     }
 
     .svg:hover {
-        color: rgb(159, 159, 159);
+        color: #3F72AF;
         ;
     }
 
     .svg {
         margin-left: 10px;
+    }
+
+    .following {
+        color: #112D4E;
     }
 
 }

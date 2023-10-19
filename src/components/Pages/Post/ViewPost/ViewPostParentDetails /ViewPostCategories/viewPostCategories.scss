@@ -8,6 +8,7 @@
     flex-wrap: wrap;
     // gap: 1px;
     margin-left: -40px;
+
     .category-card {
         font-weight: 1000;
         margin-left: 5px;
@@ -16,16 +17,21 @@
         height: 10%;
         padding: 3px 1px;
         list-style: none;
-        background-color: #f0f0f0;
-        border: none;
+        border: 1px solid #112D4E;
+        color: #112D4E;
         border-radius: 60px;
         display: flex;
         justify-content: center;
         align-items: center;
         transition: background-color 0.3s;
+        box-shadow: 0 5px 10px rgba(63, 114, 175, 0.1);
+        letter-spacing: 2px;
+
         &:hover {
             cursor: pointer;
-            background-color: rgb(214, 213, 213);
+            border: 1px solid transparent;
+            color: #DBE2EF;
+            background-color: #3F72AF;
         }
     }
 }

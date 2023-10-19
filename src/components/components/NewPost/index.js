@@ -14,8 +14,8 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import cookies from 'react-cookies';
 import "./NewPost.scss";
-
 import jwtDecode from "jwt-decode";
+
 function NewPost({ onCloseNewPost, isOpenNewPost }) {
 
   const TitleLimit = 65;

@@ -22,7 +22,7 @@ export default function FolowingList({ setShowfolowingList }) {
           dispatch(fetchFolowingChatList(cookieData))
      }, [])
      
-     
+     console.log(selector.folowingChatList , 'selector.folowingChatList');
 
      return (
           <>
@@ -49,7 +49,7 @@ export default function FolowingList({ setShowfolowingList }) {
                               <Divider borderBottomWidth={'2px'} borderColor={'#00000020'} />
                               <Link to={`/messages/${ele.id}`}>
                                    <HStack className="list-item" alignItems={{ lg : 'center'}} gap={'20px'}>
-                                        <Avatar size={'md'} name={''} src={ 'https://cdn-icons-png.flaticon.com/512/1053/1053244.png'} />
+                                        <Avatar size={'md'}  src={''} />
                                         <Heading  textTransform={'capitalize'} as={'h5'} fontSize={'15px'}  className='name'>{ele.name}</Heading>
                                    </HStack>
                               </Link>

@@ -1,0 +1,63 @@
+.reports-main{
+     width: 100%;
+     min-height: 550px;
+     display: flex;
+     justify-content: flex-start;
+     align-items: center;
+     flex-direction: column;
+     padding: 20px;
+     .reports-cont{
+          width: 95%;
+          height: 95%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+          gap: 30px;
+          padding: 20px;
+          .reports-items{
+               display: flex;
+               justify-content: center;
+               align-items: center;
+               flex-direction: column;
+               gap: 20px;
+               width: 60%;
+               .reports-item{
+                    width: 100%;
+                    min-height: 150px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    gap: 20px;
+                    padding: 15px;
+                    border-radius: 10px;
+                    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+                    background-color: white;
+                    .report-heading{
+                         width: 250px;
+                         background-color: rgb(143, 139, 139);
+                         display: flex;
+                         justify-content: center;
+                         align-items: flex-start;
+                         flex-direction: column;
+                         padding: 10px;
+                         border-radius: 10px;
+                         color: white;
+                         padding-left: 20px;
+                    }
+                    .report-description{
+                         width: 70%;
+                    }
+                    .report-icon{
+                         align-self: flex-start;
+                         cursor: pointer;
+                         border-radius: 50%;
+                         transition: 0.2s;
+                         &:hover{
+                              color: rgb(255, 0, 0);
+                         }
+                    }
+               }
+          }
+     }
+}

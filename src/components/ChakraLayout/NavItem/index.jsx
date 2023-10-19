@@ -47,8 +47,9 @@ function NavItem({ name, icon, children, ...rest }) {
         <Box
             as="a"
             href="#"
-            style={{ textDecoration: 'none' }}
+            style={{ textDecoration: 'none', backgroundColor: '#F9F7F7' }}
             _focus={{ boxShadow: 'none' }}
+
         >
             <Flex
                 align="center"
