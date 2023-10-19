@@ -217,6 +217,7 @@ function Home() {
 
     //   console.log(parsedToken.userId);
 
+
     //   useEffect(() => {
     //     try {
     //       const response = axios.get(
@@ -230,6 +231,27 @@ function Home() {
     //       console.log("error while fetching home posts");
     //     }
     //   }, []);
+
+//   useEffect(() => {
+//     try {
+//       const token = cookies.load('user_session');
+//       const response = axios.get(
+//         `http://localhost:3002/home`,
+//         {
+//           headers: {
+//             Authorization: `Bearer ${token}`,
+//           }
+//         }
+//       );
+//       response.then((data) => {
+//         console.log(data, "!!!!!!!!!!!!!!!");
+//         sethomePosts(data.data);
+//       });
+//     } catch (e) {
+//       console.log("error while fetching home posts");
+//     }
+//   }, []);
+
 
     //   return homePosts.length!==0 ? (
     //     <div className="auth-profile">

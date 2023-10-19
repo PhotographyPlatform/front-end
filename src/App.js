@@ -1,5 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+
+
 import Container from './components/Pages/@auth/index';
 import Cookies from 'react-cookies';
 import { decodeToken } from 'react-jwt';
@@ -55,6 +57,8 @@ function App() {
   const [render, setRender] = useState(true)
   const notifiRead = useSelector((state) => state.notification.read)
 
+  const [notifiOff, setnotifiOff] = useState(true)
+
   let params = useParams()
 
 
@@ -80,21 +84,30 @@ function App() {
   // Notification Action (Post, Like, Comment,  Follow)
   notificationAction.emit("notification", userId);
 
+
+
   const notificationEvent = `notification-${userId}`;
+
+  notificationAction.emit("notification", userId);
+
+  notificationAction.on(`newRecord-${notificationEvent}`, payload => {
+
+    dispatch(setNewNotifi(payload));
+
+
+  })
+
   useEffect(() => {
-    notificationAction.emit("notification", userId);
-    notificationAction.on(notificationEvent, (payload) => {
-      dispatch(setOldNotifi(payload))
-    })
+    if (notifiOff) {
+      notificationAction.on(notificationEvent, (payload) => {
+        dispatch(setOldNotifi(payload));
+      })
+    }
     // notificationAction.disconnect();
 
   }, [Logged])
 
 
-
-  notificationAction.on(`newRecord-${notificationEvent}`, payload => {
-    dispatch(setNewNotifi(payload))
-  })
 
   useEffect(() => {
     homeSocket.emit("joinHomeRoom", userId);
@@ -120,7 +133,7 @@ function App() {
               <Route path='/messages/:id' element={<MessagePage render={render} setRender={setRender} />} />
               <Route path='/chat' element={<Chat />} />
               <Route path="/userProfile" element={<UsersProfile />} />
-             
+
             </Routes>
           </SidebarWithHeader>
         ) :
