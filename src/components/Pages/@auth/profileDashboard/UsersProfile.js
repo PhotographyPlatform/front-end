@@ -22,11 +22,9 @@ function UsersProfile() {
         try {
             if (toggle === false) {
                 dispatch(Follow(userId));
-                setToggle(true);
                 setRefresh(true)
             } else {
                 dispatch(unFollow(userId));
-                setToggle(false);
                 setRefresh(true)
             }
             dispatch(getProfile(userId));
@@ -72,7 +70,7 @@ function UsersProfile() {
                 setToggle(false);
             }
         }
-    }, [userFollowing]);
+    }, [userFollowing, profile]);
 
 
     return (

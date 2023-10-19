@@ -160,7 +160,9 @@ function Profile() {
                     direction={'column'}
                     align={'center'}
                     alignSelf={'center'}
-                    position={'relative'}>
+                    position={'relative'}
+                >
+
                     {
                         image.allImages &&
                         <Image
