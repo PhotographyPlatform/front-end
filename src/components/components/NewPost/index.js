@@ -14,8 +14,6 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import cookies from 'react-cookies';
 import "./NewPost.scss";
-import cookies from 'react-cookies';
-
 import jwtDecode from "jwt-decode";
 function NewPost({ onCloseNewPost, isOpenNewPost }) {
 

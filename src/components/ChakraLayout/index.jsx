@@ -25,8 +25,9 @@ import {
 // Other Components  fro nav 
 import NavItem from './NavItem';
 import MobileNav from './MobileNav';
-
-
+import cookie from 'react-cookies'
+import { useDispatch } from 'react-redux';
+import jwtDecode from 'jwt-decode';
 // Popup  options 
 // import {useDisclosure } from '@chakra-ui/react';
 
@@ -130,7 +131,7 @@ function SidebarWithHeader() {
 
     return (
         <Box minH="100vh" >
-            <SidebarContent onClose={() => onClose()} display={{ base: 'none', md: 'block' }}   style={{ backgroundColor: '#DBE2EF' }}/>
+            <SidebarContent onClose={() => onClose()} display={{ base: 'none', md: 'block' }} style={{ backgroundColor: '#DBE2EF' }} />
             <Drawer
                 isOpen={isOpen}
                 placement="left"
@@ -145,7 +146,7 @@ function SidebarWithHeader() {
             </Drawer>
             {/* mobilenav */}
             <MobileNav onOpen={onOpen} />
-            <Box ml={{ base: 0, md: 60 }} p="4"  style={{ backgroundColor: '#F9F7F7' }}>
+            <Box ml={{ base: 0, md: 60 }} p="4" style={{ backgroundColor: '#F9F7F7' }}>
 
                 {/* Body App js */}
 
@@ -158,15 +159,14 @@ function SidebarWithHeader() {
                     <Route path='/chat' element={<Chat />} />
                     <Route path='/messages/:id' element={<MessagePage render={render} setRender={setRender} />} />
                     <Route path="/userProfile" element={<UsersProfile />} />
+
                     {
                         role === 'admin' &&
 
                         <>
-                            <Route path="/admin/user" element={<AdminPosts/>} />
-                            <Route path="/admin/reports" element={<AdminReports/>} />
+                            {/* <Route path="/admin/user" element={<AdminPosts/>} /> */}
+                            <Route path="/admin/reports" element={<AdminReports />} />
                         </>
-
-                        <Route path="/admin/user" element={<AdminPosts />} />
 
                     }
 
