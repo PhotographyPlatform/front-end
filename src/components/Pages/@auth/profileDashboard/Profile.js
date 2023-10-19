@@ -190,9 +190,9 @@ function Profile() {
                             onClick={handleClick}
                             style={{
                                 transition: 'background-color 0.3s ease',
-                                backgroundColor: '#112D4E',
+                                backgroundColor: '#3F72AF',
                                 color: '#F9F7F7',
-                                borderColor: '#3F72AF',
+                                borderColor: '#112D4E',
                                 borderWidth: '2px',
                                 borderStyle: 'solid',
                             }}

@@ -40,7 +40,6 @@ export default function SignUp() {
     const submitHandler = async (e) => {
         try {
             e.preventDefault()
-
             // const obj = {
             //     email: e.target.email.value,
             //     firstName: e.target.fname.value,
@@ -72,39 +71,32 @@ export default function SignUp() {
     }
 
     return (
-        <Container maxW="2xl" py={{ base: '12', md: '24' }} px={{ base: '0', sm: '8' }} backgroundColor='white' >
+        <Container maxW="xl" px="8" backgroundColor="white" marginTop='10px'>
             <form onSubmit={submitHandler}>
-
-                <Stack spacing="8">
-                    {/* <Stack spacing="6">
-                        <Stack spacing={{ base: '2', md: '3' }} textAlign="center">
-                            <Heading size={{ base: 'xs', md: 'sm' }}>Register</Heading>
-                        </Stack>
-                    </Stack> */}
+                <Stack spacing="4">
                     <Box
-                        py={{ base: '0', sm: '8' }}
-                        px={{ base: '4', sm: '10' }}
-                        bg={{ base: 'transparent', sm: 'bg.surface' }}
-                        boxShadow={{ base: 'none', sm: 'md' }}
-                        borderRadius={{ base: 'none', sm: 'xl' }}
+                        px="4"
+                        bg="transparent"
+                        boxShadow="md"
+                        borderRadius="xl"
                     >
-                        <Stack spacing="6" >
-                            <Box textAlign='center'>
-                                <Heading>Sign Up</Heading><br />
+                        <Stack>
+                            <Box textAlign="center">
+                                <Heading>Sign Up</Heading>
                                 <Divider />
                             </Box>
-                            <Stack spacing="5">
-                                <Stack justifyContent='space-between' direction="row">
-                                    <FormControl>
+                            <Stack spacing="2">
+                                <Stack direction="row">
+                                    <FormControl flex="1">
                                         <FormLabel htmlFor="fname">First Name</FormLabel>
                                         <Input id="fname" type="text" />
                                     </FormControl>
-                                    <FormControl>
+                                    <FormControl flex="1">
                                         <FormLabel htmlFor="lname">Last Name</FormLabel>
                                         <Input id="lname" type="text" />
                                     </FormControl>
                                 </Stack>
-                                <FormControl >
+                                <FormControl>
                                     <FormLabel htmlFor="email">Email</FormLabel>
                                     <Input id="email" type="email" />
                                 </FormControl>
@@ -113,23 +105,23 @@ export default function SignUp() {
                                     <Input id="username" type="text" />
                                 </FormControl>
                                 <Stack direction="row">
-                                    <FormControl>
+                                    <FormControl flex="1">
                                         <FormLabel htmlFor="address">Address</FormLabel>
                                         <Input id="address" type="text" />
                                     </FormControl>
-                                    <FormControl>
+                                    <FormControl flex="1">
                                         <FormLabel htmlFor="bday">Birthday</FormLabel>
                                         <Input
-                                            name='bday'
+                                            name="bday"
                                             placeholder="Select Date"
                                             size="md"
                                             type="date"
                                         />
                                     </FormControl>
                                 </Stack>
-                                <FormControl id='options'>
-                                    <FormLabel htmlFor="select" >Gender</FormLabel>
-                                    <Select placeholder="Male / Female" >
+                                <FormControl id="options">
+                                    <FormLabel htmlFor="select">Gender</FormLabel>
+                                    <Select placeholder="Male / Female">
                                         <option value="male">Male</option>
                                         <option value="female">Female</option>
                                     </Select>
@@ -144,21 +136,18 @@ export default function SignUp() {
                                 <Link variant="text" size="sm" style={{ textDecoration: 'underline lightblue', color: 'black' }} href='#'>
                                     Privacy notice
                                 </Link>
-
                             </Stack>
-                            <Stack spacing="6">
-                                <Button type='submit'>Sign Up</Button>
-                                <HStack>
-                                    <Divider />
-                                </HStack>
-                                <Text color="fg.muted">
-                                    Already have an account? <Link href="signin" style={{ textDecoration: 'underline lightblue' }}>Sign In</Link>
-                                </Text>
-                            </Stack>
+                            <Button type="submit">Sign Up</Button>
+                            <Text color="fg.muted">
+                                Already have an account?{' '}
+                                <Link href="signin" style={{ textDecoration: 'underline lightblue' }}>
+                                    Sign In
+                                </Link>
+                            </Text>
                         </Stack>
                     </Box>
                 </Stack>
-            </form >
+            </form>
             <AlertDialog
                 motionPreset="slideInBottom"
                 leastDestructiveRef={cancelRef}
@@ -167,7 +156,6 @@ export default function SignUp() {
                 isCentered
             >
                 <AlertDialogOverlay />
-
                 <AlertDialogContent>
                     <AlertDialogHeader>Error</AlertDialogHeader>
                     <AlertDialogCloseButton />
@@ -180,6 +168,7 @@ export default function SignUp() {
                 </AlertDialogContent>
             </AlertDialog>
             <Animation />
-        </Container >
+        </Container>
+
     )
 }

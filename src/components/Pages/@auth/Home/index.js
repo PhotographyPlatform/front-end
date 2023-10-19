@@ -106,6 +106,7 @@ function Home() {
                     {following &&
                         following.Following.map((story) => (
                             <Box>
+
                                 <Avatar
                                     size={['lg', 'xl', 'xl']}
                                     src={story.img}
@@ -232,25 +233,25 @@ function Home() {
     //     }
     //   }, []);
 
-//   useEffect(() => {
-//     try {
-//       const token = cookies.load('user_session');
-//       const response = axios.get(
-//         `http://localhost:3002/home`,
-//         {
-//           headers: {
-//             Authorization: `Bearer ${token}`,
-//           }
-//         }
-//       );
-//       response.then((data) => {
-//         console.log(data, "!!!!!!!!!!!!!!!");
-//         sethomePosts(data.data);
-//       });
-//     } catch (e) {
-//       console.log("error while fetching home posts");
-//     }
-//   }, []);
+    //   useEffect(() => {
+    //     try {
+    //       const token = cookies.load('user_session');
+    //       const response = axios.get(
+    //         `http://localhost:3002/home`,
+    //         {
+    //           headers: {
+    //             Authorization: `Bearer ${token}`,
+    //           }
+    //         }
+    //       );
+    //       response.then((data) => {
+    //         console.log(data, "!!!!!!!!!!!!!!!");
+    //         sethomePosts(data.data);
+    //       });
+    //     } catch (e) {
+    //       console.log("error while fetching home posts");
+    //     }
+    //   }, []);
 
 
     //   return homePosts.length!==0 ? (
