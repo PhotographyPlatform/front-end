@@ -28,21 +28,21 @@ function Challenges() {
     }
   }, []);
 
-  const headerStyleMargin = !isViewClicked ? 'challenges-header' : 'challenges-cd-header';
-
   return (
     <>
-      {isViewClicked && <div className="back-button">
-        <button onClick={() => setIsViewClicked(false)}>
-          <u>
-            <ArrowBackIcon boxSize={10} />
-          </u>
-        </button>
-      </div>}
+      {isViewClicked && (
+        <div className="back-button">
+          <button onClick={() => setIsViewClicked(false)}>
+            <u>
+              <ArrowBackIcon boxSize={8} />
+            </u>
+          </button>
+        </div>
+      )}
 
-      <h2 className={headerStyleMargin}>
-        {!isViewClicked ? "Challenges" : selectedChallenge.title}
-      </h2>
+      
+      {!isViewClicked ? <div className="challenges-header"><h2>Challenges</h2><p>Here you can browse the available challenges, see the users participations or participate by yourself</p></div> : <h2 className="challenges-cd-header">{selectedChallenge.title}</h2>}
+     
 
       {!isViewClicked ? (
         loading ? (
