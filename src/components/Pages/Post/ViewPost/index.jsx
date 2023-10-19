@@ -24,36 +24,52 @@ import './viewPost.scss'
 function ViewPost({ onCloseViewPost, isOpenViewPost, id }) {
     const dispatch = useDispatch();
     const numEffect = useSelector((state) => state.post.numEffect);
-    console.log("view post from notification ssss ", id.id)
+    const postCurrentId = useSelector((state) => state.post.postDetails[0]?.id || null);
+
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                await dispatch(fetchPostData(id));
-            } catch (error) {
-                // Handle the error here
-            }
-        };
-        fetchData();
-    }, [numEffect]);
+        if (isOpenViewPost) {
+
+            const fetchData = async () => {
+                try {
+                    await dispatch(fetchPostData(id));
+
+                } catch (error) {
+                    // Handle the error here
+                }
+            };
+            fetchData();
+        }
+
+
+    }, [isOpenViewPost]);
+
+
+
+
+
+
+
+    // ,
 
     const currentPost = useSelector((state) => state.post);
-    console.log(currentPost, "CCCCCCCCCCCCCCCUUUUUUUUUUIIIIIIIIIIIIIII")
     return (
         <>
-            <Modal onClose={onCloseViewPost} isOpen={isOpenViewPost}  >
+            <Modal onClose={onCloseViewPost} isOpen={isOpenViewPost} >
+                {/* onClose={onCloseViewPost}  */}
                 <ModalOverlay />
                 <div className='div-handler'>
                     <ModalContent className='model-parent-viewpost' size='full' >
                         <ModalHeader className='viewpost-no-space'>
                             {/* Use the ViewPostHeader component */}
-                            <ViewPostHeader />
+                            <ViewPostHeader currentPost={currentPost} currId={id} />
                             <ModalCloseButton />
                         </ModalHeader>
 
                         <div className='viewpost-no-space viewpost-child'>
                             {/* Use the ViewPostParent component */}
 
-                            <ViewPostParentDetails post={currentPost} onClose={onCloseViewPost} />
+                            <ViewPostParentDetails currId={id} post={currentPost} onClose={onCloseViewPost} />
+                            {/* {onClose = { onCloseViewPost }} */}
                         </div>
                         {/* <ModalFooter>
                         <Button onClick={onClose}>Close</Button>

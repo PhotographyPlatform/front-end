@@ -19,10 +19,11 @@ function PostOption({ postId, postOwnerId, onClose }) {
     const dispatch = useDispatch();
     const numEffect = useSelector((state) => state.post.numEffect);
 
-
     const session_user = cookies.load('user_session');
     let decoded = null;
 
+
+    
     if (session_user) {
         decoded = jwtDecode(session_user);
     }
@@ -53,6 +54,7 @@ function PostOption({ postId, postOwnerId, onClose }) {
         }}>
             {({ isOpen }) => (
                 <>
+                    
                     <MenuButton as={Button} rightIcon={<GrMoreVertical style={{ fontSize: '24px' }} />} style={{
                         background: 'none',
                         padding: '0',

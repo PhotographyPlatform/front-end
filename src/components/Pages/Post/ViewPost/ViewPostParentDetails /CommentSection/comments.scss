@@ -1,30 +1,49 @@
 :root {
-    --scrollbar-track-color: #f1f1f1;
-    --scrollbar-thumb-color: #888;
-    --scrollbar-thumb-hover-color: #555;
+    --scrollbar-track-color: #DBE2EF;
+    --scrollbar-thumb-color: #3F72AF;
+    --scrollbar-thumb-hover-color: #3F72AF;
     --owner-text-shadow-color: rgba(112, 112, 114, 0.5);
     --svg-color: #888;
+    --background-color-aqua: linear-gradient(to left bottom, #f9f7f7, #f7f2f3, #f4eef1, #efeaf1, #e8e6f0, #e5e5ef, #e1e3ed, #dee2ec, #e0e2e9, #e1e2e7, #e2e2e4, #e2e2e2);
+    --background-color-blue: linear-gradient(to left bottom, #f9f7f7, #f7f2f3, #f4eef1, #efeaf1, #e8e6f0, #e5e5ef, #e1e3ed, #dee2ec, #e0e2e9, #e1e2e7, #e2e2e4, #e2e2e2);
+    ;
+    --background-color-owner: linear-gradient(to left bottom, #f9f7f7, #f7f2f3, #f4eef1, #efeaf1, #e8e6f0, #e5e5ef, #e1e3ed, #dee2ec, #e0e2e9, #e1e2e7, #e2e2e4, #e2e2e2);
+    ;
+    --background-color-input: linear-gradient(to left bottom, #f9f7f7, #f7f2f3, #f4eef1, #efeaf1, #e8e6f0, #e5e5ef, #e1e3ed, #dee2ec, #e0e2e9, #e1e2e7, #e2e2e4, #e2e2e2);
+    ;
+    --background-color-input-inner: linear-gradient(to left bottom, #f9f7f7, #f7f2f3, #f4eef1, #efeaf1, #e8e6f0, #e5e5ef, #e1e3ed, #dee2ec, #e0e2e9, #e1e2e7, #e2e2e4, #e2e2e2);
+    ;
 }
-
-
-
 
 .viewpost-comment-list {
     box-sizing: border-box;
-    // margin-top: 5px;
-    width: 100%;
+    /* margin-top: 5px; */
+    width: 100% !important;
     overflow-y: scroll;
     overflow-x: none;
     width: 100% !important;
     height: 46vh !important;
     max-height: 100% !important;
     list-style: none;
+    background-color: var(--background-color-aqua);
 
     .no-comments {
-        position: relative;
-        top: 50px;
-    }
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 90%;
+        height: 100%;
+        opacity: 0.4;
 
+        h5 {
+            font-size: 24px;
+        }
+
+        p {
+            font-size: 14px;
+        }
+    }
 
     /* Hide the default scrollbar */
     &::-webkit-scrollbar {
@@ -49,6 +68,7 @@
 
     &::-webkit-scrollbar-track {
         background: var(--scrollbar-track-color);
+        background-color: transparent;
     }
 
     &::-webkit-scrollbar-thumb {
@@ -63,10 +83,16 @@
     .comments-card {
         display: flex;
         flex-direction: column;
-        margin-top: 20px;
-        // border-bottom: 1px rgba(0, 0, 0, 0.1) solid;
+        margin-top: 5px;
+        box-shadow: 0px 0px 1px rgba(63, 114, 175, 0.1);
 
-        // box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.1);
+        hr {
+            position: relative;
+            left: -20px;
+            width: 100%;
+            color: var(--scrollbar-thumb-color);
+        }
+
 
         .owner {
             display: flex;
@@ -75,7 +101,8 @@
             margin-left: -30px;
             font-weight: 600;
             padding-top: 5px;
-            text-shadow: 0px 1px 0px var(--owner-text-shadow-color);
+            text-shadow: 0px 1px 2px rgba($color: #000000, $alpha: 0.1);
+            background-color: var(--background-color-owner);
 
             SVG {
                 color: var(--svg-color);
@@ -89,41 +116,63 @@
             }
 
             img {
-                width: 40px;
-                height: 40px;
+                width: 35px;
+                height: 35px;
                 border-radius: 50%;
                 margin-right: 10px;
             }
+
+            .comment-time {
+                font-size: 10px;
+                margin-left: 20px;
+            }
+
+            .comment-option {}
         }
 
         .comment-content {
+            /* margin-top: 3px; */
+            background-color: var(--background-color-blue);
             font-family: sans-serif;
             font-size: 14px;
-            margin-top: -12px;
+            margin-top: -5px;
             padding-left: 4px;
             padding-right: 4px;
             margin-left: 40px;
             font-weight: 400;
+            display: flex;
+            justify-content: space-between;
+            align-items: space-between;
+            flex-direction: row;
         }
     }
 }
 
 .comment-input {
+    background-color: var(--background-color-input);
     display: flex;
-
     align-items: center;
-    margin-top: 30px;
+    margin-top: 60px;
     border-radius: 40px;
+    /* position: relative; */
+    /* top: 30px; */
 
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); */
     input {
+        background-color: var(--background-color-input-inner);
         flex: 1;
         padding: 10px;
-        border: 1px solid #888;
+        border: 1px solid #3F72AF;
         border-radius: 40px;
+
+        input: focus {
+            border: 2px solid #007BFF;
+        }
+
     }
 
     button {
-        background-color: #888;
+        background-color: #3F72AF;
         color: #fff;
         border: none;
         border-radius: 4px;
@@ -134,8 +183,7 @@
         border-radius: 40px;
 
         &:hover {
-            background-color: #555;
+            background-color: #112D4E;
         }
     }
-
 }
