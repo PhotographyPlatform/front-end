@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BiSolidLike } from 'react-icons/bi';
+import { BiSolidLike, BiComment } from 'react-icons/bi';
 import { FaRegComment } from 'react-icons/fa';
 import { BiBookmarkHeart, BiLike } from 'react-icons/bi';
 import { BsBookmark, BsFillBookmarkCheckFill } from 'react-icons/bs';
@@ -82,7 +82,6 @@ function ActionSection(photoId) {
             if (Array.isArray(favoriteList)) {
                 for (const item of favoriteList) {
                     if (item.userid === userId && postCurrentId === item.id) {
-                        console.log(true)
                         setFav(true);
                         break;
                     }
@@ -128,14 +127,16 @@ function ActionSection(photoId) {
                         {liked ? <BiSolidLike size={22} /> : <BiLike size={22} />}
 
                     </div>
-                    <span>{likeList.length}</span>
+                    <span>
+                        {likeList.length > 0 && likeList.length}
+                    </span>
                 </div>
 
                 <div
                     className={`action-button comment-button ${isActive ? 'active' : ''}`}
                     onClick={handleCommentClick}
                 >
-                    <FaRegComment size={22} />
+                    <BiComment size={22} />
                 </div>
                 <div className="bookmark-button , action-button" onClick={toggleFav}>
                     {fav ? <BsFillBookmarkCheckFill size={22} /> : <BsBookmark size={22} />}
