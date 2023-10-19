@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import "./Results.scss";
 import { Box, CircularProgress, Spinner } from "@chakra-ui/react";
 import { decodeToken } from "react-jwt";
-import { ArrowBackIcon } from '@chakra-ui/icons';
+import { ArrowBackIcon } from "@chakra-ui/icons";
 
 
 
@@ -26,18 +26,18 @@ function Results() {
   const [loading, setLoading] = useState(false);
   const [isdragging, setIsdragging] = useState(false);
 
-  // handle the user profile 
+  // handle the user profile
   const profileHandler = (id) => {
-    Cookies.remove('id')
-    Cookies.save('id', id)
-    const token = Cookies.load('user_session')
-    const parsed = decodeToken(token)
+    Cookies.remove("id");
+    Cookies.save("id", id);
+    const token = Cookies.load("user_session");
+    const parsed = decodeToken(token);
     if (id === parsed.userId) {
-      navigate('/profile')
+      navigate("/profile");
     } else {
-      navigate('/userProfile')
+      navigate("/userProfile");
     }
-  }
+  };
 
   useEffect(() => {
     const obj = {
@@ -50,10 +50,12 @@ function Results() {
         const response = axios.post("http://localhost:3002/search", obj);
         response.then((data) => {
           const searchUsers = data.data.users;
-          const searchPosts = data.data.posts.filter(item => !item.challengeID && !item.challengeName);
+          const searchPosts = data.data.posts.filter(
+            (item) => !item.challengeID && !item.challengeName
+          );
           const searchResult = {
             users: searchUsers,
-            posts: searchPosts
+            posts: searchPosts,
           };
           setSearchresults(searchResult);
           setLoading(false);
@@ -104,8 +106,7 @@ function Results() {
 
   function moveSliderOnClick(button) {
     const tagsBox = document.querySelector(".nav-tags");
-    tagsBox.scrollLeft += button === 'left' ? -350 : 350;
-
+    tagsBox.scrollLeft += button === "left" ? -350 : 350;
   }
 
   return (
@@ -114,7 +115,7 @@ function Results() {
         <div>
           <button onClick={backHandler}>
             <u>
-              <ArrowBackIcon boxSize={10} />
+              <ArrowBackIcon boxSize={8} />
             </u>
           </button>
         </div>
@@ -140,28 +141,56 @@ function Results() {
 
       {state.searchWord !== "" && state.activeCategory === "" && (
         <div className="search-results">
-          <b>
-            Users: <b>{searchresults.users ? searchresults.users.length : 0}</b>
-          </b>
-          <small>
-            <i>
-              {searchresults.users ? searchresults.users.length : 0} users found
-              for the search word '{state.searchWord}'
-            </i>
-          </small>
+          <div className="users-section">
+            <b>
+              Users:{" "}
+              <b>{searchresults.users ? searchresults.users.length : 0}</b>
+            </b>
+            <small>
+              <i>
+                {searchresults.users ? searchresults.users.length : 0} users
+                found for the search word '{state.searchWord}'
+              </i>
+            </small>
 
-          <div className="all-users-flex" >
-            {!loading ? (
-              searchresults.users &&
-              searchresults.users.map((item) => (
-                <Users
-                  handler={profileHandler}
-                  id={item.id}
-                  key={item.id}
-                  username={item.username}
-                  profilePic={item.img}
+            <div className="all-users-flex">
+              {!loading ? (
+                searchresults.users &&
+                searchresults.users.map((item) => (
+                  <Users
+                    handler={profileHandler}
+                    id={item.id}
+                    key={item.id}
+                    username={item.username}
+                    profilePic={item.img}
+                  />
+                ))
+              ) : (
+                <Spinner
+                  thickness="3px"
+                  speed="0.65s"
+                  emptyColor="gray.200"
+                  color="blue.500"
+                  size="xl"
                 />
-              ))
+              )}
+            </div>
+          </div>
+
+          <div className="posts-section">
+            <b>
+              Posts:{" "}
+              <b>{searchresults.posts ? searchresults.posts.length : 0}</b>
+            </b>
+            <small>
+              <i>
+                {searchresults.posts ? searchresults.posts.length : 0} posts
+                found for the search word '{state.searchWord}'
+              </i>
+            </small>
+
+            {!loading ? (
+              searchresults.posts && <Posts posts={searchresults.posts} />
             ) : (
               <Spinner
                 thickness="3px"
@@ -172,61 +201,66 @@ function Results() {
               />
             )}
           </div>
-
-          <b>
-            Posts: <b>{searchresults.posts ? searchresults.posts.length : 0}</b>
-          </b>
-          <small>
-            <i>
-              {searchresults.posts ? searchresults.posts.length : 0} posts found
-              for the search word '{state.searchWord}'
-            </i>
-          </small>
-
-          {!loading ? (
-            searchresults.posts && <Posts posts={searchresults.posts} />
-          ) : (
-            <Spinner
-              thickness="3px"
-              speed="0.65s"
-              emptyColor="gray.200"
-              color="blue.500"
-              size="xl"
-            />
-          )}
         </div>
       )}
 
       {state.searchWord === "" && state.activeCategory !== "" && (
         <div>
-
-          <div className="tag-navigator">
-            <div className="tag-navigator-arrow"><h4 className="arrow" onClick={() => moveSliderOnClick('left')}>&#60;</h4></div>
-            <ul className="nav-tags" onMouseMove={handleMouseMove} onMouseDown={() => setIsdragging(true)} onMouseUp={stopDragging}>
-              {state.categories.map(item => <li className="nav-tag" onClick={() => dispatch(setActiveCategory(item.name))}>{item.name}</li>)}
-            </ul>
-            <div className="tag-navigator-arrow"><h4 className="arrow" onClick={() => moveSliderOnClick('right')}>&#62;</h4></div>
+          <div className="tag-navigator-cont">
+            <div className="tag-navigator">
+              <div className="tag-navigator-arrow">
+                <h4 className="arrow" onClick={() => moveSliderOnClick("left")}>
+                  &#60;
+                </h4>
+              </div>
+              <ul
+                className="nav-tags"
+                onMouseMove={handleMouseMove}
+                onMouseDown={() => setIsdragging(true)}
+                onMouseUp={stopDragging}
+              >
+                {state.categories.map((item) => (
+                  <li
+                    className="nav-tag"
+                    onClick={() => dispatch(setActiveCategory(item.name))}
+                  >
+                    {item.name}
+                  </li>
+                ))}
+              </ul>
+              <div className="tag-navigator-arrow">
+                <h4
+                  className="arrow"
+                  onClick={() => moveSliderOnClick("right")}
+                >
+                  &#62;
+                </h4>
+              </div>
+            </div>
           </div>
 
-          <small>
-            <i>
-              {searchCategoryresults ? searchCategoryresults.length : 0} posts
-              found containing the category '{state.activeCategory}'
-            </i>
-          </small>
+          <div className="posts-section">
+            <small>
+              <i>
+                {searchCategoryresults ? searchCategoryresults.length : 0} posts
+                found containing the category '{state.activeCategory}'
+              </i>
+            </small>
 
-          {!loading ? (
-            <Posts posts={searchCategoryresults} />
-          ) : (
-            <Spinner
-              thickness="3px"
-              speed="0.65s"
-              emptyColor="gray.200"
-              color="blue.500"
-              size="xl"
-            />
-          )}
+            {/* <p className="active-category">{state.activeCategory}</p> */}
 
+            {!loading ? (
+              <Posts posts={searchCategoryresults} />
+            ) : (
+              <Spinner
+                thickness="3px"
+                speed="0.65s"
+                emptyColor="gray.200"
+                color="blue.500"
+                size="xl"
+              />
+            )}
+          </div>
         </div>
       )}
     </div>

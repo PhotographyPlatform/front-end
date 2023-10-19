@@ -1,65 +1,75 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 import {
-    IconButton,
-    Avatar,
-    Box,
-    CloseButton,
-    Flex,
-    HStack,
-    VStack,
-    Icon,
-    useColorModeValue,
-    Text,
-    Drawer,
-    DrawerContent,
-    useDisclosure,
-    BoxProps,
-    FlexProps,
-    Menu,
-    MenuButton,
-    MenuDivider,
-    MenuItem,
-    MenuList,
-} from '@chakra-ui/react';
+  IconButton,
+  Avatar,
+  Box,
+  CloseButton,
+  Flex,
+  HStack,
+  VStack,
+  Icon,
+  useColorModeValue,
+  Text,
+  Drawer,
+  DrawerContent,
+  useDisclosure,
+  BoxProps,
+  FlexProps,
+  Menu,
+  MenuButton,
+  MenuDivider,
+  MenuItem,
+  MenuList,
+} from "@chakra-ui/react";
 import {
-    FiHome,
-    FiTrendingUp,
-    FiCompass,
-    FiStar,
-    FiSettings,
-    FiMenu,
-    FiBell,
-    FiChevronDown,
-} from 'react-icons/fi';
-import { useDispatch, useSelector } from 'react-redux';
-import { logOut, uderData } from '../../../store/reducers/auth/user.reducer'
-import Cookies from 'react-cookies';
-import { useNavigate } from 'react-router';
-import { getImages } from '../../../store/reducers/profile/profile.reducer';
-import NotifiList from '../notificationList';
+  FiHome,
+  FiTrendingUp,
+  FiCompass,
+  FiStar,
+  FiSettings,
+  FiMenu,
+  FiBell,
+  FiChevronDown,
+} from "react-icons/fi";
+import { useDispatch, useSelector } from "react-redux";
+import { logOut, uderData } from "../../../store/reducers/auth/user.reducer";
+import Cookies from "react-cookies";
+import { useNavigate } from "react-router";
+import { getImages } from "../../../store/reducers/profile/profile.reducer";
+import NotifiList from "../notificationList";
+import { Search2Icon } from "@chakra-ui/icons";
+import { setSearchWord } from "../../../store/reducers/Search";
+
 function MobileNav({ onOpen, ...rest }) {
-    const navigate = useNavigate()
-    const dispatch = useDispatch()
-    const data = useSelector(state => state.user.user)
-    const image = useSelector(state => state.profile)
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const data = useSelector((state) => state.user.user);
+  const image = useSelector((state) => state.profile);
 
-    useEffect(() => {
-        const userData = Cookies.load('user')
-        dispatch(getImages())
-        dispatch(uderData(userData))
-    }, [])
+  useEffect(() => {
+    const userData = Cookies.load("user");
+    dispatch(getImages());
+    dispatch(uderData(userData));
+  }, []);
 
-    const handleLogout = () => {
-        dispatch(logOut());
-        navigate('/signin');
+  const handleLogout = () => {
+    dispatch(logOut());
+    navigate("/signin");
+  };
+  const handleProfile = () => {
+    navigate("/profile");
+  };
 
-    };
-    const handleProfile = () => {
-        navigate('/profile');
-    };
+  const setSearchWorldHandler = (e) => {
+    const value = e.target.value;
+    if (e.key === "Enter" && value.trim() !== "") {
+      dispatch(setSearchWord(e.target.value));
+      navigate("/search");
+    }
+  };
 
-    return (
-        <Flex
+  return (
+    <Flex
             ml={{ base: 0, md: 60 }}
             px={{ base: 4, md: 4 }}
             height="20"
@@ -80,6 +90,18 @@ function MobileNav({ onOpen, ...rest }) {
                 aria-label="open menu"
                 icon={<FiMenu />}
             />
+
+      {/* <div className="search-bar" style={{ width:'95%', marginRight: '1vw'}}> */}
+      <div className="search-bar" style={{marginRight: '7vw', backgroundColor:'#E6EBF6'}}>
+        <Search2Icon className="search-icon" />
+        <input
+          type="search"
+          placeholder="Type your search.."
+          maxLength={30}
+          onKeyDown={setSearchWorldHandler}
+        />
+      </div>
+
 
             <Text
                 display={{ base: 'flex', md: 'none' }}
@@ -138,7 +160,7 @@ function MobileNav({ onOpen, ...rest }) {
                 </Flex>
             </HStack>
         </Flex>
-    );
+  );
 }
 
 export default MobileNav;
