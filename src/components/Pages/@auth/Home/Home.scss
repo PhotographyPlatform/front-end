@@ -38,7 +38,7 @@
   align-items: center;
   gap: 30px;
 
-  &-container{
+  &-container {
     padding: 75px;
     border-radius: 25px;
     background-color: rgb(243, 243, 243);
@@ -48,20 +48,30 @@
     justify-content: center;
     gap: 30px;
 
-    p{
+    p {
       // font-size: 20px;
     }
 
-    button{
+    button {
       background-color: #355ceb;
       padding: 20px 50px;
       color: white;
       border-radius: 15px;
       font-size: 20px;
 
-      &:hover{
-        background-color: #7996ff!important;
+      &:hover {
+        background-color: #7996ff !important;
+      }
     }
-    }
+
+
   }
+  
 }
+
+// .btn-story {
+//   max-width: 5px !important;
+// }
+// // .story-btn-icon {
+// //   font-size: 100px !important;
+// // }

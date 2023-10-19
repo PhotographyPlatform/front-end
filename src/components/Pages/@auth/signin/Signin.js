@@ -1,4 +1,3 @@
-
 import {
   ThemeProvider,
   theme,
@@ -17,32 +16,28 @@ import {
   Stack,
   Checkbox,
   Button,
-  HStack,
-  Divider,
   AlertIcon,
   Alert
-} from '@chakra-ui/react'
+} from '@chakra-ui/react';
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
-
-import { DecodeToken, signin } from '../../../../store/reducers/auth/user.reducer'
-import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+import { DecodeToken, signin } from '../../../../store/reducers/auth/user.reducer';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { PasswordField } from '../signup/passwordFiled/Password';
 import CryptoJS from 'crypto-js';
 
-const VARIANT_COLOR = 'teal'
+const VARIANT_COLOR = 'teal';
 
 const Signin = () => {
-
   return (
     <ColorModeProvider>
       <CSSReset />
       <LoginArea />
     </ColorModeProvider>
-  )
-}
+  );
+};
 
 const LoginArea = () => {
   return (
@@ -63,11 +58,11 @@ const LoginArea = () => {
         </Box>
       </Box>
     </Flex>
-  )
-}
+  );
+};
 
 const ThemeSelector = () => {
-  const { colorMode, toggleColorMode } = useColorMode()
+  const { colorMode, toggleColorMode } = useColorMode();
 
   return (
     <Box textAlign='right' py={4}>
@@ -77,8 +72,8 @@ const ThemeSelector = () => {
         variant="ghost"
       />
     </Box>
-  )
-}
+  );
+};
 
 const LoginHeader = () => {
   return (
@@ -88,16 +83,17 @@ const LoginHeader = () => {
         Don't have an account? <Link href="/signup" color={`${VARIANT_COLOR}.500`}>Sign up</Link>
       </Text>
     </Box>
-  )
-}
+  );
+};
 
 const LoginForm = () => {
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
-  const [isChecked, setCheck] = useState(false)
-  const [data, setData] = useState()
-  const [isOpen, setOpen] = useState(false)
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [isChecked, setCheck] = useState(false);
+  const [data, setData] = useState();
+  const [isOpen, setOpen] = useState(false);
   const [error, setError] = useState('');
+
   const handleCheckboxChange = () => {
     setCheck(!isChecked);
   };
@@ -113,34 +109,35 @@ const LoginForm = () => {
         headers: {
           Authorization: `Basic ${btoa(`${obj.username}:${obj.password}`)}`
         }
-      })
+      });
       dispatch(signin(data));
       dispatch(DecodeToken());
       if (data.status === 200) {
         if (isChecked) {
-          const dataToEncrypt = JSON.stringify(obj)
-          const secretKey = process.env.SECRETKEY || 'pixel'
+          const dataToEncrypt = JSON.stringify(obj);
+          const secretKey = process.env.SECRETKEY || 'pixel';
           const encryptedData = CryptoJS.AES.encrypt(dataToEncrypt, secretKey).toString();
-          localStorage.setItem('Remember_Me', encryptedData)
+          localStorage.setItem('Remember_Me', encryptedData);
         }
-        navigate('/')
+        navigate('/');
       }
     } catch (e) {
       setError(e.response.data);
       setOpen(true);
     }
-  }
+  };
+
   useEffect(() => {
-    const userData = localStorage.getItem('Remember_Me')
+    const userData = localStorage.getItem('Remember_Me');
     if (userData) {
-      const decodedData = CryptoJS.AES.decrypt(userData, 'pixel').toString(CryptoJS.enc.Utf8)
-      const parsed = JSON.parse(decodedData)
-      setData(parsed)
+      const decodedData = CryptoJS.AES.decrypt(userData, 'pixel').toString(CryptoJS.enc.Utf8);
+      const parsed = JSON.parse(decodedData);
+      setData(parsed);
     }
-  }, [])
+  }, []);
 
   return (
-    <Box my={8} textAlign='left'>
+    <Box my={8} textAlign='left' style={{ position: 'relative', zIndex: 2 }}>
       <form onSubmit={submitHandler}>
         <FormControl>
           <FormLabel>Username</FormLabel>
@@ -163,21 +160,23 @@ const LoginForm = () => {
           <Box>
             <Link color={`${VARIANT_COLOR}.500`} href='/forgetPassword'>Forgot your password?</Link>
           </Box>
-        </Stack><br />
+        </Stack>
+        <br />
         <Stack>
-          {
-            isOpen &&
+          {isOpen && (
             <Alert status='error'>
               <AlertIcon />
               {error}
             </Alert>
-          }
+          )}
         </Stack>
-        <Button variantColor={VARIANT_COLOR} width='full' mt={4} type='submit'>Sign In</Button>
+        <Button variantColor={VARIANT_COLOR} width='full' mt={4} type='submit'>
+          Sign In
+        </Button>
       </form>
-    </Box >
 
-  )
-}
+    </Box>
+  );
+};
 
-export default Signin
+export default Signin;

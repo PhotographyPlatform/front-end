@@ -111,12 +111,25 @@ function SidebarContent({ onClose, ...rest }) {
 function SidebarWithHeader() {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [render, setRender] = useState(true)
+    const dispatch = useDispatch()
+
+    let role = null
+    let cookieData = null
+
+    if (cookie.load('user_session')) {
+
+        cookieData = cookie.load('user_session')
+        const token = jwtDecode(cookieData)
+        role = token.role
+    }
+
+
 
 
 
     return (
-        <Box minH="100vh" bg={useColorModeValue('gray.300', 'gray.900')}>
-            <SidebarContent onClose={() => onClose()} display={{ base: 'none', md: 'block' }} />
+        <Box minH="100vh" >
+            <SidebarContent onClose={() => onClose()} display={{ base: 'none', md: 'block' }}   style={{ backgroundColor: '#DBE2EF' }}/>
             <Drawer
                 isOpen={isOpen}
                 placement="left"
@@ -125,13 +138,13 @@ function SidebarWithHeader() {
                 onOverlayClick={onClose}
                 size="full"
             >
-                <DrawerContent>
+                <DrawerContent >
                     <SidebarContent onClose={onClose} />
                 </DrawerContent>
             </Drawer>
             {/* mobilenav */}
             <MobileNav onOpen={onOpen} />
-            <Box ml={{ base: 0, md: 60 }} p="4">
+            <Box ml={{ base: 0, md: 60 }} p="4"  style={{ backgroundColor: '#F9F7F7' }}>
 
                 {/* Body App js */}
 
@@ -144,6 +157,12 @@ function SidebarWithHeader() {
                     <Route path='/chat' element={<Chat />} />
                     <Route path='/messages/:id' element={<MessagePage render={render} setRender={setRender} />} />
                     <Route path="/userProfile" element={<UsersProfile />} />
+
+                    {
+                        role === 'admin' &&
+                        <Route path="/admin/user" element={<AdminPosts />} />
+                    }
+
                     <Route path="/challenges" element={<Challenges />} />
                     {/* <Route path="/addpost" element={<Profile />} /> */}
                     <Route path="*" element={<NotFound />} />

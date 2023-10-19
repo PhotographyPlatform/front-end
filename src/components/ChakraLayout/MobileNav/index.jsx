@@ -68,6 +68,9 @@ function MobileNav({ onOpen, ...rest }) {
             borderBottomWidth="1px"
             borderBottomColor={useColorModeValue('gray.200', 'gray.700')}
             justifyContent={{ base: 'space-between', md: 'flex-end' }}
+            style={{
+                backgroundColor: '#F9F7F7',
+            }}
             {...rest}
         >
             <IconButton
