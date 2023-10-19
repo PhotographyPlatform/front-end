@@ -121,7 +121,10 @@ function App() {
 
   return (
     <div className="App">
+      
       <ThemeProvider theme={theme}>
+        
+
         {decodeAuth && decodeAuth.userId ? (
           <SidebarWithHeader>
             <Routes>

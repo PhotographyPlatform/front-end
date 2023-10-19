@@ -49,6 +49,7 @@ import FavoritePage from '../Pages/@auth/FavoritePage/FavoritePage';
 import UsersProfile from '../Pages/@auth/profileDashboard/UsersProfile';
 import Challenges from '../Pages/Challenges';
 import { MdOutlinePartyMode } from 'react-icons/md';
+import AdminReports from '../Admin/Reports/Reports';
 
 import NotifiList from './notificationList';
 
@@ -157,10 +158,16 @@ function SidebarWithHeader() {
                     <Route path='/chat' element={<Chat />} />
                     <Route path='/messages/:id' element={<MessagePage render={render} setRender={setRender} />} />
                     <Route path="/userProfile" element={<UsersProfile />} />
-
                     {
                         role === 'admin' &&
+
+                        <>
+                            <Route path="/admin/user" element={<AdminPosts/>} />
+                            <Route path="/admin/reports" element={<AdminReports/>} />
+                        </>
+
                         <Route path="/admin/user" element={<AdminPosts />} />
+
                     }
 
                     <Route path="/challenges" element={<Challenges />} />

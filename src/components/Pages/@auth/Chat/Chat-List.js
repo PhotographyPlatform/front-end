@@ -55,6 +55,33 @@ export default function ChatList({ render, setShowfolowingList }) {
                     <Input onChange={(e) => dispatch(e.target.value !== '' ? dispatchSearchUserList(e.target.value)
                          : fetchUserListRedux(userId))}
                          className="searchBar-chat" placeholder='search' borderColor={'gray.300'} borderWidth={'1px'} borderStyle={'solid'} />
+
+          </InputGroup>
+          
+          <Container  className="ChatList-cont">
+          {    state.UserList && 
+               state.UserList.map((ele ) => (
+                    <Container key={ele.data.id} width={'100%'} p={0} >
+                              <Divider borderColor={'#00000020'} borderBottomWidth={'2px'} />
+                              <Link to={`/messages/${ele.data.id}`}>
+                                   
+                                   <HStack className="list-item" alignItems={{ lg : 'center' ,xl :'flex-start'}} position={'relative'}>
+                                        <Avatar size={'md'}  src={ ele.data.img} />
+                                        <Box className="item-detailes" display={'flex'} flexDirection={'column'} alignItems={'flex-start'}  marginLeft={'10px'} >
+                                             <Heading  textTransform={'capitalize'} as={'h5'} fontSize={'medium'}  className='name'>{ele.data.username}</Heading>
+                                             <Text className='item-cont' fontSize={'15px'} textAlign={'left'} display={{base : 'none' , lg : 'none' , xl : 'inline-block'}}  >{
+                                                  
+                                                  ele.messages[ele.messages.length - 1]?.content.length > 25 ?
+                                                       ` ${ele.messages[ele.messages.length - 1]?.content.slice(0, 25)} ...`
+                                                       :
+                                                       ele.messages[ele.messages.length - 1]?.content
+                                             }</Text>
+                                        </Box>
+                                        {
+                                             ele.messages[ele.messages.length - 1]?.senderId !== userId &&  
+                                             <Box position={'absolute'} right={'10px'} top={{  lg : '20px'}} justifySelf={'flex-end'} borderRadius={'50%'} h={'25px'} w={'25px'} display={userNotifiCount(ele.data.id, state.userNotification) ? 'inline-flex' : 'none'} justifyContent={'center'} alignItems={'center'} bg={'red'} p={'8px'} color={'white'}>
+                                                  <Text fontSize={'15px'} m={0}>{userNotifiCount(ele.data.id, state.userNotification)}</Text>
+
                </InputGroup>
 
                <Container className="ChatList-cont">
@@ -75,6 +102,7 @@ export default function ChatList({ render, setShowfolowingList }) {
                                                             :
                                                             ele.messages[ele.messages.length - 1]?.content
                                                   }</Text>
+
                                              </Box>
                                              {
                                                   ele.messages[ele.messages.length - 1]?.senderId !== userId &&
