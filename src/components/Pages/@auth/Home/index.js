@@ -30,6 +30,14 @@ import { uderData } from '../../../../store/reducers/auth/user.reducer';
 import Cookies from 'react-cookies'
 import Mystory from '../stories/Mystory';
 import { Carousel } from 'react-bootstrap';
+import { Search2Icon } from "@chakra-ui/icons";
+import { setSearchWord } from "../../../../store/reducers/Search";
+import { useNavigate } from "react-router";
+import Posts from "../../../components/posts";
+import "./Home.scss";
+import { decodeToken } from "react-jwt";
+import axios from "axios";
+import { Spinner } from "@chakra-ui/react";
 function Home() {
     const dispatch = useDispatch()
     const [selectedStoryId, setSelectedStoryId] = useState(null);
@@ -68,6 +76,45 @@ function Home() {
         }
     }, [imageStory])
 
+
+    const [homePosts, sethomePosts] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const Navigator = useNavigate();
+
+    const setSearchWorldHandler = (e) => {
+        const value = e.target.value;
+        if (e.key === "Enter" && value.trim() !== "") {
+            dispatch(setSearchWord(e.target.value));
+            Navigator("/search");
+        }
+    };
+
+    const token = Cookies.load("user_session");
+    const parsedToken = decodeToken(token);
+
+    console.log(parsedToken.userId);
+
+    useEffect(() => {
+        try {
+            const token = Cookies.load('user_session');
+            setLoading(true);
+            const response = axios.get(
+                `http://localhost:3002/home`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    }
+                }
+            );
+            response.then((data) => {
+                console.log(data, "!!!!!!!!!!!!!!!");
+                sethomePosts(data.data);
+                setLoading(false);
+            });
+        } catch (e) {
+            console.log("error while fetching home posts");
+        }
+    }, []);
 
     return (
         <>
@@ -124,66 +171,46 @@ function Home() {
                             </Box>
                         ))
                     }
-
+                    {selectedStoryId ? <Otherstories id={selectedStoryId} setSelectedStoryId={setSelectedStoryId} /> : null}
+                    {myStory ? < Mystory MystoryHandler={MystoryHandler} /> : null}
                 </Box>
             }
             <Divider orientation='horizontal' />
-            <div className='auth-profile' >
-                <Card maxW='md'>
-                    <CardHeader>
-                        <Flex spacing='4'>
-                            <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-                                <Avatar name='Segun Adebayo' src='https://bit.ly/sage-adebayo' />
-
-                                <Box>
-                                    <Heading size='sm'>Segun Adebayo</Heading>
-                                    <Text>Creator, Chakra UI</Text>
-                                </Box>
-                            </Flex>
-                            <IconButton
-                                variant='ghost'
-                                colorScheme='gray'
-                                aria-label='See menu'
-                                icon={<BsThreeDotsVertical />}
+            {
+                homePosts.length !== 0 ? (
+                    <div className="auth-profile">
+                        <div className="search-bar-home">
+                            <Search2Icon className="search-icon-home" />
+                            <input
+                                type="search"
+                                placeholder="Type your search.."
+                                maxLength={30}
+                                onKeyDown={setSearchWorldHandler}
                             />
-                        </Flex>
-                    </CardHeader>
-                    <CardBody>
-                        <Text>
-                            With Chakra UI, I wanted to sync the speed of development with the speed
-                            of design. I wanted the developer to be just as excited as the designer to
-                            create a screen.
-                        </Text>
-                    </CardBody>
-                    <Image
-                        objectFit='cover'
-                        src='https://images.unsplash.com/photo-1531403009284-440f080d1e12?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80'
-                        alt='Chakra UI'
-                    />
-
-                    <CardFooter
-                        justify='space-between'
-                        flexWrap='wrap'
-                        sx={{
-                            '& > button': {
-                                minW: '136px',
-                            },
-                        }}
-                    >
-                        <Button flex='1' variant='ghost' leftIcon={<BiLike />}>
-                            Like
-                        </Button>
-                        <Button flex='1' variant='ghost' leftIcon={<BiChat />}>
-                            Comment
-                        </Button>
-                        <Button flex='1' variant='ghost' leftIcon={<BiShare />}>
-                            Share
-                        </Button>
-                    </CardFooter>
-                </Card>
-            </div>
-            {selectedStoryId ? <Otherstories id={selectedStoryId} setSelectedStoryId={setSelectedStoryId} /> : null}
-            {myStory ? < Mystory MystoryHandler={MystoryHandler} /> : null}
+                        </div>
+                        {loading ? (<Spinner
+                            thickness="3px"
+                            speed="0.65s"
+                            emptyColor="gray.200"
+                            color="blue.500"
+                            size="xl"
+                        />) : (<Posts posts={homePosts} />)}
+                    </div>
+                ) : (
+                    <div className="welcome">
+                        <div className="welcome-container">
+                            <h1>Welcome</h1>
+                            <p>
+                                It looks like you are new here, press on the button below so
+                                you can search and discover more
+                            </p>
+                            <div>
+                                <button onClick={() => Navigator("/search")}>Discover &rarr;</button>
+                            </div>
+                        </div>
+                    </div>
+                )
+            }
         </>
     )
 
@@ -200,87 +227,10 @@ function Home() {
     // import axios from "axios";
 
     // function Home() {
-    //   const [homePosts, sethomePosts] = useState([]);
-
-    //   const dispatch = useDispatch();
-    //   const Navigator = useNavigate();
-
-    //   const setSearchWorldHandler = (e) => {
-    //     const value = e.target.value;
-    //     if (e.key === "Enter" && value.trim() !== "") {
-    //       dispatch(setSearchWord(e.target.value));
-    //       Navigator("/search");
-    //     }
-    //   };
-
-    //   const token = cookies.load("user_session");
-    //   const parsedToken = decodeToken(token);
-
-    //   console.log(parsedToken.userId);
 
 
-    //   useEffect(() => {
-    //     try {
-    //       const response = axios.get(
-    //         `http://localhost:3002/fullyFeeds/${parsedToken.userId}`
-    //       );
-    //       response.then((data) => {
-    //         console.log(data, "!!!!!!!!!!!!!!!");
-    //         sethomePosts(data.data);
-    //       });
-    //     } catch (e) {
-    //       console.log("error while fetching home posts");
-    //     }
-    //   }, []);
-
-    //   useEffect(() => {
-    //     try {
-    //       const token = cookies.load('user_session');
-    //       const response = axios.get(
-    //         `http://localhost:3002/home`,
-    //         {
-    //           headers: {
-    //             Authorization: `Bearer ${token}`,
-    //           }
-    //         }
-    //       );
-    //       response.then((data) => {
-    //         console.log(data, "!!!!!!!!!!!!!!!");
-    //         sethomePosts(data.data);
-    //       });
-    //     } catch (e) {
-    //       console.log("error while fetching home posts");
-    //     }
-    //   }, []);
 
 
-    //   return homePosts.length!==0 ? (
-    //     <div className="auth-profile">
-    //       <div className="search-bar-home">
-    //         <Search2Icon className="search-icon-home" />
-    //         <input
-    //           type="search"
-    //           placeholder="Type your search.."
-    //           maxLength={30}
-    //           onKeyDown={setSearchWorldHandler}
-    //         />
-    //       </div>
-    //       <Posts posts={homePosts} />
-    //     </div>
-    //   ) : (
-    //     <div className="welcome">
-    //       <div className="welcome-container">
-    //         <h1>Welcome 😺</h1>
-    //         <p>
-    //           It looks like you are new here, please press on the button below so
-    //           you can search and discover more
-    //         </p>
-    //         <div>
-    //           <button onClick={()=>Navigator("/search")}>Discover 🚀</button>
-    //         </div>
-    //       </div>
-    //     </div>
-    //   );
 
     // }
 }
