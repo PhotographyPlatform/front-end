@@ -35,6 +35,7 @@ import { dispatchAllNotification, fetchUserListRedux, getNotification } from './
 import Challenges from './components/Pages/Challenges';
 import { setNewNotifi, setRead } from './store/reducers/notificationAction';
 import { setOldNotifi } from './store/reducers/notificationAction';
+import { fetchCategories } from './store/reducers/Search';
 
 // socket assets 
 const port = 3002;
@@ -117,6 +118,8 @@ function App() {
 
   }, [Logged]);
 
+    
+  dispatch(fetchCategories());
 
 
   return (
