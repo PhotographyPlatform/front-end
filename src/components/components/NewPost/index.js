@@ -16,6 +16,7 @@ import { useSelector, useDispatch } from "react-redux";
 import cookies from 'react-cookies';
 import "./NewPost.scss";
 import jwtDecode from "jwt-decode";
+
 function NewPost({ onCloseNewPost, isOpenNewPost }) {
   
   const dispatch = useDispatch()
@@ -72,47 +73,6 @@ function NewPost({ onCloseNewPost, isOpenNewPost }) {
     setisDecEmpty(false);
   };
 
-  // const onSubmitHandler = async (e) => {
-  //   e.preventDefault();
-
-  //   if (e.target.elements.title.value === '') setisTitleInputEmpty(true);
-  //   if (e.target.elements.descript.value === '') setisDecEmpty(true);
-  //   if (tags.length === 0) setIsTagInputEmpty(true);
-  //   e.target.elements.fileInput.value ? setisUploadImageInputEmpty(false) : setisUploadImageInputEmpty(true);
-
-  //   const newPost = {
-  //     imgurl: e.target.elements.fileInput.value,
-  //     userid: 3,
-  //     title: e.target.elements.title.value,
-  //     contant: e.target.elements.descript.value,
-  //     category: tags,
-  //   };
-
-  //   if (newPost.imgurl && newPost.title && newPost.contant && newPost.category.length) {
-  //     try {
-  //       const response = await axios.post(
-  //         "http://localhost:3002/v1/newPostCOll",
-  //         newPost
-  //       );
-  //       if (response.status === 201) {
-  //         onCloseNewPost();
-  //         toast({
-  //           position: 'top-left',
-  //           title: 'Post created',
-  //           description: "your post has been created succefully",
-  //           status: 'success',
-  //           duration: 9000,
-  //           isClosable: true,
-  //         });
-  //         setTags([]);
-  //       }
-  //     } catch (error) {
-  //       console.error("error when adding a new post: ", error);
-  //     }
-
-  //   }
-  // };
-
   const onSubmitHandler = async (e) => {
     e.preventDefault();
 
@@ -125,29 +85,16 @@ function NewPost({ onCloseNewPost, isOpenNewPost }) {
     }
 
 
-
     const tagsString = tags.join(", ");
 
-    const session_user = cookies.load('user_session');
-    let decoded = null;
+    // const session_user = cookies.load('user_session');
+    // let decoded = null;
 
-    if (session_user) {
-      decoded = jwtDecode(session_user);
-    }
+    // if (session_user) {
+    //   decoded = jwtDecode(session_user);
+    // }
     // const userId = useSelector((state) => state.user?.token?.userId ?? 1);
-    const userId = decoded.userId;
-
-
-    const newPost = {
-      imgurl: e.target.elements.fileInput.value,
-
-      userid: userId,
-
-      title: e.target.elements.title.value,
-      contant: e.target.elements.descript.value,
-      category: tags,
-    };
-
+    // const userId = decoded.userId;
 
     const formData = new FormData();
     formData.append('image', fileInputRef.current.files[0]);
@@ -168,7 +115,7 @@ function NewPost({ onCloseNewPost, isOpenNewPost }) {
         }
       );
 
-      console.log(response, '88888888888888888888888888888888888');
+ 
       if (response.status === 201) {
         onCloseNewPost();
         toast({

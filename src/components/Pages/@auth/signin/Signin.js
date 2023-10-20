@@ -27,13 +27,14 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { PasswordField } from '../signup/passwordFiled/Password';
 import CryptoJS from 'crypto-js';
-
+import Animation from './Animation';
 const VARIANT_COLOR = 'teal';
 
 const Signin = () => {
   return (
     <ColorModeProvider>
       <CSSReset />
+      <Animation />
       <LoginArea />
     </ColorModeProvider>
   );
@@ -41,7 +42,7 @@ const Signin = () => {
 
 const LoginArea = () => {
   return (
-    <Flex minHeight='85vh' width='full' align='center' justifyContent='center'>
+    <Flex minHeight='85vh' width='full' align='center' justifyContent='center' >
       <Box
         borderWidth={1}
         px={4}
@@ -49,9 +50,12 @@ const LoginArea = () => {
         maxWidth='500px'
         borderRadius={4}
         textAlign='center'
-        boxShadow='lg'
+        boxShadow='xl'
+        background='white'
+        paddingTop='15px'
+
       >
-        <ThemeSelector />
+
         <Box p={4}>
           <LoginHeader />
           <LoginForm />
@@ -61,26 +65,26 @@ const LoginArea = () => {
   );
 };
 
-const ThemeSelector = () => {
-  const { colorMode, toggleColorMode } = useColorMode();
+// const ThemeSelector = () => {
+//   const { colorMode, toggleColorMode } = useColorMode();
 
-  return (
-    <Box textAlign='right' py={4}>
-      <IconButton
-        icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
-        onClick={toggleColorMode}
-        variant="ghost"
-      />
-    </Box>
-  );
-};
+//   return (
+//     <Box textAlign='right' py={4}>
+//       <IconButton
+//         icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+//         onClick={toggleColorMode}
+//         variant="ghost"
+//       />
+//     </Box>
+//   );
+// };
 
 const LoginHeader = () => {
   return (
     <Box textAlign='center'>
       <Heading>Pixel Time</Heading>
       <Text color="fg.muted" fontSize='17px'>
-        Don't have an account? <Link href="/signup" color={`${VARIANT_COLOR}.500`}>Sign up</Link>
+        Don't have an account? <Link href="/signup" color={`#3F72AF`}>Sign up</Link>
       </Text>
     </Box>
   );
@@ -110,6 +114,7 @@ const LoginForm = () => {
           Authorization: `Basic ${btoa(`${obj.username}:${obj.password}`)}`
         }
       });
+
       dispatch(signin(data));
       dispatch(DecodeToken());
       if (data.status === 200) {
@@ -158,7 +163,7 @@ const LoginForm = () => {
             <Checkbox isChecked={data ? !isChecked : isChecked} onChange={handleCheckboxChange}>Remember Me</Checkbox>
           </Box>
           <Box>
-            <Link color={`${VARIANT_COLOR}.500`} href='/forgetPassword'>Forgot your password?</Link>
+            <Link color={'#3F72AF'} href='/forgetPassword'>Forgot your password?</Link>
           </Box>
         </Stack>
         <br />
@@ -173,8 +178,8 @@ const LoginForm = () => {
         <Button variantColor={VARIANT_COLOR} width='full' mt={4} type='submit'>
           Sign In
         </Button>
-      </form>
 
+      </form>
     </Box>
   );
 };
