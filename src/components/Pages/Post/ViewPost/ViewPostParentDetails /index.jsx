@@ -60,7 +60,7 @@ function ViewPostParentDetails({ post, onClose, currId }) {
     return (
         <div className='viewpost-parent-details'>
             <div className='viewpost-img'>
-                <img src="https://images.pexels.com/photos/2760519/pexels-photo-2760519.jpeg?auto=compress&cs=tinysrgb&w=600" alt="" />
+                <img src={imgurl} alt="" />
             </div>
             <div className='viewpost-details'>
                 <section className='viewpost-section-details'>

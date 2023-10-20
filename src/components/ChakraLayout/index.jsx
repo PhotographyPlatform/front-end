@@ -13,7 +13,8 @@ import {
     Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay
 
 } from '@chakra-ui/react';
-
+import { useLocation } from 'react-router-dom';
+import './sidenav.scss'
 import {
     FiHome,
     FiTrendingUp,
@@ -30,6 +31,7 @@ import { useDispatch } from 'react-redux';
 import jwtDecode from 'jwt-decode';
 // Popup  options 
 // import {useDisclosure } from '@chakra-ui/react';
+import { IoMdPhotos } from 'react-icons/io';
 
 
 // Pages we have on the website 
@@ -51,8 +53,12 @@ import UsersProfile from '../Pages/@auth/profileDashboard/UsersProfile';
 import Challenges from '../Pages/Challenges';
 import { MdOutlinePartyMode } from 'react-icons/md';
 import AdminReports from '../Admin/Reports/Reports';
+import { BsCamera, BsChatDots } from 'react-icons/bs';
+// import { IoImagesOutline } from 'react-icons/io';
+import { LuImagePlus } from "react-icons/lu";
 
 import NotifiList from './notificationList';
+import { BsBookmark } from 'react-icons/bs';
 
 
 // handle the Icon with Name and path 
@@ -70,6 +76,10 @@ const LinkItems = [
 
 function SidebarContent({ onClose, ...rest }) {
     const { isOpen: isOpenNewPost, onOpen: onOpenNewPost, onClose: onCloseNewPost } = useDisclosure();
+    const location = useLocation();
+    
+    const isLinkActive = (path) => location.pathname === path;
+
 
     return (
         <Box
@@ -90,21 +100,54 @@ function SidebarContent({ onClose, ...rest }) {
                 <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
             </Flex>
 
-            {LinkItems.map((link, index) => (
+            <Link key={1} to={'/'} >
+                <NavItem icon={FiHome} name={"Home"}
+                    className={isLinkActive('/') ? 'active-link' : ''}
+                >
+
+                    {'Home'}</NavItem>
+            </Link>
+            <Link key={2} to={'/search'}
+                className={isLinkActive('/') ? 'active-link' : ''}
+            >
+                <NavItem icon={FiCompass} name={"Search"}> {'Search'}</NavItem>
+            </Link>
+            {/* popup Modal */}
+            <Link key={3}>
+                <NewPost onCloseNewPost={onCloseNewPost} isOpenNewPost={isOpenNewPost} />
+                <NavItem icon={LuImagePlus} onClick={onOpenNewPost}   >{'Add New Post'} </NavItem>
+            </Link>
+            <Link key={4} to={'/challenges'} >
+                <NavItem icon={BsCamera} name={"challenges"}
+                    className={isLinkActive('/') ? 'active-link' : ''}
+                > {'challenges'}</NavItem>
+            </Link>
+            <Link key={6} to={'/chat'} >
+                <NavItem icon={BsChatDots} name={"Chat"}
+                    className={isLinkActive('/') ? 'active-link' : ''}
+
+                > {'Chat'}</NavItem>
+            </Link>
+
+            <Link key={5} to={'/favorite'} >
+                <NavItem icon={BsBookmark} name={"Favourites"}
+                    className={isLinkActive('/') ? 'active-link' : ''}
+                > {'Favourites'}</NavItem>
+            </Link>
+            <Link key={5} to={'/profile'} >
+                <NavItem icon={FiTrendingUp} name={"Profile"}
+                    className={isLinkActive('/') ? 'active-link' : ''}
+
+                > {'Profile'}</NavItem>
+            </Link>
+            {/* {LinkItems.map((link, index) => (
                 //link path 
                 <Link key={index} to={link.path} >
                     <NavItem icon={link.icon} name={link.name}> {link.name}</NavItem>
                 </Link>
-            ))}
-            {/* popup Modal */}
+            ))} */}
 
-            <Link>
-
-
-                <NewPost onCloseNewPost={onCloseNewPost} isOpenNewPost={isOpenNewPost} />
-                <NavItem icon={IoMdAddCircle} onClick={onOpenNewPost}   >{'Add New Post'} </NavItem>
-            </Link>
-        </Box>
+        </Box >
     );
 }
 
@@ -164,6 +207,7 @@ function SidebarWithHeader() {
                         role === 'admin' &&
 
                         <>
+
                             {/* <Route path="/admin/user" element={<AdminPosts/>} /> */}
                             <Route path="/admin/reports" element={<AdminReports />} />
                         </>

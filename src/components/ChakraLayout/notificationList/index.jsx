@@ -80,11 +80,11 @@ function NotifiList() {
                     return (
                         <li key={index} onClick={onOpenViewPost}>
                             {/* onClick={onOpenViewPost} */}
-                            <ViewPost
+                            {/* <ViewPost
                                 isOpenViewPost={isOpenViewPost}
                                 onCloseViewPost={onCloseViewPost}
                                 id={notification.actionParentId}
-                            />
+                            /> */}
                             {getNotificationIcon(notification.message)}
                             <div>{notification.message}</div>
                             <span>{calculateTimeDifference(notification.createdAt)}</span>
@@ -126,11 +126,11 @@ function NotifiList() {
                 if (notification.actionType !== 'follow') {
                     return (
                         <li key={index} onClick={onOpenViewPost} className={" notifi-new"}>
-                            <ViewPost
+                            {/* <ViewPost
                                 isOpenViewPost={isOpenViewPost}
                                 onCloseViewPost={onCloseViewPost}
                                 id={notification.actionParentId}
-                            />
+                            /> */}
                             {getNotificationIcon(notification.message)}
                             <div>{notification.message}</div>
                             <span>{calculateTimeDifference(notification.createdAt)}</span>
@@ -148,11 +148,11 @@ function NotifiList() {
             } else if (notification.actionType === 'follow') {
                 return (
                     <li className='notifi-new' key={index} onClick={onOpenViewPost}>
-                        <ViewPost
+                        {/* <ViewPost
                             isOpenViewPost={isOpenViewPost}
                             onCloseViewPost={onCloseViewPost}
                             id={notification.actionParentId}
-                        />
+                        /> */}
                         {getNotificationIcon(notification.message)}
                         <div>{notification.message}</div>
                         <span>{calculateTimeDifference(notification.createdAt)}</span>
@@ -228,6 +228,8 @@ function getNotificationIcon(message) {
             return <BiLike />;
         case "Add comment on your post":
             return <FaRegComment />;
+        case "added new post":
+            return <IoMdPhotos />;
         default:
             return null;
     }

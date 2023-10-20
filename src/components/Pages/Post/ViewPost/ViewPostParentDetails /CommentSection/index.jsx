@@ -32,6 +32,7 @@ function CommentSection(postId) {
             });
         }
     }, [inputActive]);
+    // dispatch(handleCommentActive());
 
     const handleCommentSubmit = async () => {
         try {
