@@ -1,4 +1,4 @@
-import { Avatar, Heading, Text, Container, HStack, Box, Card, Divider, Input, InputGroup, InputRightElement, Button } from '@chakra-ui/react'
+import { Avatar, Heading, Text, Container, HStack, Box, Card, Divider, Input, InputGroup, InputRightElement, Button, Icon } from '@chakra-ui/react'
 import { SearchIcon } from '@chakra-ui/icons'
 import { BsFillChatDotsFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom'
@@ -28,36 +28,46 @@ export default function FolowingList({ setShowfolowingList }) {
           <>
      <InputGroup gap={'10px'}>
           
-          <Button onClick={() => (setShowfolowingList(value => !value))} borderColor={'gray.300'} borderWidth={'1px'} borderStyle={'solid'} bg={'transparent'} _hover={{ bg: 'white' }}>
-               <BsFillChatDotsFill size={'30px'}/>
+          <Button className='chat_search_btn' onClick={() => (setShowfolowingList(value => !value))} borderColor={'gray.300'} borderWidth={'1px'} borderStyle={'solid'} bg={'transparent'}>
+               {/* <BsFillChatDotsFill size={'30px'}/> */}
+               <Icon className='chat_search_icon' as={ BsFillChatDotsFill} fontSize={'24px'} color={'#3F72AF'}/>
           </Button>
 
           <InputRightElement pointerEvents='none' >
-               <SearchIcon color='gray.300' />
+               <SearchIcon color='#3F72AF' />
           </InputRightElement>
           
                     <Input onChange={(e) => dispatch(e.target.value !== '' ? dispatchSearchFolowingChatList(e.target.value)
                          : fetchFolowingChatList(cookieData))}
-                         className="searchBar-chat" placeholder='search' borderColor={'gray.300'} borderWidth={'1px'} borderStyle={'solid'} />
-          </InputGroup>
+                         className="searchBar-chat" placeholder='search' borderColor={'#3F72AF'} borderWidth={'1px'} borderStyle={'solid'} />
+     </InputGroup>
 
-     <Container  className="ChatList-cont">
-          {
-               selector.folowingChatList.map(ele => (
-                    
-                    <Container key={ele.id} width={'100%'} p={0} >
-                              <Divider borderBottomWidth={'2px'} borderColor={'#00000020'} />
-                              <Link to={`/messages/${ele.id}`}>
-                                   <HStack className="list-item" alignItems={{ lg : 'center'}} gap={'20px'}>
-                                        <Avatar size={'md'}  src={''} />
-                                        <Heading  textTransform={'capitalize'} as={'h5'} fontSize={'15px'}  className='name'>{ele.name}</Heading>
-                                   </HStack>
-                              </Link>
-                    </Container>
-               ))
-          }
-          
-     </Container> 
+          <Container  className="ChatList-cont">
+               {
+                    selector.folowingChatList.map(ele => (
+                         
+                         <Container key={ele.id} width={'100%'} p={0} >
+                                   <Divider borderBottomWidth={'2px'} borderColor={'#3f72af57'} />
+                                   <Link to={`/messages/${ele.id}`}>
+                                        <HStack className="list-item" alignItems={{ lg : 'center'}} gap={'20px'}>
+                                             <Avatar size={'md'}  src={ele.img} />
+                                             <Heading  textTransform={'capitalize'} as={'h5'} fontSize={'15px'}  className='name'>{ele.name}</Heading>
+                                        </HStack>
+                                   </Link>
+                         </Container>
+                    ))
+               }
+               
+          </Container> 
+     {
+         !selector.folowingChatList &&
+          <>
+               <Box className='empty_list'>
+                    <Box className='empty_list_img'></Box>
+                    <Text color={'#112D4E'} as={'p'}>Folowing List</Text>
+               </Box>
+          </>
+     }
 </>
   )
 }

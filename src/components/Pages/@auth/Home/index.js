@@ -37,7 +37,6 @@ import Posts from "../../../components/posts";
 import "./Home.scss";
 import { decodeToken } from "react-jwt";
 import axios from "axios";
-
 import { Spinner } from "@chakra-ui/react";
 function Home() {
     const dispatch = useDispatch()
@@ -93,6 +92,7 @@ function Home() {
     const token = Cookies.load("user_session");
     const parsedToken = decodeToken(token);
 
+
     useEffect(() => {
         try {
             const token = Cookies.load('user_session');
@@ -106,6 +106,7 @@ function Home() {
                 }
             );
             response.then((data) => {
+                
                 sethomePosts(data.data);
                 setLoading(false);
             });
@@ -177,7 +178,7 @@ function Home() {
             {
                 homePosts.length !== 0 ? (
                     <div className="auth-profile">
-                        <div className="search-bar-home">
+                        {/* <div className="search-bar-home">
                             <Search2Icon className="search-icon-home" />
                             <input
                                 type="search"
@@ -185,7 +186,7 @@ function Home() {
                                 maxLength={30}
                                 onKeyDown={setSearchWorldHandler}
                             />
-                        </div>
+                        </div> */}
                         {loading ? (<Spinner
                             thickness="3px"
                             speed="0.65s"
