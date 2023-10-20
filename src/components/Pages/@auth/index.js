@@ -14,8 +14,10 @@ function Container() {
   return (
     <div>
       <div>
+        {/* <Header_Inhansed color={'#29383b'} bg={'white' }/> */}
         {/* <Header /> */}
         {/* <Header_Inhansed/> */}
+        
         <Routes>
           <Route path='/ss' element={<Search />} />
           <Route path='/code' element={<Code />} />
