@@ -27,6 +27,7 @@ import { PasswordField } from './passwordFiled/Password'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import React, { useState } from 'react'
+import Header_Inhansed from '../../Header_Inhansed/Header_Inhansed'
 import Animation from '../signin/Animation'
 const VARIANT_COLOR = 'teal'
 
@@ -70,8 +71,11 @@ export default function SignUp() {
         }
     }
 
-    return (
+    return ( 
+        <>
+        <Header_Inhansed color={'#29383b'} bg={'white' } />
         <Container maxW="xl" px="8" backgroundColor="white" marginTop='10px'>
+
             <form onSubmit={submitHandler}>
                 <Stack spacing="4">
                     <Box
@@ -170,5 +174,6 @@ export default function SignUp() {
             <Animation />
         </Container>
 
+     </>
     )
 }

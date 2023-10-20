@@ -1,0 +1,28 @@
+.main-footer {
+    margin-top: 10px;
+    opacity: 0.9;
+    color: #112D4E;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    // gap: 20px;
+
+    .copy {
+        font-size: 16px;
+        font-weight: 400;
+        font-family: 'Open Sans', sans-serif;
+    }
+
+    .links {
+        font-size: 14px;
+        opacity: 0.7;
+        color: #112D4E;
+        font-weight: 500;
+    }
+}
+
+
+// heading:,
+// body: `'Raleway',
+// sans-serif`,

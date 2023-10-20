@@ -188,8 +188,7 @@ function Home() {
                 onMouseUp={stopDragging}
               >
                 {following &&
-                  // following.Following.map((story) => (
-                  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((story) => (
+                  following.Following.map((story) => (
                     <Box className="nav-tag-st">
                       <Avatar
                         size={["lg", "xl", "xl"]}

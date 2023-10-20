@@ -61,6 +61,7 @@ function App() {
   const [notifiOff, setnotifiOff] = useState(true)
 
   let params = useParams()
+  const [reload , setReload] = useState(true)
 
 
   const Logged = userState.isLogged;
@@ -81,6 +82,7 @@ function App() {
     })
 
   }, [])
+
 
   // Notification Action (Post, Like, Comment,  Follow)
   notificationAction.emit("notification", userId);
@@ -117,6 +119,8 @@ function App() {
     dispatch(getNotification(cookieData))
 
   }, [Logged]);
+  
+ 
 
     
   dispatch(fetchCategories());
@@ -139,7 +143,6 @@ function App() {
               <Route path='/messages/:id' element={<MessagePage render={render} setRender={setRender} />} />
               <Route path='/chat' element={<Chat />} />
               <Route path="/userProfile" element={<UsersProfile />} />
-
             </Routes>
           </SidebarWithHeader>
         ) :
