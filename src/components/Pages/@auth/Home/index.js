@@ -37,6 +37,7 @@ import Posts from "../../../components/posts";
 import "./Home.scss";
 import { decodeToken } from "react-jwt";
 import axios from "axios";
+
 import { Spinner } from "@chakra-ui/react";
 function Home() {
     const dispatch = useDispatch()
@@ -92,8 +93,6 @@ function Home() {
     const token = Cookies.load("user_session");
     const parsedToken = decodeToken(token);
 
-    console.log(parsedToken.userId);
-
     useEffect(() => {
         try {
             const token = Cookies.load('user_session');
@@ -107,7 +106,6 @@ function Home() {
                 }
             );
             response.then((data) => {
-                console.log(data, "!!!!!!!!!!!!!!!");
                 sethomePosts(data.data);
                 setLoading(false);
             });

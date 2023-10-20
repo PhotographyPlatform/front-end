@@ -39,6 +39,8 @@ function OthersModal({ followers, following }) {
         }
     };
 
+    
+
     useEffect(() => {
         onOpen()
     }, [])
