@@ -5,7 +5,9 @@ import { Follow, getFollowing, unFollow } from '../../../../../store/reducers/pr
 import styles from './viewpostHeader.module.scss';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-const baseUrl = "http://localhost:3002";
+// const baseUrl = "http://localhost:3002";
+const baseUrl = process.env.REACT_APP_URL;
+
 
 
 function ViewPostHeader({ currentPost, currId }) {

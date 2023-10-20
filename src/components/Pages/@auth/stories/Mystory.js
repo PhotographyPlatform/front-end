@@ -14,6 +14,8 @@ export default function Mystory({ MystoryHandler }) {
     const data = useSelector(state => state.user.user);
     const [images, setImages] = useState([]);
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const URL = process.env.REACT_APP_URL;
+
 
     useEffect(() => {
         dispatch(getStories());
@@ -41,7 +43,7 @@ export default function Mystory({ MystoryHandler }) {
                         const hoursAgo = Math.floor(minutesAgo / 60);
                         if (hoursAgo >= 24) {
                             try {
-                                const response = await axios.delete(`http://localhost:3002/story/${story.id}`, {
+                                const response = await axios.delete(`${URL}/story/${story.id}`, {
                                     headers: {
                                         Authorization: `Bearer ${token}`,
                                     }

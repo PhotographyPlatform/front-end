@@ -21,6 +21,7 @@ export default function FavoritePage() {
      const cookieData = cookie.load('user_session')
      const favIcon = useRef(null)
      const [userInfo, setUserInfo] = useState('')
+     const URL = process.env.REACT_APP_URL;
 
 
      const handelFavorite = (id) => {
@@ -40,7 +41,7 @@ export default function FavoritePage() {
      const getOtherUserData = async (id) => {
           try {
 
-               const res = await axios.get(`http://localhost:3002/getOtherDataUser/${id}`, { headers: { Authorization: `Bearer ${cookieData}` } })
+               const res = await axios.get(`${URL}/getOtherDataUser/${id}`, { headers: { Authorization: `Bearer ${cookieData}` } })
                setUserInfo(res.data.userInfo.username)
                return
 

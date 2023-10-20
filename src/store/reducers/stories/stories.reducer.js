@@ -4,6 +4,7 @@ import Cookies from "react-cookies";
 const initialState = {
 
 }
+const URL = process.env.REACT_APP_URL;
 
 export default (state = initialState, action) => {
     const { type, payload } = action;
@@ -25,7 +26,7 @@ export const getStories = () => async dispatch => {
             console.log('invalid token');
             return;
         }
-        const response = await axios.get('http://localhost:3002/story', {
+        const response = await axios.get(`${URL}/story`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -41,7 +42,7 @@ export const uploadImage = (image) => async dispatch => {
     const token = Cookies.load('user_session');
     const formData = new FormData();
     formData.append('storyUrl', image)
-    await axios.post('http://localhost:3002/story', formData, {
+    await axios.post(`${URL}/story`, formData, {
         headers: {
             Authorization: `Bearer ${token}`,
         }
@@ -59,7 +60,7 @@ export const getOtherStories = (id) => async dispatch => {
             console.log('invalid token');
             return;
         }
-        const response = await axios.get(`http://localhost:3002/story/${id}`, {
+        const response = await axios.get(`${URL}/story/${id}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },

@@ -12,11 +12,12 @@ function ChallengeDetails({ selectedChallenge }) {
   const [isViewParticipationsClicked, setIsViewParticipationsClicked] = useState(false);
   const [isNewPostAdded, setIsNewPostAdded] = useState(false); 
   const [allPosts, setAllPosts] = useState([]);
+  const URL = process.env.REACT_APP_URL;
 
   
   useEffect(()=>{
     try{
-      const response = axios.get('http://localhost:3002/v1/newPostCOll');
+      const response = axios.get(`{URL}/v1/newPostCOll`);
       response.then((data) => {
         const posts = data.data.filter(item => item.challengeID===selectedChallenge.id);
         setAllPosts(posts);

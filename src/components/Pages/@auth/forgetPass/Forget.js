@@ -24,13 +24,15 @@ export default function ForgotPassword() {
     const [faild, setFaild] = useState(false);
     const [email, setEmail] = useState('');
     const [id, setId] = useState()
+    const URL = process.env.REACT_APP_URL;
+
     const submitHandler = async (e) => {
         try {
             e.preventDefault();
             const obj = {
                 email: e.target.email.value,
             };
-            const data = await axios.post('http://localhost:3002/forgetPassword', obj);
+            const data = await axios.post(`${URL}/forgetPassword`, obj);
             if (data.status === 200) {
                 setAlert(true);
                 const numberToEncrypt = data.data.id;

@@ -6,6 +6,7 @@ import CryptoJS from 'crypto-js';
 const PROFILE_STATE = {
     profile: null,
 }
+const URL = process.env.REACT_APP_URL;
 
 // Reducer
 export default (state = PROFILE_STATE, action) => {
@@ -49,7 +50,7 @@ export const profileEdit = (payload) => async dispatch => {
                 birthday: payload.birthday,
             }
             const token = cookies.load('user_session');
-            const response = await axios.patch('http://localhost:3002/profile', obj, {
+            const response = await axios.patch(`${URL}/profile`, obj, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 }
@@ -57,7 +58,7 @@ export const profileEdit = (payload) => async dispatch => {
             dispatch(profile(response.status));
         } else {
             const token = cookies.load('user_session');
-            const response = await axios.patch('http://localhost:3002/profile', payload, {
+            const response = await axios.patch(`${URL}/profile`, payload, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 }
@@ -85,7 +86,7 @@ export const getFollowing = () => async dispatch => {
             return;
         }
 
-        const response = await axios.get('http://localhost:3002/Following', {
+        const response = await axios.get(`${URL}/Following`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -104,7 +105,7 @@ export const getFollowers = () => async dispatch => {
             return;
         }
 
-        const response = await axios.get('http://localhost:3002/Followers', {
+        const response = await axios.get(`${URL}/Followers`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -122,7 +123,7 @@ export const getProfile = (id) => async dispatch => {
             console.log('invalid token');
             return;
         }
-        const response = await axios.get(`http://localhost:3002/profile/${id}`, {
+        const response = await axios.get(`${URL}/profile/${id}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -141,7 +142,7 @@ export const Follow = (id) => async dispatch => {
             console.log('invalid token');
             return;
         }
-        const response = await axios.post('http://localhost:3002/notification/follow', { following_id: id }, {
+        const response = await axios.post(`${URL}/notification/follow`, { following_id: id }, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -160,7 +161,7 @@ export const unFollow = (id) => async dispatch => {
             console.log('invalid token');
             return;
         }
-        const response = await axios.delete('http://localhost:3002/unfollow', {
+        const response = await axios.delete(`${URL}/unfollow`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -180,7 +181,7 @@ export const removeFollower = (id) => async dispatch => {
             console.log('invalid token');
             return;
         }
-        const response = await axios.delete('http://localhost:3002/unfollow', {
+        const response = await axios.delete(`${URL}/unfollow`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -198,7 +199,7 @@ export const uploadImage = (image) => async dispatch => {
     const token = cookies.load('user_session');
     const formData = new FormData();
     formData.append('image', image)
-    await axios.post('http://localhost:3002/profileImage', formData, {
+    await axios.post(`${URL}/profileImage`, formData, {
         headers: {
             Authorization: `Bearer ${token}`,
         }
@@ -213,7 +214,7 @@ export const uploadHero = (image) => async dispatch => {
     const token = cookies.load('user_session');
     const formData = new FormData();
     formData.append('image', image)
-    await axios.post('http://localhost:3002/heroImage', formData, {
+    await axios.post(`${URL}/heroImage`, formData, {
         headers: {
             Authorization: `Bearer ${token}`,
         }
@@ -227,7 +228,7 @@ export const uploadHero = (image) => async dispatch => {
 export const getImages = () => async dispatch => {
     try {
         const token = cookies.load('user_session');
-        const response = await axios.get('http://localhost:3002/v2/profile', {
+        const response = await axios.get(`${URL}/v2/profile`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },

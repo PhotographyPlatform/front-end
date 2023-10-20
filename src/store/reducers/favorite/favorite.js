@@ -5,7 +5,9 @@ const initialState = {
      favoritePosts: []
 }
 
-const url = `http://localhost:3002`
+// const url = `http://localhost:3002`
+const url = process.env.REACT_APP_URL;
+
 
 const session_user = cookies.load('user_session');
 

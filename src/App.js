@@ -37,16 +37,18 @@ import { setNewNotifi, setRead } from './store/reducers/notificationAction';
 import { setOldNotifi } from './store/reducers/notificationAction';
 
 // socket assets 
+const URL = process.env.REACT_APP_URL;
+
 const port = 3002;
-const host = "http://localhost:3002";
-const homeHost = "http://localhost:3002/home";
-const nameSpacehost = `http://localhost:${port}/notification`;
+const host = URL;
+const homeHost = `${URL}/home`;
+const nameSpacehost = `${URL}/notification`;
 
 export const socket = io.connect(host, { transports: ["websocket"] });
 export const homeSocket = io.connect(homeHost, { transports: ["websocket"] });
 
 export const notificationAction = io.connect(nameSpacehost, { transports: ["websocket"] });
-const url = process.env.REACT_APP_URL;
+
 
 
 function App() {
@@ -82,7 +84,7 @@ function App() {
     })
   }, [])
 
-  console.log(url);
+  console.log(URL);
 
 
   // Notification Action (Post, Like, Comment,  Follow)

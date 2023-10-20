@@ -25,6 +25,7 @@ function Results() {
   const [searchCategoryresults, setSearchCategoryresults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [isdragging, setIsdragging] = useState(false);
+  const URL = process.env.REACT_APP_URL;
 
   // handle the user profile
   const profileHandler = (id) => {
@@ -47,7 +48,7 @@ function Results() {
     try {
       if (state.searchWord !== "") {
         setLoading(true);
-        const response = axios.post("http://localhost:3002/search", obj);
+        const response = axios.post(`${URL}/search`, obj);
         response.then((data) => {
           const searchUsers = data.data.users;
           const searchPosts = data.data.posts.filter(
@@ -73,7 +74,7 @@ function Results() {
       if (state.activeCategory !== "") {
         setLoading(true);
         const response = axios.get(
-          `http://localhost:3002/searchCategory/${searchCtegory}`
+          `${URL}/searchCategory/${searchCtegory}`
         );
         response.then((data) => {
           setSearchCategoryresults(data.data.searchResults);

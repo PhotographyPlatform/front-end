@@ -12,12 +12,13 @@ function Challenges() {
   const [isViewClicked, setIsViewClicked] = useState(false);
   const [selectedChallenge, setSelectedChallenge] = useState({});
   // const [isNewChallengeAdded, setIsNewChallengeAdded] = useState(false);
+  const URL = process.env.REACT_APP_URL;
 
   useEffect(() => {
     try {
       setLoading(true);
       const response = axios.get(
-        "http://localhost:3002/v1/challenagesCollection"
+        `${URL}/v1/challenagesCollection`
       );
       response.then((data) => {
         setChallenges(data.data);
