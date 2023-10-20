@@ -22,7 +22,6 @@ export default function FolowingList({ setShowfolowingList }) {
           dispatch(fetchFolowingChatList(cookieData))
      }, [])
      
-     console.log(selector.folowingChatList , 'selector.folowingChatList');
 
      return (
           <>
@@ -60,7 +59,7 @@ export default function FolowingList({ setShowfolowingList }) {
                
           </Container> 
      {
-         !selector.folowingChatList &&
+         selector.folowingChatList.length === 0 &&
           <>
                <Box className='empty_list'>
                     <Box className='empty_list_img'></Box>

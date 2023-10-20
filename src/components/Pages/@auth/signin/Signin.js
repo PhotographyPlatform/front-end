@@ -23,15 +23,14 @@ import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 
 import { DecodeToken, signin } from '../../../../store/reducers/auth/user.reducer';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { Link, useNavigate } from 'react-router-dom'
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { PasswordField } from '../signup/passwordFiled/Password';
 import CryptoJS from 'crypto-js';
 import Animation from './Animation';
-const VARIANT_COLOR = 'teal';
 import Header_Inhansed from '../../Header_Inhansed/Header_Inhansed';
+const VARIANT_COLOR = 'teal';
 
 
 const Signin = () => {

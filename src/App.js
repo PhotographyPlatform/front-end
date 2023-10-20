@@ -46,6 +46,7 @@ export const socket = io.connect(host, { transports: ["websocket"] });
 export const homeSocket = io.connect(homeHost, { transports: ["websocket"] });
 
 export const notificationAction = io.connect(nameSpacehost, { transports: ["websocket"] });
+const url = process.env.REACT_APP_URL;
 
 
 function App() {
@@ -79,8 +80,9 @@ function App() {
     homeSocket.on('msgNotificaton', msg => {
       dispatch(getNotification(cookieData))
     })
-
   }, [])
+
+  console.log(url);
 
 
   // Notification Action (Post, Like, Comment,  Follow)
