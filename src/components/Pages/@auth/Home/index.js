@@ -177,15 +177,6 @@ function Home() {
             {
                 homePosts.length !== 0 ? (
                     <div className="auth-profile">
-                        <div className="search-bar-home">
-                            <Search2Icon className="search-icon-home" />
-                            <input
-                                type="search"
-                                placeholder="Type your search.."
-                                maxLength={30}
-                                onKeyDown={setSearchWorldHandler}
-                            />
-                        </div>
                         {loading ? (<Spinner
                             thickness="3px"
                             speed="0.65s"

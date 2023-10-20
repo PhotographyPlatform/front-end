@@ -150,11 +150,14 @@ function UsersProfile() {
                                             Follow
                                         </Button>
                                 }
-                                <Button className='btn-hover2' style={{
-                                    transition: 'background-color 0.3s ease',
-                                    backgroundColor: '#3F72AF',
-                                    color: '#F9F7F7',
-                                }} onClick={() => { navigate(`/messages/${data.user.id}`) }}><AiFillMessage /></Button>
+                                {
+                                    toggle &&
+                                    <Button className='btn-hover2' style={{
+                                        transition: 'background-color 0.3s ease',
+                                        backgroundColor: '#3F72AF',
+                                        color: '#F9F7F7',
+                                    }} onClick={() => { navigate(`/messages/${data.user.id}`) }}><AiFillMessage /></Button>
+                                }
                             </Box>
                             <HStack justifyContent="center" gap="30px" paddingTop='10px'>
                                 <Text fontSize="xl"
