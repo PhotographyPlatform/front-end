@@ -77,7 +77,7 @@ const LinkItems = [
 function SidebarContent({ onClose, ...rest }) {
     const { isOpen: isOpenNewPost, onOpen: onOpenNewPost, onClose: onCloseNewPost } = useDisclosure();
     const location = useLocation();
-    
+
     const isLinkActive = (path) => location.pathname === path;
 
 
@@ -107,10 +107,14 @@ function SidebarContent({ onClose, ...rest }) {
 
                     {'Home'}</NavItem>
             </Link>
-            <Link key={2} to={'/search'}
-                className={isLinkActive('/') ? 'active-link' : ''}
-            >
-                <NavItem icon={FiCompass} name={"Search"}> {'Search'}</NavItem>
+            <Link key={2} to={'/search'}>
+                <NavItem
+                    icon={FiCompass}
+                    name="Search"
+                    className={isLinkActive('/search') ? 'active-link' : ''}
+                >
+                    {'Search'}
+                </NavItem>
             </Link>
             {/* popup Modal */}
             <Link key={3}>
@@ -119,24 +123,24 @@ function SidebarContent({ onClose, ...rest }) {
             </Link>
             <Link key={4} to={'/challenges'} >
                 <NavItem icon={BsCamera} name={"challenges"}
-                    className={isLinkActive('/') ? 'active-link' : ''}
+                    className={isLinkActive('/challenges') ? 'active-link' : ''}
                 > {'challenges'}</NavItem>
             </Link>
             <Link key={6} to={'/chat'} >
                 <NavItem icon={BsChatDots} name={"Chat"}
-                    className={isLinkActive('/') ? 'active-link' : ''}
+                    className={isLinkActive('/chat') ? 'active-link' : ''}
 
                 > {'Chat'}</NavItem>
             </Link>
 
             <Link key={5} to={'/favorite'} >
                 <NavItem icon={BsBookmark} name={"Favourites"}
-                    className={isLinkActive('/') ? 'active-link' : ''}
+                    className={isLinkActive('/favorite') ? 'active-link' : ''}
                 > {'Favourites'}</NavItem>
             </Link>
             <Link key={5} to={'/profile'} >
                 <NavItem icon={FiTrendingUp} name={"Profile"}
-                    className={isLinkActive('/') ? 'active-link' : ''}
+                    className={isLinkActive('/profile') ? 'active-link' : ''}
 
                 > {'Profile'}</NavItem>
             </Link>
