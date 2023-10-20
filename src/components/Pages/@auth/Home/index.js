@@ -79,7 +79,6 @@ function Home() {
 
 
     const [homePosts, sethomePosts] = useState([]);
-    console.log(homePosts);
     const [loading, setLoading] = useState(false);
     const Navigator = useNavigate();
 

@@ -7,11 +7,14 @@ import OthersModal from './OthersModal';
 import { useNavigate } from 'react-router';
 import { AiFillMessage } from 'react-icons/ai';
 import placeholder from '../../../assets/cover-1.png'
+import axios from 'axios';
+import Posts from '../../../components/posts';
 function UsersProfile() {
     const [data, setData] = useState({});
     const navigate = useNavigate()
     const [showFollowersModal, setShowFollowersModal] = useState(false);
     const [showFollowingModal, setShowFollowingModal] = useState(false);
+    const [images, setPost] = useState([])
     const [toggle, setToggle] = useState(false)
     const profile = useSelector((state) => state.profile.userProfile);
     const userFollowing = useSelector((state) => state.profile.following);
@@ -59,6 +62,24 @@ function UsersProfile() {
         }
     }, [profile]);
 
+    const fetchData = async () => {
+        try {
+            const token = cookies.load('user_session');
+            const response = await axios.get(`http://localhost:3002/getallPostUser/${userId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+
+            setPost(response.data.posts)
+        } catch (error) {
+            console.error('Error fetching images:', error);
+        }
+    }
+
+    useEffect(() => {
+        fetchData()
+    }, [])
 
     // this to get the users that following u to compare them with the user that u visit its profile if found then unfollow else follow
     useEffect(() => {
@@ -162,6 +183,7 @@ function UsersProfile() {
             )}
             {showFollowersModal && data.followers.Count !== 0 ? <OthersModal followers={data.followers} /> : null}
             {showFollowingModal && data.following.Count !== 0 ? <OthersModal following={data.following} /> : null}
+            <Posts posts={images} />
         </div>
     );
 }
