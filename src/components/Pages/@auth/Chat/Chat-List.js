@@ -1,7 +1,7 @@
 import { SearchIcon } from '@chakra-ui/icons'
-import { Avatar, Heading, Text , Container, HStack, Box, Card, Divider, Input, InputGroup, InputRightElement, Button} from '@chakra-ui/react'
+import { Avatar, Heading, Text , Container, HStack, Box, Card, Divider, Input, InputGroup, InputRightElement, Button, Icon} from '@chakra-ui/react'
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import jwtDecode from 'jwt-decode'
 import cookie from 'react-cookies';
 import { Link, useParams } from 'react-router-dom'
@@ -16,6 +16,8 @@ export default function ChatList({ render , setShowfolowingList}) {
      const cookieData = cookie.load('user_session')
      const token = jwtDecode(cookieData)
      const userId = token.userId
+     const active = useRef(null)
+
 
      // redux
      const dispatch = useDispatch()
@@ -36,39 +38,40 @@ export default function ChatList({ render , setShowfolowingList}) {
           return +userInfo[0].nonRead
      }
 
-
      
   return (
   
 //     <Container className='ChatList' width={{md : '200px' , lg : '400px'}} gap={'10px'} display={'flex'} flexDirection={'column'} mx={'20px'} py={'20px'}>
         <>
         <InputGroup gap={'10px'}>
-                 <Button onClick={() => setShowfolowingList(value => !value)} borderColor={'gray.300'} borderWidth={'1px'} borderStyle={'solid'} bg={'transparent'} _hover={{ bg: 'white' }}>
-                      <TbUserSearch size={'30px'}/>
+                 <Button className='chat_search_btn' onClick={() => setShowfolowingList(value => !value)} borderColor={'#3F72AF'} borderWidth={'1px'} borderStyle={'solid'} bg={'transparent'} >
+                      {/* <Icon className='chat_search_icon' as={TbUserSearch} fontSize={'14px'} color={'#3F72AF'} /> */}
+                      ＋New
+                      {/* <TbUserSearch size={'30px'} color='#3F72AF'/> */}
                  </Button>
 
-               <InputRightElement pointerEvents='none' >
-                    <SearchIcon color='gray.300' />
-                    
+               <InputRightElement pointerEvents='none'>
+                    <SearchIcon color='#3F72AF' />
                </InputRightElement>
                  {/* <Input className="searchBar-chat" placeholder='search' borderColor={'gray.300'} borderWidth={'1px'} borderStyle={'solid'}/> */}
                  <Input onChange={(e) => dispatch(e.target.value !== '' ? dispatchSearchUserList(e.target.value)
                          : fetchUserListRedux(userId))}
-                         className="searchBar-chat" placeholder='search' borderColor={'gray.300'} borderWidth={'1px'} borderStyle={'solid'} />
+                         className="searchBar-chat" placeholder='search' borderColor={'#3f72af57'} borderWidth={'1px'} borderStyle={'solid'} />
           </InputGroup>
           
           <Container  className="ChatList-cont">
           {    state.UserList && 
                state.UserList.map((ele ) => (
-                    <Container key={ele.data.id} width={'100%'} p={0} >
-                              <Divider borderColor={'#00000020'} borderBottomWidth={'2px'} />
+                    <Container ref={active}  key={ele.data.id} width={'100%'} p={0} >
+                              <Divider borderColor={'#3f72af57'} borderBottomWidth={'2px'} my={'10px'} />
                               <Link to={`/messages/${ele.data.id}`}>
                                    
-                                   <HStack className="list-item" alignItems={{ lg : 'center' ,xl :'flex-start'}} position={'relative'}>
+                              <HStack className="list-item"
+                                   alignItems={{ lg: 'center', xl: 'flex-start' }} position={'relative'}>
                                         <Avatar size={'md'}  src={ ele.data.img} />
                                         <Box className="item-detailes" display={'flex'} flexDirection={'column'} alignItems={'flex-start'}  marginLeft={'10px'} >
                                              <Heading  textTransform={'capitalize'} as={'h5'} fontSize={'medium'}  className='name'>{ele.data.username}</Heading>
-                                             <Text className='item-cont' fontSize={'15px'} textAlign={'left'} display={{base : 'none' , lg : 'none' , xl : 'inline-block'}}  >{
+                                             <Text className='item-cont' m={0} fontSize={'15px'} textAlign={'left'} display={{base : 'none' , lg : 'none' , xl : 'inline-block'}}  >{
                                                   
                                                   ele.messages[ele.messages.length - 1]?.content.length > 25 ?
                                                        ` ${ele.messages[ele.messages.length - 1]?.content.slice(0, 25)} ...`
@@ -84,13 +87,23 @@ export default function ChatList({ render , setShowfolowingList}) {
                                         }
                                    </HStack>
                               </Link>
-                         </Container>
+                    </Container>
           ))
           }
-          </Container> 
+            </Container> 
+            {
+               !state.UserList && 
+               <>
+                    <Box className='empty_list'>
+                         <Box className='empty_list_img'></Box>
+                         <Text color={'#112D4E'} as={'p'}>Please select a chat to start messaging</Text>
+                    </Box>
+               </>
+          }
           </>
 
 //     </Container>
   )
 
 }
+// e.target.classList.add('active')

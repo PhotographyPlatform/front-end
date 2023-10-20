@@ -22,6 +22,7 @@
                flex-direction: column;
                gap: 20px;
                width: 60%;
+               cursor: pointer;
                .reports-item{
                     width: 100%;
                     min-height: 150px;
@@ -35,7 +36,7 @@
                     background-color: white;
                     .report-heading{
                          width: 250px;
-                         background-color: rgb(143, 139, 139);
+                         background-color: #3F72AF;
                          display: flex;
                          justify-content: center;
                          align-items: flex-start;
@@ -47,6 +48,10 @@
                     }
                     .report-description{
                          width: 70%;
+                         display: flex;
+                         justify-content: flex-start;
+                         align-items: center;
+                         text-align: start;
                     }
                     .report-icon{
                          align-self: flex-start;
@@ -54,7 +59,7 @@
                          border-radius: 50%;
                          transition: 0.2s;
                          &:hover{
-                              color: rgb(255, 0, 0);
+                              color: #3F72AF;
                          }
                     }
                }

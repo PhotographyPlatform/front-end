@@ -157,7 +157,7 @@ export default function Messages({setRender}) {
                     <Avatar size={'sm'} src={userInfo?.img} />
                     <Text textTransform={'capitalize'} margin={0} >{userInfo?.username}</Text>
                </Box>
-               <Divider  borderBottomWidth={'2px'} borderColor={'#00000020'}  marginTop={'7px'}/>
+               <Divider  borderBottomWidth={'2px'} borderColor={'#3f72af57'}  marginTop={'7px'}/>
           </Box>
 
           <Box className="sub-chat-container" height={'95%'} display={'flex'} flexDirection={'column'} justifyContent={'flex-end'}>

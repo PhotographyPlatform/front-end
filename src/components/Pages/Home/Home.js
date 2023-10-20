@@ -11,6 +11,7 @@ import Section_Six from './Section_Six/Section_Six'
 import Section_Seven from './Section_Seven/Section_Seven'
 import Section_Eight from './Section_Eight/Section_Eight'
 import Header_Inhansed from '../Header_Inhansed/Header_Inhansed'
+import Meet_Team from './Meet_Team/Meet_Team'
 
 export default function Home() {
   return (
@@ -22,7 +23,8 @@ export default function Home() {
       <Section_Four/>
       <Section_Five/>
       <Section_Six/>
-      <Section_Seven/>
+      <Section_Seven />
+      <Meet_Team/>
       <Section_Eight/>
     </Box>
   )

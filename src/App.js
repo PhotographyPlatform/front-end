@@ -53,6 +53,7 @@ function App() {
   const notificationState = useSelector((state) => state.ChatList.AllNotification);
   const [render, setRender] = useState(true)
   let params = useParams()
+  const [reload , setReload] = useState(true)
 
 
   const Logged = userState.isLogged;
@@ -74,12 +75,15 @@ function App() {
 
   }, [])
 
-  
   homeSocket.emit("joinHomeRoom", userId);
+
   
   useEffect(() => {
+    homeSocket.emit("joinHomeRoom", userId);
     dispatch(getNotification(cookieData))
   }, [Logged]);
+  
+ 
 
 
 
@@ -100,7 +104,6 @@ function App() {
               <Route path='/messages/:id' element={<MessagePage render={render} setRender={setRender} />} />
               <Route path='/chat' element={<Chat />} />
               <Route path="/userProfile" element={<UsersProfile />} />
-
             </Routes>
           </SidebarWithHeader>
         ) :

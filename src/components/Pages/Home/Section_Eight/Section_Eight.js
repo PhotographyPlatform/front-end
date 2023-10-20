@@ -5,6 +5,7 @@ import Footer from '../Footer/Footer';
 export default function Section_Eight() {
   return (
      <>
+     
           <Box className='Section_Eight_main'>
                <Box 
                w={{ base: '90%', 'sm' :  '80%' , 'lg': '65%', 'xl': '60%' }}  

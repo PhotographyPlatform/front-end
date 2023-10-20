@@ -126,7 +126,8 @@ const LoginForm = () => {
           const encryptedData = CryptoJS.AES.encrypt(dataToEncrypt, secretKey).toString();
           localStorage.setItem('Remember_Me', encryptedData)
         }
-        navigate('/')
+        // navigate('/')
+        window.location.href = '/'
       }
     } catch (e) {
       setError(e.response.data);

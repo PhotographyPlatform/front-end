@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './profile.scss'
 import {
     Card,
@@ -17,9 +17,26 @@ import {
 import { BsThreeDotsVertical } from 'react-icons/bs'; // Import the BsThreeDotsVertical icon
 import { BiLike, BiChat, BiShare } from 'react-icons/bi'; // Import the BiLike, BiChat, and BiShare icons
 import { homeSocket } from '../../../../App';
+import cookie from 'react-cookies';
+import jwtDecode from "jwt-decode";
 
 
 function Home() {
+
+    // let userId = null
+    // let cookieData = null
+  
+    // if (cookie.load('user_session')) {
+  
+    //   cookieData = cookie.load('user_session')
+    //   const token = jwtDecode(cookieData)
+    //   userId = token.userId
+    // }
+
+    // useEffect(() => {
+    //     homeSocket.emit("joinHomeRoom", userId);
+    //   }, []);
+    
 
     return (
         <div className='auth-profile'>
