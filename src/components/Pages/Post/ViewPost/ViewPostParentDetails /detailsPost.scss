@@ -1,3 +1,8 @@
+$post_body_color: #F9F7F7;
+$post_body_color_hover: #DBE2EF;
+$post_body_color_border: #3F72AF;
+$post_body_color_button: #112D4E;
+
 .viewpost-parent-details {
     box-sizing: border-box;
     display: flex;
@@ -5,7 +10,9 @@
     justify-content: center;
     height: 100% !important;
     max-height: 100% !important;
+
     // height: 600px;
+    .comments-section {}
 
     .viewpost-img {
         display: flex;
@@ -15,14 +22,15 @@
         height: auto !important;
         width: auto !important;
         max-height: 100%;
-        // height: 600px !important;
 
+        // height: 600px !important;
         img {
             max-width: 100%;
             max-height: 100%;
             width: auto;
             height: auto;
             object-fit: cover;
+            border-bottom-left-radius: 1% !important;
         }
     }
 
@@ -33,6 +41,8 @@
         max-height: 100% !important;
         max-width: 100% !important;
         padding: 10px;
+        // background-color: $post_body_color;
+        background-image: linear-gradient(to left bottom, #f9f7f7, #f7f2f3, #f4eef1, #efeaf1, #e8e6f0, #e5e5ef, #e1e3ed, #dee2ec, #e0e2e9, #e1e2e7, #e2e2e4, #e2e2e2);
 
         .viewpost-basic-actions {
             display: flex;
@@ -49,6 +59,18 @@
         .viewpost-title {
             display: flex;
             justify-content: space-between;
+
+            .main-title {
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-end;
+                align-items: flex-end;
+
+                .post-time {
+                    font-size: 12px;
+                    margin-left: 10px;
+                }
+            }
         }
 
         .viewpost-icon-details svg {
@@ -58,7 +80,7 @@
         }
 
         .viewpost-icon-details svg:hover {
-            color: rgb(159, 159, 159);
+            color: #DBE2EF;
         }
 
         .viewpost-category {
@@ -151,15 +173,13 @@ $large-screen: 1200px;
 
 @media (min-width: $medium-screen) {
     // Styles for medium screens
-}
-
-@media (min-width: $large-screen) {
     // Styles for large screens
 
     .viewpost-parent-details {
         all: unset;
         box-sizing: border-box;
         display: flex;
+        flex-direction: column;
         // align-items: center;
         justify-content: center;
         height: 100% !important;
@@ -179,14 +199,90 @@ $large-screen: 1200px;
             img {
                 max-width: 100%;
                 max-height: 100%;
-                width: auto;
-                height: auto;
+                height: 100vh;
+                height: 60vh;
                 object-fit: cover;
             }
         }
 
         .viewpost-details {
-            width: 750px;
+            width: 700px;
+            padding: 10px;
+            padding-left: 20px !important;
+            max-height: 100% !important;
+            max-width: 100% !important;
+            padding: 10px;
+
+            .viewpost-basic-actions {
+                display: flex;
+                justify-content: space-evenly;
+                align-items: center;
+
+            }
+
+            .viewpost-section-details {
+                padding: 10px;
+                box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.1);
+            }
+
+            .viewpost-title {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .viewpost-icon-details svg {
+                margin-right: 10px;
+                cursor: pointer;
+                transition: color 0.3s;
+            }
+
+            .viewpost-icon-details svg:hover {
+                color: rgb(159, 159, 159);
+            }
+
+            .viewpost-category {
+                // max-width: 100% !important;
+                // width: 100% !important;
+            }
+        }
+    }
+}
+
+@media (min-width: $large-screen) {
+    // Styles for large screens
+
+    .viewpost-parent-details {
+        all: unset;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        // align-items: center;
+        justify-content: center;
+        height: 100% !important;
+        max-height: 100% !important;
+        // height: 600px;
+
+        .viewpost-img {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            max-width: 100%;
+            height: auto !important;
+            width: auto !important;
+            max-height: 100%;
+            // height: 600px !important;
+
+            img {
+                max-width: 100%;
+                max-height: 100%;
+                height: 100vh;
+                height: 60vh;
+                object-fit: cover;
+            }
+        }
+
+        .viewpost-details {
+            width: 700px;
             padding: 10px;
             padding-left: 20px !important;
             max-height: 100% !important;

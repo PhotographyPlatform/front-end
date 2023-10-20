@@ -2,6 +2,7 @@
 .viewpost-grandparent {
     max-height: 50% !important;
     max-width: 80% !important;
+    border-radius: 1% !important;
 }
 
 .div-handler {
@@ -10,6 +11,7 @@
     // width: 600px !important;
     max-height: 100% !important;
     max-width: 100% !important;
+    border-radius: 1% !important;
 }
 
 .model-parent-viewpost {
@@ -17,6 +19,9 @@
     // all: unset !important;
     max-width: 65% !important;
     max-height: 100% !important;
+    border-radius: 1% !important;
+
+
 }
 
 .viewpost-header {}
@@ -24,6 +29,7 @@
 .viewpost-no-space {
     margin: 0 !important;
     padding: 0 !important;
+    border-radius: 1% !important;
 }
 
 
@@ -45,13 +51,11 @@ $large-screen: 1200px;
         display: block !important;
         height: 100% !important;
         max-height: 100% !important;
-        background-color: aqua;
         max-width: 100% !important;
     }
 
     .model-parent-viewpost {
         max-width: 95% !important;
-        background-color: aqua;
         max-height: 200% !important;
     }
 
@@ -65,23 +69,41 @@ $large-screen: 1200px;
 @media (min-width: $medium-screen) {
 
     // Styles for medium screens
-    .viewpost-grandparent,
-    .div-handler,
-    .model-parent-viewpost {
-        max-height: 100% !important;
-        max-width: 100% !important;
-    }
-
+    // Styles for large screens
+    /* Define other SCSS styles as needed */
     .viewpost-grandparent {
-        width: 100% !important;
+        max-height: 50% !important;
+        max-width: 40% !important;
+        border-radius: 3% !important;
     }
 
     .div-handler {
-        width: 100% !important;
+        display: block !important;
+        height: 100% !important;
+        // width: 600px !important;
+        max-height: 100% !important;
+        max-width: 100% !important;
+        border-radius: 1% !important;
     }
 
     .model-parent-viewpost {
-        width: 100% !important;
+        // max-width: 0% !important;
+        // all: unset !important;
+        position: absolute !important;
+        top: -50px !important;
+        max-width: 45% !important;
+        max-height: 200% !important;
+        border-radius: 1% !important;
+
+
+    }
+
+    .viewpost-header {}
+
+    .viewpost-no-space {
+        margin: 0 !important;
+        padding: 0 !important;
+        border-radius: 3% !important;
     }
 }
 
@@ -91,7 +113,8 @@ $large-screen: 1200px;
     /* Define other SCSS styles as needed */
     .viewpost-grandparent {
         max-height: 50% !important;
-        max-width: 80% !important;
+        max-width: 40% !important;
+        border-radius: 3% !important;
     }
 
     .div-handler {
@@ -100,13 +123,19 @@ $large-screen: 1200px;
         // width: 600px !important;
         max-height: 100% !important;
         max-width: 100% !important;
+        border-radius: 1% !important;
     }
 
     .model-parent-viewpost {
         // max-width: 0% !important;
         // all: unset !important;
-        max-width: 65% !important;
-        max-height: 100% !important;
+        position: absolute !important;
+        top: -50px !important;
+        max-width: 45% !important;
+        max-height: 200% !important;
+        border-radius: 1% !important;
+
+
     }
 
     .viewpost-header {}
@@ -114,6 +143,7 @@ $large-screen: 1200px;
     .viewpost-no-space {
         margin: 0 !important;
         padding: 0 !important;
+        border-radius: 3% !important;
     }
 
 

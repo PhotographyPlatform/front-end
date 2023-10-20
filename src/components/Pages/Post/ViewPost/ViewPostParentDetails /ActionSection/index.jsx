@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BiSolidLike } from 'react-icons/bi';
+import { BiSolidLike, BiComment } from 'react-icons/bi';
 import { FaRegComment } from 'react-icons/fa';
 import { BiBookmarkHeart, BiLike } from 'react-icons/bi';
 import { BsBookmark, BsFillBookmarkCheckFill } from 'react-icons/bs';
@@ -13,57 +13,32 @@ import { handleCommentActive } from '../../../../../../store/reducers/basicActio
 import { addFavoritePost, removeFavorite, fetchFavoritePosts } from '../../../../../../store/reducers/favorite/favorite';
 import jwtDecode from "jwt-decode";
 import cookies from 'react-cookies';
+
 function ActionSection(photoId) {
     // Like Button State
-    const [liked, setLiked] = useState(false);
-    const [fav, setFav] = useState(false);
-    const dispatch = useDispatch();
-
-    // Like Comment button State
-    const [isActive, setIsActive] = useState(false);
-    const handleCommentClick = () => {
-        setIsActive(true);
-        dispatch(handleCommentActive());
-    };
 
 
+    // favorite State
+    const favoriteList = useSelector((state) => (state.Favorite && state.Favorite.favoritePosts) ? state.Favorite.favoritePosts : []);
     const postData = useSelector((state) => state.post);
-    const likeList = postData.likeList
-
-    // Get user id from Session 
-    const session_user = cookies.load('user_session');
-    let decoded = null;
-
-    if (session_user) {
-        decoded = jwtDecode(session_user);
-    }
-
-    const userId = decoded.userId;
-
-    const postCurrentId = postData.postDetails.length > 0 ? postData.postDetails[0].id : null;
+    const likeList = postData.likeList;
 
 
-
-    // Search  if the user already add like
     useEffect(() => {
-        if (userId) {
-
-            if (Array.isArray(likeList)) {
-                for (const item of likeList) {
-                    if (item.userid === userId) {
-                        setLiked(true);
-                        break;
-                    }
+        if (Array.isArray(likeList)) {
+            for (const item of likeList) {
+                if (item.userid === userId) {
+                    setLiked(true);
+                    break;
                 }
             }
         }
-
-    }, []);
+    }, [likeList]);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                await dispatch(fetchFavoritePosts(session_user));
+                await dispatch(fetchFavoritePosts());
             } catch (error) {
                 console.error('Error:', error);
             }
@@ -72,17 +47,12 @@ function ActionSection(photoId) {
 
     }, []);
 
-    const favoriteList = useSelector((state) => state.Favorite.favoritePosts
-    );
-
-    console.log("IDDDD current photo ", photoId);
     useEffect(() => {
         if (userId) {
 
             if (Array.isArray(favoriteList)) {
                 for (const item of favoriteList) {
-                    if (item.userid === userId && postCurrentId === item.id) {
-                        console.log(true)
+                    if (item && item.userid === userId && postCurrentId === item.id) {
                         setFav(true);
                         break;
                     }
@@ -90,12 +60,39 @@ function ActionSection(photoId) {
             }
         }
 
-    }, []);
+    }, [favoriteList]);
+
+    const [liked, setLiked] = useState(false);
+    const [fav, setFav] = useState(false);
+
+    const dispatch = useDispatch();
+    // Like Comment button State
+    const [isActive, setIsActive] = useState(false);
+    const handleCommentClick = () => {
+        setIsActive(true);
+        dispatch(handleCommentActive());
+    };
 
 
 
-    console.log("llllllist", favoriteList)
 
+    // Get user id from Session 
+    const session_user = cookies.load('user_session');
+    let decoded = null;
+    let userId = null
+    if (session_user) {
+        decoded = jwtDecode(session_user);
+        userId = decoded.userId
+    }
+
+
+
+    const postCurrentId = postData.postDetails.length > 0 ? postData.postDetails[0].id : null;
+
+
+
+
+    // Like Toggle 
     const toggleLike = async () => {
         if (liked === true) {
             await dispatch(removeLike(postCurrentId))
@@ -105,14 +102,14 @@ function ActionSection(photoId) {
         }
         setLiked(!liked);
     };
-    // Faviorites 
 
+    // Faviorites  Toggle
     const toggleFav = async () => {
-        if (liked === true) {
-            await dispatch(removeFavorite(session_user, postCurrentId))
+        if (fav === true) {
+            await dispatch(removeFavorite(postCurrentId))
 
         } else {
-            await dispatch(addFavoritePost(session_user, postCurrentId))
+            await dispatch(addFavoritePost(postCurrentId))
 
         }
         setFav(!fav);
@@ -129,14 +126,16 @@ function ActionSection(photoId) {
                         {liked ? <BiSolidLike size={22} /> : <BiLike size={22} />}
 
                     </div>
-                    <span>{likeList.length}</span>
+                    <span>
+                        {likeList.length > 0 && likeList.length}
+                    </span>
                 </div>
 
                 <div
                     className={`action-button comment-button ${isActive ? 'active' : ''}`}
                     onClick={handleCommentClick}
                 >
-                    <FaRegComment size={22} />
+                    <BiComment size={22} />
                 </div>
                 <div className="bookmark-button , action-button" onClick={toggleFav}>
                     {fav ? <BsFillBookmarkCheckFill size={22} /> : <BsBookmark size={22} />}

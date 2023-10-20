@@ -7,11 +7,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
     setComment, fetchComments, fetchPostData, handleCommentActive
 } from '../../../../../../store/reducers/basicActions/post';
+import CalculateTime from '../../../../../components/Time';
+import { FaRegComment } from 'react-icons/fa';
 
 
 function CommentSection(postId) {
-    const commentState = useSelector((state) => state.post.commentsList);
-    const inputActive = useSelector((state) => state.post.commentActive);
+    const commentState = useSelector((state) => state.post.commentsList) || null;
+    const inputActive = useSelector((state) => state.post.commentActive) || null;
     //setComment
     const [commentText, setCommentText] = useState('');
     const dispatch = useDispatch();
@@ -30,6 +32,7 @@ function CommentSection(postId) {
             });
         }
     }, [inputActive]);
+    // dispatch(handleCommentActive());
 
     const handleCommentSubmit = async () => {
         try {
@@ -48,6 +51,7 @@ function CommentSection(postId) {
     return (
 
         <div>
+            {/* Comments List*/}
             <ul className='viewpost-comment-list'>
                 {Array.isArray(commentState) && commentState.length > 0 ? (
                     commentState.map((item) => (
@@ -56,17 +60,28 @@ function CommentSection(postId) {
                                 <div className='details'>
                                     <img src={item.owner.img} alt="" />
                                     <span>{item.owner.username}</span>
+                                    <span className="comment-time">
+                                        <CalculateTime createdAt={item.comment.createdAt} />
+                                    </span>
                                 </div>
-                                <CommentOption item={item} />
+                                <div className='comment-option'>
+                                    <CommentOption item={item} />
+                                </div>
                             </div>
                             <div className='comment-content'>
                                 <span>{item.comment.content}</span>
+
                             </div>
                             <hr />
                         </div>
                     ))
                 ) : (
-                    <div className='no-comments'>No comments available</div>
+                    <div className='no-comments'>
+                        <FaRegComment size={90} />
+                        <h5>No comments available</h5>
+                        <p>Be the first to leave a comment!</p>
+
+                    </div>
                 )}
 
             </ul>

@@ -1,16 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AiOutlinePlusSquare } from 'react-icons/ai';
 import { BsInfoSquare } from 'react-icons/bs';
+import { Follow, getFollowing, unFollow } from '../../../../../store/reducers/profile/profile.reducer';
 import styles from './viewpostHeader.module.scss';
+import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+const baseUrl = "http://localhost:3002";
 
 
-function ViewPostHeader() {
+function ViewPostHeader({ currentPost, currId }) {
+    const userid = currentPost.postDetails[0] ? currentPost.postDetails[0].userid : null;
+    const dispatch = useDispatch()
     const [follow, setFollow] = useState(false);
-
+    const userFollowing = useSelector((state) => state.profile.following);
     const toggleFollow = () => {
         if (follow === true) {
+            dispatch(unFollow(userid));
             // await dispatch(removeLike(postCurrentId))
         } else {
+            dispatch(Follow(userid));
             // await dispatch(setLike(postCurrentId))
 
         }
@@ -18,17 +26,52 @@ function ViewPostHeader() {
     };
 
 
+    const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+
+    useEffect(() => {
+        // dispatch(getProfile(userid));
+        dispatch(getFollowing())
+    }, [])
+
+    useEffect(() => {
+        axios.get(`${baseUrl}/v1/newUserCOll/${userid}`)
+            .then(response => {
+
+                setData(response.data.data);
+                setLoading(false);
+            })
+            .catch(err => {
+                setError(err);
+                setLoading(false);
+            });
+        return () => {
+
+        };
+    }, [userid]);
+
+    useEffect(() => {
+        if (userFollowing !== undefined) {
+            const found = userFollowing.Following.find(ele => ele.id === userid);
+            if (found) {
+                setFollow(true);
+            } else {
+                setFollow(false);
+            }
+        }
+    }, [userFollowing]);
+
     return (
         <header className={styles['viewpost-header']}>
-            <img src="https://images.pexels.com/photos/16128264/pexels-photo-16128264/free-photo-of-snow-and-clouds-around-church.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" className={styles['viewpost-img-postowner']} />
-            <span className={styles['viewpost-username-postowner']}> Abd- Al Majeed </span>
+            <img src={data.img} alt="" className={styles['viewpost-img-postowner']} />
+            <span className={styles['viewpost-username-postowner']}> {data.username}</span>
             {/* <AiOutlinePlusSquare size={36} /> */}
-            <span className={styles['svg']} onClick={() => toggleFollow()} >
-
+            <span className={`${styles['svg']} ${follow ? styles['following'] : styles['follow']}`} onClick={() => toggleFollow()}>
                 {follow ? 'Following' : 'Follow'}
-
             </span>
-        </header>
+        </header >
     );
 }
 

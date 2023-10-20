@@ -1,8 +1,91 @@
 .post {
-  width: 32%;
-  img:hover{
-      filter: brightness(50%);
-      cursor: pointer;
-      transition: 0.5s;
+  width: 22.8vw;
+  height: 22.8vw;
+  position: relative;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .post-owner {
+    position: absolute;
+    bottom: 275px;
+    left: 15px;
+    display: none;
+    align-items: center;
+
+    .user-img {
+      width: 45px;
+      height: 45px;
+      object-fit: cover;
+      border-radius: 50px;
+      margin-right: 10px;
+    }
+
+    .username {
+      font-weight: 600;
+      color: rgb(230, 230, 230);
+    }
+  }
+
+  &:hover .post-owner {
+    display: flex;
+  }
+
+  img:hover {
+    filter: brightness(50%);
+    cursor: pointer;
+    transition: 0.5s;
   }
 }
+
+
+
+
+
+
+// .post {
+//   // width: 340px;
+//   // height: 340px;
+//   width: 22vw;
+//   height: 22vw;
+//   position: relative;
+
+//   img{
+//     width: 100%;
+//     height: 100%;
+//     object-fit: cover;
+//   }
+  
+//   img:hover{
+//       filter: brightness(50%);
+//       cursor: pointer;
+//       transition: 0.5s;
+//   }
+// }
+
+
+// .post-owner{
+
+//   position: absolute;
+//   bottom: 270px;
+//   left: 15px;
+//   display: flex;
+//   align-items: center;
+
+//   .user-img{
+//     width: 45px;
+//     height: 45px;
+//     object-fit: cover;
+//     border-radius: 50px;
+//     margin-right: 10px;
+//   }
+
+//   .username{
+//     font-weight: 600;
+//     color: white;
+//   }
+
+// }

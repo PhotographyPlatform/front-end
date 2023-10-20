@@ -1,29 +1,33 @@
-.favoritePage{
+.favoritePage {
      width: 100%;
-     min-height: 83vh ;
+     min-height: 76vh;
      // background-color: red;
      display: flex;
      flex-direction: column;
      justify-content: flex-start;
      align-items: center;
-     .favoriteContainer{
+
+     .favoriteContainer {
           display: flex;
           flex-direction: column;
           justify-content: center;
           align-items: center;
           gap: 30px;
-          .favHeading{
+
+          .favHeading {
                padding: 10px 30px;
                // align-self: flex-start;
           }
-          .favoriteItems{
+
+          .favoriteItems {
                display: flex;
                align-items: center;
                gap: 20px;
                padding: 15px;
                flex-wrap: wrap;
                width: 100%;
-               .favoriteItem{
+
+               .favoriteItem {
                     width: 340px;
                     height: 300px;
                     background-repeat: no-repeat;
@@ -34,22 +38,25 @@
                     justify-content: space-between;
                     color: white;
                     border-radius: 10px;
-                    transition: all 0.3s ease; /* Add this line for smooth transition */
+                    transition: all 0.3s ease;
+                    /* Add this line for smooth transition */
                     // transition: all 0.3s ease; /* Add this line for smooth transition */
-                    
+
 
                     &:hover {
                          // box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* Add a box shadow on hover */
                          transform: scale(1.01);
-                         .favTitle{
+
+                         .favTitle {
                               display: flex;
                          }
-                         .favInteraction{
+
+                         .favInteraction {
                               display: flex;
                          }
-                     }
-                     
-                    .favTitle{
+                    }
+
+                    .favTitle {
                          display: none;
                          background: linear-gradient(rgba(0, 0, 0, 0.303) 0%, rgba(0, 0, 0, 0) 100%);
                          width: 100%;
@@ -60,7 +67,8 @@
                          font-size: 20px;
 
                     }
-                    .favInteraction{
+
+                    .favInteraction {
                          display: none;
                          justify-content: space-between;
                          align-items: center;
@@ -68,21 +76,25 @@
                          background: linear-gradient(rgba(0, 0, 0, 0.303) 0%, rgba(0, 0, 0, 0) 100%);
                          padding: 8px;
                          border-radius: 10px;
-                         .favUsername{
+
+                         .favUsername {
                               display: flex;
                               justify-content: center;
                               align-items: center;
                               gap: 10px;
-                              p{
+
+                              p {
                                    margin: 0;
                               }
                          }
-                         .favIcons{
+
+                         .favIcons {
                               display: flex;
                               justify-content: center;
                               align-items: center;
                               gap: 5px;
-                              .favIcon{
+
+                              .favIcon {
                                    transition: all 0.3s ease;
                                    width: 30px;
                                    height: 30px;
@@ -91,12 +103,14 @@
                                    align-items: center;
                                    border-radius: 50%;
                               }
-                              .favIcon:hover{
+
+                              .favIcon:hover {
                                    background-color: rgba(255, 255, 255, 0.368);
-                                   
+
                                    cursor: pointer;
                               }
-                              .Active{
+
+                              .Active {
                                    color: red;
                               }
                          }
@@ -105,7 +119,23 @@
           }
      }
 
-     
+
 }
 
 
+.fav-empty {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     gap: 20px;
+     opacity: 0.4;
+     color: #112D4E !important;
+
+     SVG {}
+
+     .search-link {
+          opacity: 1 !important;
+          color: #000000 !important;
+          text-decoration: underline;
+     }
+}

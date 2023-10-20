@@ -39,6 +39,8 @@ function OthersModal({ followers, following }) {
         }
     };
 
+    
+
     useEffect(() => {
         onOpen()
     }, [])
@@ -53,12 +55,12 @@ function OthersModal({ followers, following }) {
                         <ModalHeader>Followers</ModalHeader>
                         <ModalCloseButton />
                         <ModalBody>
-                            <UnorderedList>
+                            <UnorderedList display='flex' justifyContent='space-between' flexDirection='column' gap='12px'>
                                 {
                                     followers.followers.map(follow => (
 
                                         <Box key={follow.id} onClick={() => handleID(follow.id)} display="flex" alignItems="center" cursor='pointer' _hover={{ color: 'gray' }}>
-                                            <Avatar size='md' />
+                                            <Avatar size='md' src={follow.img} />
                                             <Text ml="5">{follow.name}</Text>
                                         </Box>
                                     ))
@@ -81,11 +83,11 @@ function OthersModal({ followers, following }) {
                         <ModalHeader>Following</ModalHeader>
                         <ModalCloseButton />
                         <ModalBody>
-                            <UnorderedList>
+                            <UnorderedList display='flex' justifyContent='space-between' flexDirection='column' gap='12px'>
                                 {
                                     following.Following.map(follow => (
-                                        <Box key={follow.id} onClick={() => handleID(follow.id)} display="flex" alignItems="center" cursor='pointer' _hover={{ color: 'gray' }}>
-                                            <Avatar size='md' />
+                                        <Box key={follow.id} onClick={() => handleID(follow.id)} display="flex" alignItems="center" cursor='pointer' _hover={{ color: 'gray' }} >
+                                            <Avatar size='md' src={follow.img} />
                                             <Text ml="5" >{follow.name}</Text>
                                         </Box>
                                     ))
