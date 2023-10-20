@@ -6,7 +6,7 @@ import axios from 'axios';
 const baseUrl = "http://localhost:3002";
 
 
-function ViewPostHeader({ currentPost, currId  }) {
+function ViewPostHeader({ currentPost, currId }) {
     const userid = currentPost.postDetails[0] ? currentPost.postDetails[0].userid : null;
 
     const [follow, setFollow] = useState(false);
@@ -31,6 +31,7 @@ function ViewPostHeader({ currentPost, currId  }) {
     useEffect(() => {
         axios.get(`${baseUrl}/v1/newUserCOll/${userid}`)
             .then(response => {
+
                 setData(response.data.data);
                 setLoading(false);
             })
@@ -41,7 +42,7 @@ function ViewPostHeader({ currentPost, currId  }) {
         return () => {
 
         };
-    }, []);
+    }, [userid]);
 
 
 
