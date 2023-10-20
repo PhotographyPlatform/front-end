@@ -16,39 +16,15 @@ import cookies from 'react-cookies';
 
 function ActionSection(photoId) {
     // Like Button State
-    const [liked, setLiked] = useState(false);
-    const [fav, setFav] = useState(false);
-    const dispatch = useDispatch();
-
-    // Like Comment button State
-    const [isActive, setIsActive] = useState(false);
-    const handleCommentClick = () => {
-        setIsActive(true);
-        dispatch(handleCommentActive());
-    };
 
 
+    // favorite State
+    const favoriteList = useSelector((state) => (state.Favorite && state.Favorite.favoritePosts) ? state.Favorite.favoritePosts : []);
     const postData = useSelector((state) => state.post);
-    const likeList = postData.likeList
-
-    // Get user id from Session 
-    const session_user = cookies.load('user_session');
-    let decoded = null;
-
-    if (session_user) {
-        decoded = jwtDecode(session_user);
-    }
-
-    const userId = decoded.userId;
-
-    const postCurrentId = postData.postDetails.length > 0 ? postData.postDetails[0].id : null;
+    const likeList = postData.likeList;
 
 
-
-    // Search  if the user already add like
     useEffect(() => {
-
-
         if (Array.isArray(likeList)) {
             for (const item of likeList) {
                 if (item.userid === userId) {
@@ -57,14 +33,12 @@ function ActionSection(photoId) {
                 }
             }
         }
-
-
-    }, [userId]);
+    }, [likeList]);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                await dispatch(fetchFavoritePosts(session_user));
+                await dispatch(fetchFavoritePosts());
             } catch (error) {
                 console.error('Error:', error);
             }
@@ -73,15 +47,12 @@ function ActionSection(photoId) {
 
     }, []);
 
-    const favoriteList = useSelector((state) => state.Favorite.favoritePosts
-    );
-
     useEffect(() => {
         if (userId) {
 
             if (Array.isArray(favoriteList)) {
                 for (const item of favoriteList) {
-                    if (item.userid === userId && postCurrentId === item.id) {
+                    if (item && item.userid === userId && postCurrentId === item.id) {
                         setFav(true);
                         break;
                     }
@@ -89,11 +60,39 @@ function ActionSection(photoId) {
             }
         }
 
-    }, []);
+    }, [favoriteList]);
+
+    const [liked, setLiked] = useState(false);
+    const [fav, setFav] = useState(false);
+
+    const dispatch = useDispatch();
+    // Like Comment button State
+    const [isActive, setIsActive] = useState(false);
+    const handleCommentClick = () => {
+        setIsActive(true);
+        dispatch(handleCommentActive());
+    };
 
 
 
 
+    // Get user id from Session 
+    const session_user = cookies.load('user_session');
+    let decoded = null;
+    let userId = null
+    if (session_user) {
+        decoded = jwtDecode(session_user);
+        userId = decoded.userId
+    }
+
+
+
+    const postCurrentId = postData.postDetails.length > 0 ? postData.postDetails[0].id : null;
+
+
+
+
+    // Like Toggle 
     const toggleLike = async () => {
         if (liked === true) {
             await dispatch(removeLike(postCurrentId))
@@ -103,14 +102,14 @@ function ActionSection(photoId) {
         }
         setLiked(!liked);
     };
-    // Faviorites 
 
+    // Faviorites  Toggle
     const toggleFav = async () => {
-        if (liked === true) {
-            await dispatch(removeFavorite(session_user, postCurrentId))
+        if (fav === true) {
+            await dispatch(removeFavorite(postCurrentId))
 
         } else {
-            await dispatch(addFavoritePost(session_user, postCurrentId))
+            await dispatch(addFavoritePost(postCurrentId))
 
         }
         setFav(!fav);

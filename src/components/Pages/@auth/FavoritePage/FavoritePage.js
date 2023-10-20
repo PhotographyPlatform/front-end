@@ -8,6 +8,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addFavoritePost, fetchFavoritePosts, removeFavorite } from '../../../../store/reducers/favorite/favorite'
 import cookie from 'react-cookies';
 import axios from 'axios'
+import Posts from '../../../components/posts'
+import { BsBookmark } from 'react-icons/bs';
+import { GiDividedSquare } from 'react-icons/gi'
+import { Link } from 'react-router-dom'
+import MainFooter from '../../Footer'
 
 
 export default function FavoritePage() {
@@ -15,26 +20,26 @@ export default function FavoritePage() {
      const selector = useSelector(state => state.Favorite)
      const cookieData = cookie.load('user_session')
      const favIcon = useRef(null)
-     const [userInfo , setUserInfo] = useState('')
+     const [userInfo, setUserInfo] = useState('')
 
 
      const handelFavorite = (id) => {
           const filter = selector.favoritePosts.filter(ele => {
-               if(ele) return ele.id === id
+               if (ele) return ele.id === id
           })
           console.log(filter);
           if (filter) {
-               dispatch(removeFavorite(cookieData, id))
-               if(favIcon.current) favIcon.current.classList.remove('Active')
+               dispatch(removeFavorite(id))
+               if (favIcon.current) favIcon.current.classList.remove('Active')
           }
           if (!filter) {
-               dispatch(addFavoritePost(cookieData, id))
-               if(favIcon.current) favIcon.current.classList.add('Active')
+               dispatch(addFavoritePost(id))
+               if (favIcon.current) favIcon.current.classList.add('Active')
           }
      }
      const getOtherUserData = async (id) => {
           try {
-               
+
                const res = await axios.get(`http://localhost:3002/getOtherDataUser/${id}`, { headers: { Authorization: `Bearer ${cookieData}` } })
                setUserInfo(res.data.userInfo.username)
                return
@@ -45,49 +50,71 @@ export default function FavoritePage() {
      }
 
      useEffect(() => {
-          dispatch(fetchFavoritePosts(cookieData))
-     } , [])
+          dispatch(fetchFavoritePosts())
+     }, [])
 
-     
-     console.log(selector.favoritePosts);
 
-  return (
-    <Box className='favoritePage'>
-      <Box className='favoriteContainer'>
-          <Box as='div' className='favHeading'>
-               <Heading as={'h3'}>Favorites</Heading>
-          </Box>
-          <Divider  borderBottomWidth={'3px'} borderColor={'#00000040'}  marginTop={'5px'}/>
-          <Box className='favoriteItems' justifyContent={{base : 'center', xl : 'center' }}>
-               {
-                    selector.favoritePosts &&
-                    selector.favoritePosts.map(ele =>(
-                         ele && 
-                    <Box key={ele.id} className='favoriteItem' backgroundImage={'https://drscdn.500px.org/photo/1077696107/q%3D80_m%3D2000_k%3D1/v2?sig=64038fc06f74fc6e7dbd614004cb01b59e3f080f0ebf043767b02b66449fbd94'}>
-                         <Box className='favTitle'>{ele.title}</Box>
-                         
-                         <Box className='favInteraction'>
-                              <Box className='favUsername'>
-                                   <Avatar size={'sm'} src='https://cdn-icons-png.flaticon.com/512/1053/1053244.png' />
-                                   <Text as={'p'}>username</Text>
-                              </Box>
-                              <Box className='favIcons'>
-                                   <Box className='favIcon' >
-                                        <Icon title='Like' as={AiOutlineHeart} fontSize={'25px'}/>
-                                   </Box>
-                                   <Box className='favIcon'>
-                                        <Icon title='Comment'  as={FaRegComment} fontSize={'20px'}/>
-                                   </Box>
-                                   <Box ref={favIcon} className='favIcon'>
-                                        <Icon title='Remove'  onClick={() => handelFavorite(ele.id)} as={MdOutlineDeleteOutline} fontSize={'22px'}/>
-                                   </Box>
-                              </Box>
+
+     const filteredFavoritePosts = selector.favoritePosts.filter((item) => item !== null && item !== undefined);
+
+     return (
+          <div>
+               <Box className='favoritePage'>
+
+                    <Box className='favoriteContainer'>
+                         <Box as='div' className='favHeading'>
+                              <Heading as={'h4'}>Favorites</Heading>
                          </Box>
+                         {filteredFavoritePosts.length === 0 ? (
+                              <div className='fav-empty'>
+                                   <BsBookmark size={150} />
+                                   <p>
+                                        You don't have any favorites yet. Start adding some posts to your favorites!
+                                   </p>
+                                   <p className="search-link">
+                                        <Link to="/search" >Explore posts and users on the Search page</Link>
+                                   </p>
+                              </div>
+                         ) : (
+                              <Posts posts={filteredFavoritePosts} />
+                         )}
                     </Box>
-                    ))
-               }
-          </Box>
-      </Box>
-    </Box>
-  )
+
+               </Box>
+               <MainFooter />
+          </div>
+     )
 }
+
+
+
+// {/* <Divider borderBottomWidth={'3px'} borderColor={'#00000040'} marginTop={'5px'} />
+//                     <Box className='favoriteItems' justifyContent={{ base: 'center', xl: 'center' }}>
+//                          {
+//                               selector.favoritePosts &&
+//                               selector.favoritePosts.map(ele => (
+//                                    ele &&
+//                                    <Box key={ele.id} className='favoriteItem' backgroundImage={'https://drscdn.500px.org/photo/1077696107/q%3D80_m%3D2000_k%3D1/v2?sig=64038fc06f74fc6e7dbd614004cb01b59e3f080f0ebf043767b02b66449fbd94'}>
+//                                         <Box className='favTitle'>{ele.title}</Box>
+
+//                                         <Box className='favInteraction'>
+//                                              <Box className='favUsername'>
+//                                                   <Avatar size={'sm'} src='https://cdn-icons-png.flaticon.com/512/1053/1053244.png' />
+//                                                   <Text as={'p'}>username</Text>
+//                                              </Box>
+//                                              <Box className='favIcons'>
+//                                                   <Box className='favIcon' >
+//                                                        <Icon title='Like' as={AiOutlineHeart} fontSize={'25px'} />
+//                                                   </Box>
+//                                                   <Box className='favIcon'>
+//                                                        <Icon title='Comment' as={FaRegComment} fontSize={'20px'} />
+//                                                   </Box>
+//                                                   <Box ref={favIcon} className='favIcon'>
+//                                                        <Icon title='Remove' onClick={() => handelFavorite(ele.id)} as={MdOutlineDeleteOutline} fontSize={'22px'} />
+//                                                   </Box>
+//                                              </Box>
+//                                         </Box>
+//                                    </Box>
+//                               ))
+//                          }
+//                     </Box> */}

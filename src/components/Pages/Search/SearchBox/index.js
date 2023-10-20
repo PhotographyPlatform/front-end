@@ -1,8 +1,8 @@
 import React from "react";
-import './SearchBox.scss';
 import { Search2Icon } from "@chakra-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearchWord } from "../../../../store/reducers/Search";
+import './SearchBox.scss';
 
 function SerachBox() {
 
@@ -18,8 +18,8 @@ function SerachBox() {
   return (
     <div className="searchbox-container">
       <div className="search-des">
-        <p className="search-des_first-paragraph"><span className="search-des_span">Search for anything you want</span> you can search through the users and the posts: </p> 
-        {/* <p className="search-des_second-paragraph"> </p> */}
+        <p className="search-des_first-paragraph"><span className="search-des_span">What are you looking for?</span>  </p> 
+        {/* <p className="search-des_second-paragraph"> you can search through the users and the posts:</p> */}
       </div>
       <div className="search-bar">
         <Search2Icon className="search-icon"/>

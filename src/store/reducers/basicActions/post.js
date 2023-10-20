@@ -18,7 +18,6 @@ const postSlice = createSlice({
         setPostData(state, action) {
             state.commentsList = null;
             state.postDetails = null;
-            console.log("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS",state.postDetails)
             state.postDetails = action.payload;
         },
         setLoading(state, action) {
