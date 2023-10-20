@@ -213,25 +213,5 @@ function Home() {
             }
         </>
     )
-
-    // import React, { useEffect, useState } from "react";
-    // import { homeSocket } from "../../../../App";
-    // import { Search2Icon } from "@chakra-ui/icons";
-    // import { setSearchWord } from "../../../../store/reducers/Search";
-    // import { useDispatch } from "react-redux";
-    // import { useNavigate } from "react-router";
-    // import Posts from "../../../components/posts";
-    // import "./Home.scss";
-    // import { decodeToken } from "react-jwt";
-    // import cookies from "react-cookies";
-    // import axios from "axios";
-
-    // function Home() {
-
-
-
-
-
-    // }
 }
 export default Home;
