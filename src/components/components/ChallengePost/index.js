@@ -8,15 +8,22 @@ import {
   ModalBody,
   ModalCloseButton,
   Button,
-  useToast 
+  useToast,
+  Spinner,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import cookies from 'react-cookies';
+import cookies from "react-cookies";
+import { decodeToken } from "react-jwt";
 import "./ChallengePost.scss";
 
-function ChallengePost({onCloseNewPost, isOpenNewPost, ChallengeName, challengeId, setIsNewPostAdded}) {
-  
+function ChallengePost({
+  onCloseNewPost,
+  isOpenNewPost,
+  ChallengeName,
+  challengeId,
+  setIsNewPostAdded,
+}) {
   const TitleLimit = 65;
   const desLimit = 200;
 
@@ -29,13 +36,19 @@ function ChallengePost({onCloseNewPost, isOpenNewPost, ChallengeName, challengeI
   const [isTitleInputEmpty, setisTitleInputEmpty] = useState(false);
   const [isDecEmpty, setisDecEmpty] = useState(false);
   const [isTagInputEmpty, setIsTagInputEmpty] = useState(false);
-  
+  const [imageInput, setimageInput] = useState("");
+  const [step, setStep] = useState(1);
+  const [uploadingPost, setUploadingPost] = useState(false);
+  const [showPlaceholderImg, setShowPlaceholderImg] = useState(true);
+
   const toast = useToast();
   const fileInputRef = useRef(null);
 
-  const allowedTags = useSelector((state) => state.search.categories.map(item => item.name));
+  const allowedTags = useSelector((state) =>
+    state.search.categories.map((item) => item.name)
+  );
 
-const handleFileInputChange = () => {
+  const handleFileInputChange = () => {
     const fileNameSpan = document.getElementById("fileName");
     const previewImage = document.getElementById("previewImage");
     const fileInput = fileInputRef.current;
@@ -43,19 +56,21 @@ const handleFileInputChange = () => {
     if (fileInput.files.length > 0) {
       fileNameSpan.textContent = fileInput.files[0].name;
       const selectedFile = fileInput.files[0];
-        if (selectedFile.type.startsWith("image/")) {
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            previewImage.src = e.target.result;
-            previewImage.style.display = "block";
-          };
-          reader.readAsDataURL(selectedFile);
-        }
+      if (selectedFile.type.startsWith("image/")) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          previewImage.src = e.target.result;
+          previewImage.style.display = "block";
+        };
+        setShowPlaceholderImg(false);
+        reader.readAsDataURL(selectedFile);
+      }
     } else {
       fileNameSpan.textContent = "";
       previewImage.style.display = "none";
     }
     setisUploadImageInputEmpty(false);
+    setimageInput(fileInputRef.current.files[0]);
   };
 
   const onChangeTitle = (e) => {
@@ -68,60 +83,55 @@ const handleFileInputChange = () => {
     setisDecEmpty(false);
   };
 
-  const onSubmitHandler = async (e) => {//////////////////////////////////////////////////////////////////////////////////////////////////
+  const onSubmitHandler = async (e) => {
     e.preventDefault();
 
-    if (e.target.elements.title.value === '') setisTitleInputEmpty(true);
-    if (e.target.elements.descript.value === '') setisDecEmpty(true);
+    if (e.target.elements.title.value === "") setisTitleInputEmpty(true);
+    if (e.target.elements.descript.value === "") setisDecEmpty(true);
     if (tags.length === 0) setIsTagInputEmpty(true);
-    if (!fileInputRef.current.files[0]) {
-      setisUploadImageInputEmpty(true);
-      return;
-    }
-
-    const newPost = {
-      imgurl: e.target.elements.fileInput.value,
-      userid: 2,
-      title: e.target.elements.title.value,
-      contant: e.target.elements.descript.value,
-      category: tags,
-      challengeID: challengeId,
-      challengeName: ChallengeName
-    };
 
     const tagsString = tags.join(", ");
 
-    const formData = new FormData();
-    formData.append('image', fileInputRef.current.files[0]);
-    formData.append('userid', 3);
-    formData.append('title', e.target.elements.title.value);
-    formData.append('contant', e.target.elements.descript.value);
-    formData.append('challengeID', challengeId);
-    formData.append('challengeName', ChallengeName);
-    formData.append('category', tagsString);
+    const token = cookies.load("user_session");
+    const parsedToken = decodeToken(token);
 
-    if (newPost.imgurl && newPost.title && newPost.contant && newPost.category.length) {
+    const formData = new FormData();
+    formData.append("image", imageInput);
+    formData.append("userid", parsedToken.userId);
+    formData.append("title", e.target.elements.title.value);
+    formData.append("contant", e.target.elements.descript.value);
+    formData.append("challengeID", challengeId);
+    formData.append("challengeName", ChallengeName);
+    formData.append("category", tagsString);
+
+    if (
+      imageInput &&
+      e.target.elements.title.value &&
+      e.target.elements.descript.value &&
+      tags.length
+    ) {
       try {
+        setUploadingPost(true);
         setIsNewPostAdded(true);
-        const token = cookies.load('user_session');
+        const token = cookies.load("user_session");
         const response = await axios.post(
           "http://localhost:3002/notification/post",
           formData,
           {
             headers: {
               Authorization: `Bearer ${token}`,
-            }
+            },
           }
         );
-    
-        console.log(response, '88888888888888888888888888888888888');
+
         if (response.status === 201) {
+          setUploadingPost(false);
           onCloseNewPost();
           toast({
-            position: 'top-left',
-            title: 'Post created',
+            position: "top-left",
+            title: "Post created",
             description: "your post has been created successfully",
-            status: 'success',
+            status: "success",
             duration: 9000,
             isClosable: true,
           });
@@ -129,9 +139,12 @@ const handleFileInputChange = () => {
         }
         setIsNewPostAdded(false);
       } catch (error) {
-        console.error(`error when adding a new post for a the challenge '${ChallengeName}'`, error);
+        console.error(
+          `error when adding a new post for a the challenge '${ChallengeName}'`,
+          error
+        );
       }
-  }
+    }
   };
 
   const addTagHandler = (e) => {
@@ -155,7 +168,7 @@ const handleFileInputChange = () => {
       tag.toLowerCase().includes(e.target.value.toLowerCase())
     );
     setSuggestedTags(matchingTags);
-    setIsTagInputEmpty(false)
+    setIsTagInputEmpty(false);
   };
 
   const handleSuggestionClick = (suggestion) => {
@@ -164,140 +177,191 @@ const handleFileInputChange = () => {
     setSuggestedTags([]);
   };
 
-  const validateTagInput = isTagInputEmpty ? 'empty-tag-input' : 'tags-container';
-  const validateTitleInput = isTitleInputEmpty ?  'empty-title-input' : 'title-input';
-  const validateDecInput = isDecEmpty ?  'empty-title-input' : 'title-input';
+  const validateTagInput = isTagInputEmpty
+    ? "empty-tag-input"
+    : "tags-container";
+  const validateTitleInput = isTitleInputEmpty
+    ? "empty-title-input"
+    : "title-input";
+  const validateDecInput = isDecEmpty ? "empty-title-input" : "title-input";
+
+  const onNetCLick = () => {
+    if (!imageInput) {
+      setisUploadImageInputEmpty(true);
+      return;
+    }
+    setStep(2);
+  };
 
   return (
     <>
-
       <Modal isOpen={isOpenNewPost} onClose={onCloseNewPost} size="xl">
         <ModalOverlay />
         <ModalContent className="modal">
           <ModalHeader className="modal-title">Participate</ModalHeader>
           <ModalCloseButton />
-          <form onSubmit={onSubmitHandler}>
+          <form onSubmit={onSubmitHandler} className="modal-flex-con">
             <ModalBody>
               <div className="modal-form">
-              <div className="upload-image-container modal-item">
-                  <input
-                    type="file"
-                    name="fileInput"
-                    id="fileInput"
-                    style={{ display: "none" }}
-                    ref={fileInputRef}
-                    onChange={handleFileInputChange}
-                  />
-                  <div className="ulpoad-dec">
-                    <p>Upload your image here</p>
-                    <div className="review-img-title">
-                      <img id="previewImage" src="" alt="yourimage" className="review-img"/>
-                      <span id="fileName"></span>
+                {step !== 2 ? (
+                  <div className="upload-image-container modal-item">
+                    <input
+                      type="file"
+                      name="fileInput"
+                      id="fileInput"
+                      style={{ display: "none" }}
+                      ref={fileInputRef}
+                      onChange={handleFileInputChange}
+                    />
+                    <div className="ulpoad-dec">
+                      <p>Upload your image here</p>
+                      <div className="review-img-title">
+                        {showPlaceholderImg && (
+                          <div className="placeholder-con">
+                            <img
+                              src="https://creazilla-store.fra1.digitaloceanspaces.com/icons/3431627/picture-icon-md.png"
+                              alt="yourimage"
+                              className="image-placeholder-cp"
+                            />
+                            <p>your image goes here</p>
+                          </div>
+                        )}
+                        <img
+                          id="previewImage"
+                          src=""
+                          alt="yourimage"
+                          className="review-img"
+                        />
+                        <span id="fileName"></span>
+                      </div>
+                      <label
+                        htmlFor="fileInput"
+                        className="upload-image-container_ulpoader"
+                      >
+                        Ulpoad image
+                      </label>
                     </div>
-                    <label
-                      htmlFor="fileInput"
-                      className="upload-image-container_ulpoader"
-                    >
-                      Ulpoad image
-                    </label>
+                    {isUploadImageInputEmpty && (
+                      <span className="empty-img-input">
+                        !! you must upload an image !!
+                      </span>
+                    )}
                   </div>
-                  {isUploadImageInputEmpty && <span className="empty-img-input">!! you must upload an image !!</span>}
-                </div>
-
-                <div className="modal-item">
-                  <div className="counter-flex">
-                    <label>Challenge name</label>
-                  </div>
-                  <input
-                    type="text"
-                    placeholder={ChallengeName}
-                    className='input-disabled'
-                    disabled={true}
-                  />
-                </div>
-
-                <div className="modal-item">
-                  <div className="counter-flex">
-                    <label>Title</label>
-                    <small>
-                      {titleCounter}/{TitleLimit}
-                    </small>
-                  </div>
-                  <input
-                    type="text"
-                    name="title"
-                    placeholder="write the title here...."
-                    className={validateTitleInput}
-                    onChange={onChangeTitle}
-                    maxLength={TitleLimit}
-                  />
-                </div>
-
-                <div className="modal-item">
-                  <div className="counter-flex">
-                    <label>Description</label>
-                    <small>
-                      {desCounter}/{desLimit}
-                    </small>
-                  </div>
-                  <textarea name="descript"
-                    className={validateDecInput}
-                    maxLength={desLimit}
-                    placeholder="write the description here...."
-                    onChange={onChangeDes}></textarea>
-                </div>
-
-                <div className="modal-item">
-                  <label>Tags</label>
-                  <div className="tags">
-                    <div className={validateTagInput}>
-                      {tags.map((item, index) => (
-                        <div className="tags-item" key={index}>
-                          <span className="text">{item}</span>
-                          <span
-                            onClick={() => removeTag(item)}
-                            className="close"
-                          >
-                            &times;
-                          </span>
-                        </div>
-                      ))}
+                ) : (
+                  <div className="section2">
+                    <div className="modal-item">
+                      <div className="counter-flex">
+                        <label>Challenge name</label>
+                      </div>
                       <input
-                        className="tag-input"
-                        type="search"
-                        placeholder="Ex: nature, country, food..."
-                        onKeyDown={addTagHandler}
-                        onChange={suggestTag}
-                        value={tagInput}
+                        type="text"
+                        placeholder={ChallengeName}
+                        className="input-disabled"
+                        disabled={true}
                       />
                     </div>
 
-                    <ul className="suggestions">
-                      {suggestedTags.map(
-                        (suggestion, index) =>
-                          !tags.includes(suggestion.trim()) && (
-                            <li
-                              key={index}
-                              onClick={() => handleSuggestionClick(suggestion)}
-                              className="suggestion"
-                            >
-                              {suggestion}
-                            </li>
-                          )
-                      )}
-                    </ul>
+                    <div className="modal-item">
+                      <div className="counter-flex">
+                        <label>Title</label>
+                        <small>
+                          {titleCounter}/{TitleLimit}
+                        </small>
+                      </div>
+                      <input
+                        type="text"
+                        name="title"
+                        placeholder="write the title here...."
+                        className={validateTitleInput}
+                        onChange={onChangeTitle}
+                        maxLength={TitleLimit}
+                      />
+                    </div>
+
+                    <div className="modal-item">
+                      <div className="counter-flex">
+                        <label>Description</label>
+                        <small>
+                          {desCounter}/{desLimit}
+                        </small>
+                      </div>
+                      <textarea
+                        name="descript"
+                        className={validateDecInput}
+                        maxLength={desLimit}
+                        placeholder="write the description here...."
+                        onChange={onChangeDes}
+                      ></textarea>
+                    </div>
+
+                    <div className="modal-item">
+                      <label>Tags</label>
+                      <div className="tags">
+                        <div className={validateTagInput}>
+                          {tags.map((item, index) => (
+                            <div className="tags-item" key={index}>
+                              <span className="text">{item}</span>
+                              <span
+                                onClick={() => removeTag(item)}
+                                className="close"
+                              >
+                                &times;
+                              </span>
+                            </div>
+                          ))}
+                          <input
+                            className="tag-input"
+                            type="search"
+                            placeholder="Ex: nature, country, food..."
+                            onKeyDown={addTagHandler}
+                            onChange={suggestTag}
+                            value={tagInput}
+                          />
+                        </div>
+
+                        <ul className="suggestions">
+                          {suggestedTags.map(
+                            (suggestion, index) =>
+                              !tags.includes(suggestion.trim()) && (
+                                <li
+                                  key={index}
+                                  onClick={() =>
+                                    handleSuggestionClick(suggestion)
+                                  }
+                                  className="suggestion"
+                                >
+                                  {suggestion}
+                                </li>
+                              )
+                          )}
+                        </ul>
+                      </div>
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             </ModalBody>
 
             <ModalFooter className="modal-buttons-cp">
-              <Button variant="ghost" onClick={onCloseNewPost}>
-                Close
-              </Button>
-              <Button type="submit" colorScheme="blue" mr={3}>
-                Done
-              </Button>
+              {step !== 2 ? (
+                <Button variant="ghost" onClick={onCloseNewPost}>
+                  Close
+                </Button>
+              ) : (
+                <Button variant="ghost" onClick={() => setStep(1)}>
+                  Previous
+                </Button>
+              )}
+              {step !== 2 && (
+                <Button colorScheme="blue" mr={3} onClick={onNetCLick}>
+                  Next
+                </Button>
+              )}
+              {step === 2 && (
+                <Button type="submit" colorScheme="blue" mr={3}>
+                  {!uploadingPost ? "Done" : <Spinner />}
+                </Button>
+              )}
             </ModalFooter>
           </form>
         </ModalContent>
@@ -307,4 +371,3 @@ const handleFileInputChange = () => {
 }
 
 export default ChallengePost;
-

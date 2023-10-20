@@ -1,4 +1,5 @@
 .modal {
+    height: 800px !important;
     padding: 15px;
     background-color: aquamarine;
   
@@ -31,6 +32,16 @@
         background-color: #fff;
       }
     }
+  }
+  
+  .placeholder-con{
+    margin: 60px 0;
+    color: rgb(169, 169, 169);
+  }
+
+  .image-placeholder-cp{
+    height: 340px;
+    opacity: 15%;
   }
 
   .ulpoad-dec{
@@ -181,7 +192,7 @@
   }
 
   .modal-buttons-cp{
-    margin: 10% 0;
+    margin-bottom: 15px !important;
     button{
       margin-right: 10px;
     }
