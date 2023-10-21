@@ -23,6 +23,7 @@ import {
 } from "@chakra-ui/icons"
 import { Link } from "react-router-dom"
 import logo3 from '../../assets/logo3.png'
+import whiteLogo from '../../assets/logoWhite.png'
 import './header.css'
 export default function Header_Inhansed({ color, bg }) {
   const { isOpen, onToggle } = useDisclosure()
@@ -62,7 +63,7 @@ export default function Header_Inhansed({ color, bg }) {
             <Link to={'/'}>
               <div className="main-logo">
 
-                <img src={logo3} alt="logo" />
+                <img src={whiteLogo} alt="logo" />
 
               </div>
 

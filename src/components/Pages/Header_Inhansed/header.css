@@ -7,3 +7,8 @@
     height: 7vh !important;
     width: auto;
 }
+
+.header_in{
+    position: relative;
+    z-index: 100;
+}
