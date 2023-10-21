@@ -18,7 +18,7 @@ function Category() {
             .then(() => { })
             .catch((error) => { });
     }, [dispatch]);
-
+    console.log("sSsssssssssssssssssssssssssssssssssssssss", categories);
     return (
         <div className="search-category-container">
             <p>You can browse all the available categories to discover and find more</p>
@@ -31,7 +31,7 @@ function Category() {
                         {categories.map((category) => (
 
                             <li style={{
-                                backgroundImage: 'url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPe-0_BF69iVrssanpv82RoV-cWdqppHOKvA&usqp=CAU")'
+                                backgroundImage: `url(${category.imgurl})`
                             }} key={category.id} className='category-card' onClick={() => dispatch(setActiveCategory(category.name))}>
                                 <p>{category.name}</p>
                             </li>

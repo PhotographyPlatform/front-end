@@ -9,7 +9,7 @@ import CalculateTime from '../../Time';
 //{ id, imgurl, userid, title, contant, challengeName, challengeID, category, createdAt, updatedAt }
 
 function Post(props) {
-console.log(props);
+  console.log(props);
 
 
   const { id, imgurl, userid, title, contant, challengeName, challengeID, category, createdAt, updatedAt, } = props;
@@ -34,7 +34,7 @@ console.log(props);
     } catch (e) {
       console.log("fetching challenges error: ", e);
     }
-    fetchData()
+
   }, []);
 
   return (
@@ -50,7 +50,7 @@ console.log(props);
       <div className='post-owner'>
         <img className='user-img' src={userImg} alt='profilePicture' onClick={() => console.log(userid, 'GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG')} />
         <p className='username'>{username}</p>
-        <div  className='post-time'>
+        <div className='post-time'>
           <CalculateTime createdAt={createdAt} />
         </div>
 

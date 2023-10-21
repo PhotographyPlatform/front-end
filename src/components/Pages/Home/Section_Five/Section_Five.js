@@ -12,7 +12,7 @@ export default function Section_Five() {
                <Box className='Section_Five_heading' w={{base : '100%' , 'md' : '90%' , 'lg' : '85%'  ,'xl' : '70% '}}>
                     <Fade  duration={1000}>
                               <Heading fontSize={{base : '20px' , 'md' : '25px' , 'lg' : '28px'  ,'xl' : '30px '}} as={'h2'}>Designed and built for photographers</Heading>
-                              <Text>Create your own high-quality website in minutes. Portfolios allows you to share your work externally so you can build your own brand and market yourself as a professional photographer.</Text>
+                              <Text>Create your own high-quality . profile allows you to share your work externally so you can build your own brand and market yourself as a professional photographer.</Text>
                               <Link to={'signup'}>
                                 <Button
                                       w={{ base: '150px', 'sm' :  '180px' , 'lg': '200px', 'xl': '200px ' }}  
@@ -28,7 +28,7 @@ export default function Section_Five() {
                          //   h={{base : '150px','md': '250px' , 'lg' : '300px'  ,'xl' : '300px '}}
                            w={{ base: '350px', 'sm' :  '480px' ,'md': '600px', 'lg': '650px', 'xl': '650px ' }}  
                            h={{base : '200px', 'sm' : '250px' ,'md': '350px' , 'lg' : '300px'  ,'xl' : '300px '}}
-                           className='Section_Five_img' backgroundImage={'https://500px.com/staticV2/media/desktop_portfolio.fdf6ee3e.png'}></Box>
+            className='Section_Five_img' backgroundImage={'https://images.pexels.com/photos/4348401/pexels-photo-4348401.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'}></Box>
                </Fade>
      </Box>
    </Box>

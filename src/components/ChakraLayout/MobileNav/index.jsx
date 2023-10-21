@@ -43,12 +43,6 @@ import { useLocation } from 'react-router-dom';
 
 function MobileNav({ onOpen, ...rest }) {
   const location = useLocation();
-
-  console.log("sssssssssssssssss", location.pathname);
-
-
-
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const data = useSelector((state) => state.user.user);
@@ -62,7 +56,7 @@ function MobileNav({ onOpen, ...rest }) {
 
   const handleLogout = () => {
     dispatch(logOut());
-    navigate("/signin");
+    navigate("/");
   };
   const handleProfile = () => {
     navigate("/profile");
@@ -101,14 +95,14 @@ function MobileNav({ onOpen, ...rest }) {
 
       {/* <div className="search-bar" style={{ width:'95%', marginRight: '1vw'}}> */}
       {location.pathname !== '/search' && (
-        <div className="search-bar" style={{ marginRight: '11vw', backgroundColor: '#E6EBF6', width:"50%" }}>
+        <div className="search-bar" style={{ marginRight: '11vw', backgroundColor: '#E6EBF6', width: "50%" }}>
           <Search2Icon className="search-icon" />
           <input
             type="search"
             placeholder="Type your search.."
             maxLength={30}
             onKeyDown={setSearchWorldHandler}
-          
+
           />
         </div>
       )}
