@@ -18,13 +18,13 @@ body {
      max-height: 900px;
      margin: 0 15px;
      padding: 20px;
-     border-radius: 5px;
+     border-radius: 8px;
      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
      display: flex;
      flex-direction: column;
      justify-content: flex-end;
      position: relative;
-     background-color: #e2e8f0;
+     background-color: white;
 }
 
 .chat {
@@ -65,11 +65,13 @@ body {
      align-items: center;
      flex-direction: row-reverse;
      p{
+          box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
           background-color: #f5f6f7;
           border-radius: 5px;
           margin-right: 5px;
           margin-bottom: 0px;
           padding: 10px;
+          color: #112D4E;
      }
      span{
           align-self: flex-start;
@@ -88,11 +90,13 @@ body {
      // align-items: center;
 
      p{
-          background-color: #3b71ca;
+          // background-color: #3b71ca;
+          background-color: #3F72AF;
           border-radius: 5px;
           margin-right: 5px;
           margin-bottom: 0px;
           padding: 10px;
+          color: white;
      }
      
 }

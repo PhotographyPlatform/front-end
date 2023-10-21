@@ -9,11 +9,13 @@ import Signin from './signin/Signin';
 import Header from '../../Header/Header';
 import Search from '../Search';
 import Home from '../Home/Home';
+import Header_Inhansed from '../Header_Inhansed/Header_Inhansed';
 function Container() {
   return (
     <div>
       <div>
-        <Header />
+        {/* <Header /> */}
+        {/* <Header_Inhansed/> */}
         <Routes>
           <Route path='/ss' element={<Search />} />
           <Route path='/code' element={<Code />} />

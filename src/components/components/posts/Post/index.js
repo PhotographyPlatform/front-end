@@ -9,6 +9,7 @@ import CalculateTime from '../../Time';
 //{ id, imgurl, userid, title, contant, challengeName, challengeID, category, createdAt, updatedAt }
 
 function Post(props) {
+console.log(props);
 
 
   const { id, imgurl, userid, title, contant, challengeName, challengeID, category, createdAt, updatedAt, } = props;
@@ -18,6 +19,7 @@ function Post(props) {
   const [username, setUsername] = useState('');
 
   useEffect(() => {
+
     try {
       if (userid) {
         const response = axios.get(
@@ -32,6 +34,7 @@ function Post(props) {
     } catch (e) {
       console.log("fetching challenges error: ", e);
     }
+    fetchData()
   }, []);
 
   return (
@@ -40,6 +43,7 @@ function Post(props) {
         isOpenViewPost={isOpenViewPost}
         onCloseViewPost={onCloseViewPost}
         id={id}
+
       />
 
       <img src={imgurl} alt='imgURL' />
@@ -49,6 +53,7 @@ function Post(props) {
         <div  className='post-time'>
           <CalculateTime createdAt={createdAt} />
         </div>
+
 
 
       </div>

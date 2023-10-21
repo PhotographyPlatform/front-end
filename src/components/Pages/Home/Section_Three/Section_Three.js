@@ -28,8 +28,8 @@ export default function Section_Three() {
          </Fade>
           
          {/* <Box className='Section_Three_Photos'> */}
-               <Zoom delay={0} cascade triggerOnce>
                     <Box className='Section_Three_Photos_1'>
+               <Zoom delay={0} cascade triggerOnce>
                               <Box backgroundImage={img1}></Box>
                               <Box as={'div'} backgroundImage={img2}></Box>
                               <Box as={'div'} backgroundImage={img3}></Box>
@@ -38,8 +38,8 @@ export default function Section_Three() {
                               <Box as={'div'} backgroundImage={img6}></Box>
                               <Box as={'div'} backgroundImage={img7}></Box>
                               <Box as={'div'} backgroundImage={img8}></Box>
-                    </Box>
                </Zoom>
+                    </Box>
                {/* <Box className='Section_Three_Photos_1'>
                     <Zoom cascade delay={0} triggerOnce>
                          
