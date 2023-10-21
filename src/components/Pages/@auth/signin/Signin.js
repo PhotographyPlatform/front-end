@@ -107,6 +107,7 @@ const LoginForm = () => {
   const [data, setData] = useState();
   const [isOpen, setOpen] = useState(false);
   const [error, setError] = useState('');
+  const URL = process.env.REACT_APP_URL;
 
   const handleCheckboxChange = () => {
     setCheck(!isChecked);
@@ -119,7 +120,7 @@ const LoginForm = () => {
         username: e.target.username.value,
         password: e.target.password.value
       }
-      const data = await axios.post('http://localhost:3002/login', null, {
+      const data = await axios.post(`${URL}/login`, null, {
         headers: {
           Authorization: `Basic ${btoa(`${obj.username}:${obj.password}`)}`
         }

@@ -15,13 +15,16 @@ import './reports.scss'
 import axios from 'axios'
 import cookie from 'react-cookies';
 import { AiOutlineClose } from 'react-icons/ai'
+import ViewPost from '../../Pages/Post/ViewPost'
 const url = 'http://localhost:3002'
 
 
 export default function AdminReports() {
      const cookieData = cookie.load('user_session')
      const { isOpen, onOpen, onClose } = useDisclosure()
-     const [reports,setReports] = useState([])
+     const [reports, setReports] = useState([])
+     const { isOpen: isOpenViewPost, onOpen: onOpenViewPost, onClose: onCloseViewPost } = useDisclosure();
+
 
 
      const fetchReports = async () => {
@@ -48,7 +51,8 @@ export default function AdminReports() {
           fetchReports()
      }, [])
 
-     console.log(reports);
+
+
      
   return (
     <Box className='reports-main'>
@@ -61,13 +65,18 @@ export default function AdminReports() {
                     reports &&
                     reports.map(ele => (
                          <Box className='reports-item' >
-                              <Model ele={ele} isOpen={isOpen} onClose={onClose} deleteReport = {deleteReport} />
-                              <Box className='report-heading' onClick={() => ele.actionType === 'comment' ? onOpen() : ''}>
+                              <Model ele={ele} isOpen={isOpen} onClose={onClose} deleteReport={deleteReport} />
+                              <ViewPost
+                                   isOpenViewPost={isOpenViewPost}
+                                   onCloseViewPost={onCloseViewPost}
+                                   id={ele.actionId} />
+                              
+                              <Box className='report-heading' onClick={() => ele.actionType === 'comment' ? onOpen() : onOpenViewPost()}>
                                    <p>Type : {ele.categories}</p>
                                    <p>Action : {ele.actionType} </p>
                                    {/* <p>ID : {ele.actionId} </p> */}
                               </Box>
-                              <Box className='report-description' onClick={() => ele.actionType === 'comment' ? onOpen() : ''}>
+                              <Box className='report-description' onClick={() => ele.actionType === 'comment' ? onOpen() : onOpenViewPost()}>
                                    <Box as='p'> <Heading display={'inline-block'} fontSize={'17px'}>Report : </Heading> {ele.details}</Box>
                               </Box>
                               <Box className='report-icon'>

@@ -75,6 +75,7 @@ function Profile() {
     const data = state.user
     const { isOpen, onOpen, onClose } = useDisclosure()
     const refreshState = useSelector(state => state.refresh)
+    const URL = process.env.REACT_APP_URL;
 
 
     const handleClick = () => {
@@ -139,7 +140,7 @@ function Profile() {
     const fetchData = async () => {
         try {
             const token = cookies.load('user_session');
-            const response = await axios.get('http://localhost:3002/getallPostUser', {
+            const response = await axios.get(`${URL}/getallPostUser`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

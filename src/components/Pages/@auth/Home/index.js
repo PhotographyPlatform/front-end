@@ -44,6 +44,7 @@ import { decodeToken } from "react-jwt";
 import axios from "axios";
 import { Spinner } from "@chakra-ui/react";
 function Home() {
+
   const dispatch = useDispatch();
   const [selectedStoryId, setSelectedStoryId] = useState(null);
   const [imageStory, setImage] = useState(null);
@@ -53,6 +54,8 @@ function Home() {
   const following = useSelector((state) => state.profile.following);
   const image = useSelector((state) => state.profile);
   const data = useSelector((state) => state.user.user);
+  const URL = process.env.REACT_APP_URL;
+
   const storyHandler = (id) => {
     setSelectedStoryId(id);
   };
@@ -98,7 +101,7 @@ function Home() {
     try {
       const token = Cookies.load("user_session");
       setLoading(true);
-      const response = axios.get(`http://localhost:3002/home`, {
+      const response = axios.get(`${URL}/home` , {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -120,6 +123,7 @@ function Home() {
       tagsBox.scrollLeft -= e.movementX;
     }
   }
+
 
   function stopDragging() {
     const tagsBox = document.querySelector(".nav-tags-st");

@@ -10,7 +10,7 @@ import {
     Drawer,
     DrawerContent,
     useDisclosure,
-    Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay
+    Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Divider
 
 } from '@chakra-ui/react';
 import { useLocation } from 'react-router-dom';
@@ -51,7 +51,7 @@ import { BsFillChatDotsFill } from 'react-icons/bs';
 import FavoritePage from '../Pages/@auth/FavoritePage/FavoritePage';
 import UsersProfile from '../Pages/@auth/profileDashboard/UsersProfile';
 import Challenges from '../Pages/Challenges';
-import { MdOutlinePartyMode } from 'react-icons/md';
+import { MdOutlinePartyMode, MdReport, MdReportGmailerrorred } from 'react-icons/md';
 import AdminReports from '../Admin/Reports/Reports';
 import { BsCamera, BsChatDots } from 'react-icons/bs';
 // import { IoImagesOutline } from 'react-icons/io';
@@ -60,6 +60,7 @@ import logo3 from '../assets/logo3.png';
 import logo4 from '../assets/logo4.png';
 import NotifiList from './notificationList';
 import { BsBookmark } from 'react-icons/bs';
+import { BiAddToQueue, BiSolidAddToQueue } from 'react-icons/bi';
 
 
 // handle the Icon with Name and path 
@@ -80,6 +81,16 @@ function SidebarContent({ onClose, ...rest }) {
     const location = useLocation();
 
     const isLinkActive = (path) => location.pathname === path;
+
+    let role = null
+    let cookieData = null
+
+    if (cookie.load('user_session')) {
+
+        cookieData = cookie.load('user_session')
+        const token = jwtDecode(cookieData)
+        role = token.role
+    }
 
 
     return (
@@ -135,6 +146,33 @@ function SidebarContent({ onClose, ...rest }) {
                     {'Profile'}
                 </NavItem>
             </Link>
+
+            {
+                role === 'admin' && (
+                    <>
+                        <Link key={5} to={'/admin/challenge'} >
+                            <NavItem icon={BiAddToQueue} name={"Profile"}
+                                className={isLinkActive('/admin/challenge') ? 'active-link' : ''}
+
+                            > {'Add Challenge'}</NavItem>
+                        </Link>
+                        <Link key={5} to={'/admin/reports'} >
+                            <NavItem icon={MdReportGmailerrorred} name={"Favourites"}
+                                className={isLinkActive('/admin/reports') ? 'active-link' : ''}
+                            > {'Reports'}</NavItem>
+                        </Link>
+                        
+                    </>
+                )
+            }
+            {/* {LinkItems.map((link, index) => (
+                //link path 
+                <Link key={index} to={link.path} >
+                    <NavItem icon={link.icon} name={link.name}> {link.name}</NavItem>
+                </Link>
+            ))} */}
+
+
         </Box >
     );
 }

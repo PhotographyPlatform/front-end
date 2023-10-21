@@ -24,6 +24,8 @@ const categorySlice = createSlice({
         }
     }
 });
+const URL = process.env.REACT_APP_URL;
+
 
 
 export const { setCategories, setLoading, setSearchWord, setActiveCategory } = categorySlice.actions;
@@ -31,7 +33,7 @@ export const { setCategories, setLoading, setSearchWord, setActiveCategory } = c
 export const fetchCategories = () => async (dispatch) => {
     try {
         dispatch(setLoading(true));
-        const response = await axios.get('http://localhost:3002/getAllCategory');
+        const response = await axios.get(`${URL}/getAllCategory`);
         dispatch(setCategories(response.data));
 
     } catch (error) {

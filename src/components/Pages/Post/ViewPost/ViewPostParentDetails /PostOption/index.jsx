@@ -29,6 +29,7 @@ function PostOption({ postId, postOwnerId, onClose }) {
     }
     // const userId = useSelector((state) => state.user?.token?.userId ?? 1);
     const userId = decoded.userId;
+    const role = decoded.role;
 
 
 
@@ -75,7 +76,7 @@ function PostOption({ postId, postOwnerId, onClose }) {
                                 isOpenReport={isOpenReport} actionId={postId} actionType={'post'} />
                         </MenuItem>
 
-                        {allow && (
+                        {allow || role === 'admin' && (
 
                             <MenuItem style={{
                                 padding: '2',

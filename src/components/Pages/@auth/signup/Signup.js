@@ -41,6 +41,8 @@ export default function SignUp() {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const cancelRef = React.useRef();
     const [error, setError] = useState('')
+    const URL = process.env.REACT_APP_URL;
+
     const submitHandler = async (e) => {
         try {
             e.preventDefault()
@@ -64,7 +66,7 @@ export default function SignUp() {
                 username: 'osama'
             }
             localStorage.setItem('email', obj.email)
-            const signUp = await axios.post('http://localhost:3002/signup', obj)
+            const signUp = await axios.post(`${URL}/signup`, obj)
             if (signUp.status === 200) {
                 navigate('/code')
             }

@@ -11,6 +11,8 @@ function Otherstories({ id, setSelectedStoryId }) {
     const data = useSelector(state => state.stories);
     const [images, setImages] = useState([]);
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const URL = process.env.REACT_APP_URL;
+
 
     useEffect(() => {
         onOpen();
@@ -31,7 +33,7 @@ function Otherstories({ id, setSelectedStoryId }) {
                         if (hoursAgo >= 24) {
                             try {
                                 const token = cookies.load('user_session');
-                                const response = await axios.delete(`http://localhost:3002/story/${story.id}`, {
+                                const response = await axios.delete(`${URL}/story/${story.id}`, {
                                     headers: {
                                         Authorization: `Bearer ${token}`,
                                     }

@@ -21,6 +21,8 @@ function UsersProfile() {
     const dispatch = useDispatch();
     const userId = parseInt(cookies.load('id'));
     const [refresh, setRefresh] = useState(false)
+    const URL = process.env.REACT_APP_URL;
+
     const handleFollow = async () => {
         try {
             if (toggle === false) {
@@ -65,7 +67,7 @@ function UsersProfile() {
     const fetchData = async () => {
         try {
             const token = cookies.load('user_session');
-            const response = await axios.get(`http://localhost:3002/getallPostUser/${userId}`, {
+            const response = await axios.get(`${URL}/getallPostUser/${userId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

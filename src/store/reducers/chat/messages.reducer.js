@@ -3,6 +3,8 @@ import axios from 'axios';
 export const initialState = {
      messages : []
 }
+const URL = process.env.REACT_APP_URL;
+
 
 
 export const MessagesReducer = (state = initialState, action) => {
@@ -23,12 +25,12 @@ export const messageThunk = (userId ,reciver ,cookieData ) =>  async (dispatch) 
      console.log('fom reducer messageThunk',reciver, 'reciver', userId, 'sender');
      
      try {
-          const res = await axios.get(`http://localhost:3002/chat/${reciver}`, { headers: { Authorization: `Bearer ${cookieData}` } })
+          const res = await axios.get(`${URL}/chat/${reciver}`, { headers: { Authorization: `Bearer ${cookieData}` } })
 
           
           let resieveData = res.data.resieveData.map(async ele => {
                if (!ele.read) {
-                    const makeItSeen = await axios.put(`http://localhost:3002/chat/${ele.id}/${reciver}`, { read: true }, { headers: { Authorization: `Bearer ${cookieData}` } })
+                    const makeItSeen = await axios.put(`${URL}/chat/${ele.id}/${reciver}`, { read: true }, { headers: { Authorization: `Bearer ${cookieData}` } })
                     return ele
                }
           })

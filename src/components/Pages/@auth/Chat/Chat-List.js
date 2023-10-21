@@ -30,7 +30,9 @@ export default function ChatList({ render , setShowfolowingList}) {
           dispatch(fetchUserListRedux(userId))
           // dispatch(getNotification(cookieData))
           console.log('userNotification', state.userNotification);
-     }, [render  , params])
+     }, [render, params])
+     
+     console.log(state.UserList , 'state.UserList');
 
      
      function userNotifiCount(id , array) {
@@ -44,7 +46,7 @@ export default function ChatList({ render , setShowfolowingList}) {
 //     <Container className='ChatList' width={{md : '200px' , lg : '400px'}} gap={'10px'} display={'flex'} flexDirection={'column'} mx={'20px'} py={'20px'}>
         <>
         <InputGroup gap={'10px'}>
-                 <Button className='chat_search_btn' onClick={() => setShowfolowingList(value => !value)} borderColor={'#3F72AF'} borderWidth={'1px'} borderStyle={'solid'} bg={'transparent'} >
+                 <Button className='chat_search_btn' onClick={() => setShowfolowingList(value => !value)} borderColor={'#3f72af75'} borderWidth={'1px'} borderStyle={'solid'} bg={'transparent'} >
                       {/* <Icon className='chat_search_icon' as={TbUserSearch} fontSize={'14px'} color={'#3F72AF'} /> */}
                       ＋New
                       {/* <TbUserSearch size={'30px'} color='#3F72AF'/> */}
@@ -92,13 +94,14 @@ export default function ChatList({ render , setShowfolowingList}) {
           }
             </Container> 
             {
-               !state.UserList && 
+               state.UserList.length === 0 &&
                <>
                     <Box className='empty_list'>
                          <Box className='empty_list_img'></Box>
                          <Text color={'#112D4E'} as={'p'}>Please select a chat to start messaging</Text>
-                    </Box>
-               </>
+                    </Box> 
+               </> 
+               
           }
           </>
 

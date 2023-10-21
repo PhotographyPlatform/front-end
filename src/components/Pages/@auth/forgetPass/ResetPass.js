@@ -27,6 +27,8 @@ export default function ResetPassword() {
     const [Auth, setAuth] = useState(false)
     const [wrong, setWrong] = useState(false)
     const [alert, setAlert] = useState(false)
+    const URL = process.env.REACT_APP_URL;
+
     const submitHandler = async (e) => {
         e.preventDefault();
         const obj = {
@@ -38,7 +40,7 @@ export default function ResetPassword() {
             const secretKey = 'pixel';
             const bytes = CryptoJS.AES.decrypt(decryptedNumber, secretKey);
             const id = parseInt(bytes.toString(CryptoJS.enc.Utf8), 10);
-            const data = await axios.post(`http://localhost:3002/resetPassword/${id}`, obj)
+            const data = await axios.post(`${URL}/resetPassword/${id}`, obj)
             if (data.status === 200) {
                 const getData = localStorage.getItem('Remember_Me')
                 if (getData) {
