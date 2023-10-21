@@ -1,0 +1,19 @@
+.logo-signup {
+    background-color: #F9F7F7;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
+    /* box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.1); */
+}
+
+.logo-signup img {
+    height: 20vh;
+    width: auto;
+}
+
+.head-signup {
+    font-size: 22px !important;
+    color: #112D4E !important;
+}

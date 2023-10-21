@@ -56,7 +56,8 @@ import AdminReports from '../Admin/Reports/Reports';
 import { BsCamera, BsChatDots } from 'react-icons/bs';
 // import { IoImagesOutline } from 'react-icons/io';
 import { LuImagePlus } from "react-icons/lu";
-
+import logo3 from '../assets/logo3.png';
+import logo4 from '../assets/logo4.png';
 import NotifiList from './notificationList';
 import { BsBookmark } from 'react-icons/bs';
 
@@ -91,15 +92,10 @@ function SidebarContent({ onClose, ...rest }) {
             w={{ base: 'full', md: 60 }}
             pos="fixed"
             h="full"
-            {...rest}
-        >
-            <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-
-                <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-                    Pixle Time
-                </Text>
-                <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
-            </Flex>
+            {...rest}>
+            <Text className="image-logo" fontSize="2xl" fontFamily="monospace" fontWeight="bold">
+                <img src={logo3} alt="logo" />
+            </Text>
 
             <Link key={1} to={'/'} className="custom-link">
                 <NavItem icon={FiHome} name={"Home"} className={isLinkActive('/') ? 'active-link' : ''}>
@@ -139,14 +135,6 @@ function SidebarContent({ onClose, ...rest }) {
                     {'Profile'}
                 </NavItem>
             </Link>
-
-            {/* {LinkItems.map((link, index) => (
-                //link path 
-                <Link key={index} to={link.path} >
-                    <NavItem icon={link.icon} name={link.name}> {link.name}</NavItem>
-                </Link>
-            ))} */}
-
         </Box >
     );
 }

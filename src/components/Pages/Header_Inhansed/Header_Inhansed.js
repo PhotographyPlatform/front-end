@@ -22,14 +22,15 @@ import {
   ChevronRightIcon
 } from "@chakra-ui/icons"
 import { Link } from "react-router-dom"
-
-export default function Header_Inhansed({color , bg}) {
+import logo3 from '../../assets/logo3.png'
+import './header.css'
+export default function Header_Inhansed({ color, bg }) {
   const { isOpen, onToggle } = useDisclosure()
 
   return (
-    <Box  className="header_in">
+    <Box className="header_in">
       <Flex
-     //    bg={useColorModeValue("white", "gray.800")}
+        //    bg={useColorModeValue("white", "gray.800")}
         color={useColorModeValue("gray.600", "white")}
         minH={"60px"}
         py={{ base: 2 }}
@@ -37,7 +38,7 @@ export default function Header_Inhansed({color , bg}) {
         borderBottom={'0.5px'}
         borderStyle={"solid"}
         borderColor={'#ffffffa6'}
-     //    borderColor={useColorModeValue("gray.200", "gray.900")}
+        //    borderColor={useColorModeValue("gray.200", "gray.900")}
         align={"center"}
       >
         <Flex flex={{ base: 1, md: "auto" }} ml={{ base: -2 }} display={{ base: "flex", md: "none" }}>
@@ -55,11 +56,18 @@ export default function Header_Inhansed({color , bg}) {
             textAlign={useBreakpointValue({ base: "center", md: "left" })}
             fontFamily={"heading"}
             color={useColorModeValue(color)}
-          //   color={useColorModeValue("white")}
+            //   color={useColorModeValue("white")}
             fontSize={'20px'}
           >
-               <Link to={'/'}>LOGO</Link>
-            
+            <Link to={'/'}>
+              <div className="main-logo">
+
+                <img src={logo3} alt="logo" />
+
+              </div>
+
+            </Link>
+
           </Text>
 
           {/* <Flex display={{ base: "none", md: "flex" }} ml={10}>
@@ -73,14 +81,14 @@ export default function Header_Inhansed({color , bg}) {
           direction={"row"}
           spacing={6}
         >
-          
-          
+
+
           <Button
             as={"a"}
             fontSize={"18px"}
             fontWeight={500}
             variant={"link"}
-            color = {color}
+            color={color}
           //   borderWidth = '1.3px'
           //   borderColor = '#3f72afe0'
           //   borderStyle = 'solid'
@@ -93,32 +101,32 @@ export default function Header_Inhansed({color , bg}) {
           //   }}
           //   href={"signin"}
           >
-          <Link to={'/signin'}>
-            Sign In
-          </Link>
+            <Link to={'/signin'}>
+              Sign In
+            </Link>
           </Button>
-          
-          <Button 
+
+          <Button
             as={"a"}
             display={{ base: "none", md: "inline-flex" }}
             fontSize={"16px"}
             fontWeight={500}
             color={bg}
             bg={color}
-          //   color={"#29383b"}
-          //   bg={"white"}
-            borderWidth = '1.5px'
-            borderColor = '#3f72afe0'
-            borderStyle = 'solid'
-          
+            //   color={"#29383b"}
+            //   bg={"white"}
+            borderWidth='1.5px'
+            borderColor='#3f72afe0'
+            borderStyle='solid'
+
             _hover={{
-          //     bg: "white",
-               // color: '#3F72AF',
-               // fontWeight : '600'
+              //     bg: "white",
+              // color: '#3F72AF',
+              // fontWeight : '600'
             }}
           >
-          <Link to={'/signup'}> Sign Up </Link>
-            
+            <Link to={'/signup'}> Sign Up </Link>
+
           </Button>
         </Stack>
       </Flex>
@@ -286,42 +294,42 @@ const MobileNavItem = ({ label, children, href }) => {
 }
 
 const NAV_ITEMS = [
-//   {
-//     label: "Inspiration",
-//     children: [
-//       {
-//         label: "Explore Design Work",
-//         subLabel: "Trending Design to inspire you",
-//         href: "#"
-//       },
-//       {
-//         label: "New & Noteworthy",
-//         subLabel: "Up-and-coming Designers",
-//         href: "#"
-//       }
-//     ]
-//   },
-//   {
-//     label: "Find Work",
-//     children: [
-//       {
-//         label: "Job Board",
-//         subLabel: "Find your dream design job",
-//         href: "#"
-//       },
-//       {
-//         label: "Freelance Projects",
-//         subLabel: "An exclusive list for contract work",
-//         href: "#"
-//       }
-//     ]
-//   },
-//   {
-//     label: "Learn Design",
-//     href: "#"
-//   },
-//   {
-//     label: "Hire Designers",
-//     href: "#"
-//   }
+  //   {
+  //     label: "Inspiration",
+  //     children: [
+  //       {
+  //         label: "Explore Design Work",
+  //         subLabel: "Trending Design to inspire you",
+  //         href: "#"
+  //       },
+  //       {
+  //         label: "New & Noteworthy",
+  //         subLabel: "Up-and-coming Designers",
+  //         href: "#"
+  //       }
+  //     ]
+  //   },
+  //   {
+  //     label: "Find Work",
+  //     children: [
+  //       {
+  //         label: "Job Board",
+  //         subLabel: "Find your dream design job",
+  //         href: "#"
+  //       },
+  //       {
+  //         label: "Freelance Projects",
+  //         subLabel: "An exclusive list for contract work",
+  //         href: "#"
+  //       }
+  //     ]
+  //   },
+  //   {
+  //     label: "Learn Design",
+  //     href: "#"
+  //   },
+  //   {
+  //     label: "Hire Designers",
+  //     href: "#"
+  //   }
 ]
