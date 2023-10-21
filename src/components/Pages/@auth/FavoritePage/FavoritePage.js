@@ -59,28 +59,22 @@ export default function FavoritePage() {
 
      return (
           <div>
-               <Box className='favoritePage'>
+               <div className='favoritePage'>
+                    {filteredFavoritePosts.length === 0 ? (
+                         <div className='fav-empty'>
+                              <BsBookmark size={150} />
+                              <p>
+                                   You don't have any favorites yet. Start adding some posts to your favorites!
+                              </p>
+                              <p className="search-link">
 
-                    <Box className='favoriteContainer'>
-                         <Box as='div' className='favHeading'>
-                              <Heading as={'h4'}>Favorites</Heading>
-                         </Box>
-                         {filteredFavoritePosts.length === 0 ? (
-                              <div className='fav-empty'>
-                                   <BsBookmark size={150} />
-                                   <p>
-                                        You don't have any favorites yet. Start adding some posts to your favorites!
-                                   </p>
-                                   <p className="search-link">
-                                        <Link to="/search" >Explore posts and users on the Search page</Link>
-                                   </p>
-                              </div>
-                         ) : (
-                              <Posts posts={filteredFavoritePosts} />
-                         )}
-                    </Box>
-
-               </Box>
+                                   <Link to="/search" > Discover &rarr;</Link>
+                              </p>
+                         </div>
+                    ) : (
+                         <Posts posts={filteredFavoritePosts} />
+                    )}
+               </div>
                <MainFooter />
           </div>
      )

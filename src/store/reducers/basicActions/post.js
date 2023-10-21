@@ -43,11 +43,14 @@ export const { setPostData, setLoading, setLikeList, setCommentsList, setNumEffe
 
 export const fetchPostData = (postId) => async (dispatch) => {
     try {
-        dispatch(setLoading(true));
-        const response = await axios.get(`${BASE_URL}/getAllPostData/${postId}`);
-        dispatch(setPostData(response.data));
-        dispatch(setLikeList(response.data[0].likes));
-        dispatch(fetchComments(response.data[0].comments));
+        if (postId) {
+            dispatch(setLoading(true));
+            const response = await axios.get(`${BASE_URL}/getAllPostData/${postId}`);
+            dispatch(setPostData(response.data));
+            dispatch(setLikeList(response.data[0].likes));
+            dispatch(fetchComments(response.data[0].comments));
+
+        }
 
     } catch (error) {
         console.log("There is an error when getting the post Details: ", error);
@@ -84,20 +87,24 @@ export const fetchComments = (commentsList) => async (dispatch) => {
         dispatch(setLoading(true));
         const commentsData = [];
         for (const item of commentsList) {
-            const response = await axios.get(`${BASE_URL}/v1/newUserCOll/${item.userid}`);
-            const obj = {
-                owner: {
-                    username: response.data.data.username,
-                    img: response.data.data.img,
-                    Id: response.data.data.id,
-                },
-                comment: {
-                    id: item.id,
-                    content: item.contant,
-                    createdAt: item.createdAt
-                },
-            };
-            commentsData.push(obj);
+            if (item) {
+                console.log("LLLLLLLLLLLLLLLLLLLLL", item)
+                const response = await axios.get(`${BASE_URL}/v1/newUserCOll/${item.userid}`);
+                const obj = {
+                    owner: {
+                        username: response.data.data.username,
+                        img: response.data.data.img,
+                        Id: response.data.data.id,
+                    },
+                    comment: {
+                        id: item.id,
+                        content: item.contant,
+                        createdAt: item.createdAt
+                    },
+                };
+                commentsData.push(obj);
+            }
+
         }
         dispatch(setCommentsList(commentsData));
     } catch (error) {

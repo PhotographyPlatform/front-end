@@ -22,7 +22,8 @@ function ActionSection(photoId) {
     const favoriteList = useSelector((state) => (state.Favorite && state.Favorite.favoritePosts) ? state.Favorite.favoritePosts : []);
     const postData = useSelector((state) => state.post);
     const likeList = postData.likeList;
-
+    const [liked, setLiked] = useState(false);
+    const [fav, setFav] = useState(false);
 
     useEffect(() => {
         if (Array.isArray(likeList)) {
@@ -62,8 +63,7 @@ function ActionSection(photoId) {
 
     }, [favoriteList]);
 
-    const [liked, setLiked] = useState(false);
-    const [fav, setFav] = useState(false);
+
 
     const dispatch = useDispatch();
     // Like Comment button State

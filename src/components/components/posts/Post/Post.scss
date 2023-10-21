@@ -1,7 +1,8 @@
 .post {
   width: 22.8vw;
   height: 22.8vw;
-  position: relative;
+  // position: relative;
+  box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.1);
 
   img {
     width: 100%;
@@ -10,11 +11,13 @@
   }
 
   .post-owner {
-    position: absolute;
-    bottom: 275px;
-    left: 15px;
-    display: none;
-    align-items: center;
+    position: relative;
+    display: flex;
+
+    margin-top: -95%;
+    margin-left: 7%;
+    opacity: 0;
+    transition: max-height 0.3s, opacity 0.3s;
 
     .user-img {
       width: 45px;
@@ -24,14 +27,22 @@
       margin-right: 10px;
     }
 
+    .post-time {
+      color: white;
+      margin-left: 44%;
+      margin-top: 3%;
+      font-size: 10px;
+    }
+
     .username {
-      font-weight: 600;
+      margin-top: 6px;
+
       color: rgb(230, 230, 230);
     }
   }
 
   &:hover .post-owner {
-    display: flex;
+    opacity: 1;
   }
 
   img:hover {
@@ -41,51 +52,177 @@
   }
 }
 
+$small-screen: 768px;
+$medium-screen: 1024px;
+$large-screen: 1200px;
 
+@media (max-width: $small-screen) {
 
+  .post {
+    width: 22.8vw;
+    height: 22.8vw;
+    // position: relative;
+    box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.1);
 
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
 
+    .post-owner {
+      position: relative;
+      display: flex;
 
-// .post {
-//   // width: 340px;
-//   // height: 340px;
-//   width: 22vw;
-//   height: 22vw;
-//   position: relative;
+      margin-top: -95%;
+      margin-left: 7%;
+      opacity: 0;
+      transition: max-height 0.3s, opacity 0.3s;
 
-//   img{
-//     width: 100%;
-//     height: 100%;
-//     object-fit: cover;
-//   }
-  
-//   img:hover{
-//       filter: brightness(50%);
-//       cursor: pointer;
-//       transition: 0.5s;
-//   }
-// }
+      .user-img {
+        width: 25px;
+        height: 25px;
+        object-fit: cover;
+        border-radius: 50px;
+        margin-right: 10px;
+      }
 
+      .post-time {
+        color: white;
+        margin-left: 44%;
+        margin-top: 3%;
+        font-size: 10px;
+      }
 
-// .post-owner{
+      .username {
+        margin-top: 6px;
 
-//   position: absolute;
-//   bottom: 270px;
-//   left: 15px;
-//   display: flex;
-//   align-items: center;
+        color: rgb(230, 230, 230);
+      }
+    }
 
-//   .user-img{
-//     width: 45px;
-//     height: 45px;
-//     object-fit: cover;
-//     border-radius: 50px;
-//     margin-right: 10px;
-//   }
+    &:hover .post-owner {
+      opacity: 1;
+    }
 
-//   .username{
-//     font-weight: 600;
-//     color: white;
-//   }
+    img:hover {
+      filter: brightness(50%);
+      cursor: pointer;
+      transition: 0.5s;
+    }
+  }
+}
 
-// }
+@media (min-width: $medium-screen) {
+  .post {
+    width: 22.8vw;
+    height: 22.8vw;
+    // position: relative;
+    box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.1);
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .post-owner {
+      position: relative;
+      display: flex;
+
+      margin-top: -95%;
+      margin-left: 7%;
+      opacity: 0;
+      transition: max-height 0.3s, opacity 0.3s;
+
+      .user-img {
+        width: 45px;
+        height: 45px;
+        object-fit: cover;
+        border-radius: 50px;
+        margin-right: 10px;
+      }
+
+      .post-time {
+        color: white;
+        margin-left: 44%;
+        margin-top: 3%;
+        font-size: 10px;
+      }
+
+      .username {
+        margin-top: 6px;
+
+        color: rgb(230, 230, 230);
+      }
+    }
+
+    &:hover .post-owner {
+      opacity: 1;
+    }
+
+    img:hover {
+      filter: brightness(50%);
+      cursor: pointer;
+      transition: 0.5s;
+    }
+  }
+}
+
+@media (min-width: $large-screen) {
+
+  .post {
+    width: 22.8vw;
+    height: 22.8vw;
+    // position: relative;
+    box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.1);
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .post-owner {
+      position: relative;
+      display: flex;
+
+      margin-top: -95%;
+      margin-left: 7%;
+      opacity: 0;
+      transition: max-height 0.3s, opacity 0.3s;
+
+      .user-img {
+        width: 45px;
+        height: 45px;
+        object-fit: cover;
+        border-radius: 50px;
+        margin-right: 10px;
+      }
+
+      .post-time {
+        color: white;
+        margin-left: 44%;
+        margin-top: 3%;
+        font-size: 10px;
+      }
+
+      .username {
+        margin-top: 6px;
+
+        color: rgb(230, 230, 230);
+      }
+    }
+
+    &:hover .post-owner {
+      opacity: 1;
+    }
+
+    img:hover {
+      filter: brightness(50%);
+      cursor: pointer;
+      transition: 0.5s;
+    }
+  }
+
+}
