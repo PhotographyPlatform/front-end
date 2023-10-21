@@ -22,6 +22,14 @@ export default function Meet_Team() {
                     <Box className='Meet_Team_cards'>
                          <Box className='Meet_Team_card'>
                               <Image src={moh} />
+                                   <Box
+                                   position="absolute"
+                                   top="0"
+                                   left="0"
+                                   right="0"
+                                   bottom="0"
+                                   backgroundColor="rgba(17, 45, 78, 0.5)"
+                              />
                               <Box className='member_caption_cont'>
                                    <Box className='member_caption'>
                                         <Fade direction='left'>
@@ -40,6 +48,14 @@ export default function Meet_Team() {
                          </Box>
                          <Box className='Meet_Team_card'>
                               <Image src={sham} />
+                              <Box
+                                   position="absolute"
+                                   top="0"
+                                   left="0"
+                                   right="0"
+                                   bottom="0"
+                                   backgroundColor="rgba(17, 45, 78, 0.5)"
+                              />
                               <Box className='member_caption_cont'>
                                    <Box className='member_caption'>
                                         <Fade direction='left'>
@@ -58,6 +74,14 @@ export default function Meet_Team() {
                          </Box>
                          <Box className='Meet_Team_card'>
                               <Image src={ihab} />
+                              <Box
+                                   position="absolute"
+                                   top="0"
+                                   left="0"
+                                   right="0"
+                                   bottom="0"
+                                   backgroundColor="rgba(17, 45, 78, 0.5)"
+                              />
                               <Box className='member_caption_cont'>
                                    <Box className='member_caption'>
                                         <Fade direction='left'>
@@ -76,6 +100,14 @@ export default function Meet_Team() {
                          </Box>
                          <Box className='Meet_Team_card'>
                               <Image src={hamza} />
+                              <Box
+                                   position="absolute"
+                                   top="0"
+                                   left="0"
+                                   right="0"
+                                   bottom="0"
+                                   backgroundColor="rgba(17, 45, 78, 0.5)"
+                              />
                               <Box className='member_caption_cont'>
                                    <Box className='member_caption'>
                                         <Fade direction='left'>

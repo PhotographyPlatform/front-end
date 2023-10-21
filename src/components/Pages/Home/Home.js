@@ -17,15 +17,15 @@ export default function Home() {
   return (
     <Box className='home-page'>
       <Hero />
-      <Section_one/>
-      <Section_Two/>
-      <Section_Three />
-      <Section_Four/>
-      <Section_Five/>
-      <Section_Six/>
+      <Section_one />
+      <Section_Two />
+      {/* <Section_Three /> */}
+      <Section_Four />
+      <Section_Five />
+      <Section_Six />
       <Section_Seven />
-      <Meet_Team/>
-      <Section_Eight/>
+      <Meet_Team />
+      <Section_Eight />
     </Box>
   )
 }
