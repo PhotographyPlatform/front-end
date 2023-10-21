@@ -93,7 +93,10 @@ function SidebarContent({ onClose, ...rest }) {
             pos="fixed"
             h="full"
             {...rest}>
+
             <Text className="image-logo" fontSize="2xl" fontFamily="monospace" fontWeight="bold">
+                <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
+
                 <img src={logo3} alt="logo" />
             </Text>
 
