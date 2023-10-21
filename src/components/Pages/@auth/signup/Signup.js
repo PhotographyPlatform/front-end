@@ -46,25 +46,25 @@ export default function SignUp() {
     const submitHandler = async (e) => {
         try {
             e.preventDefault()
-            // const obj = {
-            //     email: e.target.email.value,
-            //     firstName: e.target.fname.value,
-            //     lastName: e.target.lname.value,
-            //     password: e.target.password.value,
-            //     address: e.target.address.value,
-            //     gender: e.target.options.value,
-            //     birthday: e.target.bday.value,
-            //     username: e.target.username.value
-            // }
             const obj = {
-                email: 'moh122@gmail.com',
-                firstName: 'Mohammad',
-                lastName: 'Attallah',
-                password: '123',
-                address: 'amman',
-                birthday: '1999-12 - 12',
-                username: 'osama'
+                email: e.target.email.value,
+                firstName: e.target.fname.value,
+                lastName: e.target.lname.value,
+                password: e.target.password.value,
+                address: e.target.address.value,
+                gender: e.target.options.value,
+                birthday: e.target.bday.value,
+                username: e.target.username.value
             }
+            // const obj = {
+            //     email: 'moh122@gmail.com',
+            //     firstName: 'Mohammad',
+            //     lastName: 'Attallah',
+            //     password: '123',
+            //     address: 'amman',
+            //     birthday: '1999-12 - 12',
+            //     username: 'osama'
+            // }
             localStorage.setItem('email', obj.email)
             const signUp = await axios.post(`${URL}/signup`, obj)
             if (signUp.status === 200) {
