@@ -20,7 +20,8 @@ import {
   Alert
 } from '@chakra-ui/react';
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
-
+import logo3 from "../../../assets/logo3.png"
+import PNGyellow from "../../../assets/PNG yellow.png"
 import { DecodeToken, signin } from '../../../../store/reducers/auth/user.reducer';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom'
@@ -35,9 +36,9 @@ const VARIANT_COLOR = 'teal';
 
 const Signin = () => {
   return (
-    
+
     <ColorModeProvider>
-      <Header_Inhansed color={'#29383b'} bg={'white' }/>
+      <Header_Inhansed color={'#29383b'} bg={'white'} />
       <CSSReset />
       <Animation />
       <LoginArea />
@@ -87,11 +88,13 @@ const LoginArea = () => {
 const LoginHeader = () => {
   return (
     <Box textAlign='center'>
-      <Heading>Pixel Time</Heading>
+      <Heading className='logo-login'>
+        <img src={logo3} alt='Pixle Time Logo' />
+
+      </Heading>
       <Text color="fg.muted" fontSize='17px'>
         Don't have an account? <Link to="/signup" color={`${VARIANT_COLOR}.500`}>Sign up</Link>
-    // convert from href to to
-//         Don't have an account? <Link href="/signup" color={`#3F72AF`}>Sign up</Link>
+
       </Text>
     </Box>
   );

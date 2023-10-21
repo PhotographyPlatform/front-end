@@ -1,6 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
-
+import './App.scss'
 
 import Container from './components/Pages/@auth/index';
 import Cookies from 'react-cookies';
@@ -35,6 +34,7 @@ import { dispatchAllNotification, fetchUserListRedux, getNotification } from './
 import Challenges from './components/Pages/Challenges';
 import { setNewNotifi, setRead } from './store/reducers/notificationAction';
 import { setOldNotifi } from './store/reducers/notificationAction';
+import { fetchCategories } from './store/reducers/Search';
 
 // socket assets 
 const URL = process.env.REACT_APP_URL;
@@ -125,6 +125,8 @@ function App() {
   
  
 
+    
+  dispatch(fetchCategories());
 
 
   return (

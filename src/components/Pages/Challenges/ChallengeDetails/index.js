@@ -8,9 +8,14 @@ import Report from "../../../components/Report";
 import NewChallenge from "../../../components/NewChallenge";
 
 function ChallengeDetails({ selectedChallenge }) {
-  const { isOpen: isOpenNewPost, onOpen: onOpenNewPost, onClose: onCloseNewPost } = useDisclosure();
-  const [isViewParticipationsClicked, setIsViewParticipationsClicked] = useState(false);
-  const [isNewPostAdded, setIsNewPostAdded] = useState(false); 
+  const {
+    isOpen: isOpenNewPost,
+    onOpen: onOpenNewPost,
+    onClose: onCloseNewPost,
+  } = useDisclosure();
+  const [isViewParticipationsClicked, setIsViewParticipationsClicked] =
+    useState(false);
+  const [isNewPostAdded, setIsNewPostAdded] = useState(false);
   const [allPosts, setAllPosts] = useState([]);
   const URL = process.env.REACT_APP_URL;
 
@@ -18,14 +23,31 @@ function ChallengeDetails({ selectedChallenge }) {
   useEffect(()=>{
     try{
       const response = axios.get(`{URL}/v1/newPostCOll`);
+
       response.then((data) => {
-        const posts = data.data.filter(item => item.challengeID===selectedChallenge.id);
+        const posts = data.data.filter(
+          (item) => item.challengeID === selectedChallenge.id
+        );
         setAllPosts(posts);
       });
-    }catch(e){
-      console.log('error while fetching challenges posts');
+    } catch (e) {
+      console.log("error while fetching challenges posts");
     }
-  },[isNewPostAdded]);
+  }, [isNewPostAdded]);
+
+  const readableDate = (datefromdb) => {
+
+    const date = new Date(datefromdb);
+
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+
+    const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}`;
+    return formattedDate;
+  };
 
   return (
     <>
@@ -56,8 +78,8 @@ function ChallengeDetails({ selectedChallenge }) {
               <div className="card-item">
                 <h5 class="card-title">Start and End date</h5>
                 <ul class="card-text">
-                  <li>{selectedChallenge.startDate}</li>
-                  <li>{selectedChallenge.endDate}</li>
+                  <li>{readableDate(selectedChallenge.startDate)}</li>
+                  <li>{readableDate(selectedChallenge.endDate)}</li>
                 </ul>
               </div>
 
@@ -80,13 +102,16 @@ function ChallengeDetails({ selectedChallenge }) {
                   challengeId={selectedChallenge.id}
                   setIsNewPostAdded={setIsNewPostAdded}
                 />
-                
               </div>
             </div>
           </div>
         </div>
+      ) : allPosts.length === 0 ? (
+        <i>
+          there are no posts for the challenge '{selectedChallenge.title}' yet
+        </i>
       ) : (
-        allPosts.length===0 ? <i>there are no posts for the challenge '{selectedChallenge.title}' yet</i> : <Posts posts={allPosts}/>
+        <Posts posts={allPosts} />
       )}
     </>
   );

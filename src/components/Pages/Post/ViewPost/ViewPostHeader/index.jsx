@@ -39,19 +39,22 @@ function ViewPostHeader({ currentPost, currId }) {
     }, [])
 
     useEffect(() => {
-        axios.get(`${baseUrl}/v1/newUserCOll/${userid}`)
-            .then(response => {
+        if (userid) {
+            axios.get(`${baseUrl}/v1/newUserCOll/${userid}`)
+                .then(response => {
 
-                setData(response.data.data);
-                setLoading(false);
-            })
-            .catch(err => {
-                setError(err);
-                setLoading(false);
-            });
-        return () => {
+                    setData(response.data.data);
+                    setLoading(false);
+                })
+                .catch(err => {
+                    setError(err);
+                    setLoading(false);
+                });
+            return () => {
 
-        };
+            };
+        }
+      
     }, [userid]);
 
     useEffect(() => {

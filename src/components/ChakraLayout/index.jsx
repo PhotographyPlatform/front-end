@@ -56,7 +56,8 @@ import AdminReports from '../Admin/Reports/Reports';
 import { BsCamera, BsChatDots } from 'react-icons/bs';
 // import { IoImagesOutline } from 'react-icons/io';
 import { LuImagePlus } from "react-icons/lu";
-
+import logo3 from '../assets/logo3.png';
+import logo4 from '../assets/logo4.png';
 import NotifiList from './notificationList';
 import { BsBookmark } from 'react-icons/bs';
 import { BiAddToQueue, BiSolidAddToQueue } from 'react-icons/bi';
@@ -94,66 +95,56 @@ function SidebarContent({ onClose, ...rest }) {
 
     return (
         <Box
+            className='side-nav-style'
             transition="3s ease"
-            bg={useColorModeValue('gray.200', 'gray.900')}
+            // bg={useColorModeValue('gray.200', 'gray.900')}
             borderRight="1px"
             borderRightColor={useColorModeValue('gray.200', 'gray.700')}
             w={{ base: 'full', md: 60 }}
             pos="fixed"
             h="full"
-            {...rest}
-        >
-            <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
+            {...rest}>
+            <Text className="image-logo" fontSize="2xl" fontFamily="monospace" fontWeight="bold">
+                <img src={logo3} alt="logo" />
+            </Text>
 
-                <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-                    Logo
-                </Text>
-                <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
-            </Flex>
-
-            <Link key={1} to={'/'} >
-                <NavItem icon={FiHome} name={"Home"}
-                    className={isLinkActive('/') ? 'active-link' : ''}
-                >
-
-                    {'Home'}</NavItem>
+            <Link key={1} to={'/'} className="custom-link">
+                <NavItem icon={FiHome} name={"Home"} className={isLinkActive('/') ? 'active-link' : ''}>
+                    {'Home'}
+                </NavItem>
             </Link>
-            <Link key={2} to={'/search'}>
-                <NavItem
-                    icon={FiCompass}
-                    name="Search"
-                    className={isLinkActive('/search') ? 'active-link' : ''}
-                >
+            <Link key={2} to={'/search'} className="custom-link">
+                <NavItem icon={FiCompass} name="Search" className={isLinkActive('/search') ? 'active-link' : ''}>
                     {'Search'}
                 </NavItem>
             </Link>
+
             {/* popup Modal */}
-            <Link key={3}>
+            <Link key={3} className="custom-link">
                 <NewPost onCloseNewPost={onCloseNewPost} isOpenNewPost={isOpenNewPost} />
-                <NavItem icon={LuImagePlus} onClick={onOpenNewPost}   >{'Add New Post'} </NavItem>
+                <NavItem icon={LuImagePlus} onClick={onOpenNewPost}>
+                    {'Add New Post'}
+                </NavItem>
             </Link>
-            <Link key={4} to={'/challenges'} >
-                <NavItem icon={BsCamera} name={"challenges"}
-                    className={isLinkActive('/challenges') ? 'active-link' : ''}
-                > {'challenges'}</NavItem>
+            <Link key={4} to={'/challenges'} className="custom-link">
+                <NavItem icon={BsCamera} name={"Challenges"} className={isLinkActive('/challenges') ? 'active-link' : ''}>
+                    {'Challenges'}
+                </NavItem>
             </Link>
-            <Link key={6} to={'/chat'} >
-                <NavItem icon={BsChatDots} name={"Chat"}
-                    className={isLinkActive('/chat') ? 'active-link' : ''}
-
-                > {'Chat'}</NavItem>
+            <Link key={6} to={'/chat'} className="custom-link">
+                <NavItem icon={BsChatDots} name={"Chat"} className={isLinkActive('/chat') ? 'active-link' : ''}>
+                    {'Chat'}
+                </NavItem>
             </Link>
-
-            <Link key={5} to={'/favorite'} >
-                <NavItem icon={BsBookmark} name={"Favourites"}
-                    className={isLinkActive('/favorite') ? 'active-link' : ''}
-                > {'Favourites'}</NavItem>
+            <Link key={5} to={'/favorite'} className="custom-link">
+                <NavItem icon={BsBookmark} name={"Favourites"} className={isLinkActive('/favorite') ? 'active-link' : ''}>
+                    {'Favourites'}
+                </NavItem>
             </Link>
-            <Link key={5} to={'/profile'} >
-                <NavItem icon={FiTrendingUp} name={"Profile"}
-                    className={isLinkActive('/profile') ? 'active-link' : ''}
-
-                > {'Profile'}</NavItem>
+            <Link key={5} to={'/profile'} className="custom-link">
+                <NavItem icon={FiTrendingUp} name={"Profile"} className={isLinkActive('/profile') ? 'active-link' : ''}>
+                    {'Profile'}
+                </NavItem>
             </Link>
 
             {
@@ -180,6 +171,7 @@ function SidebarContent({ onClose, ...rest }) {
                     <NavItem icon={link.icon} name={link.name}> {link.name}</NavItem>
                 </Link>
             ))} */}
+
 
         </Box >
     );

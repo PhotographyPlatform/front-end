@@ -29,7 +29,10 @@ import { useNavigate } from 'react-router-dom'
 import React, { useState } from 'react'
 import Header_Inhansed from '../../Header_Inhansed/Header_Inhansed'
 import Animation from '../signin/Animation'
+import logo3 from "../../../assets/logo3.png"
+import './signup.css'
 const VARIANT_COLOR = 'teal'
+
 
 export default function SignUp() {
     const navigate = useNavigate()
@@ -73,109 +76,111 @@ export default function SignUp() {
         }
     }
 
-    return ( 
+    return (
         <>
-        <Header_Inhansed color={'#29383b'} bg={'white' } />
-        <Container maxW="xl" px="8" backgroundColor="white" marginTop='10px'>
+            <Header_Inhansed color={'#29383b'} bg={'white'} />
+            <Container maxW="xl" px="8" backgroundColor="white" marginTop='10px'>
 
-            <form onSubmit={submitHandler}>
-                <Stack spacing="4">
-                    <Box
-                        px="4"
-                        bg="transparent"
-                        boxShadow="md"
-                        borderRadius="xl"
-                    >
-                        <Stack>
-                            <Box textAlign="center">
-                                <Heading>Sign Up</Heading>
-                                <Divider />
-                            </Box>
-                            <Stack spacing="2">
-                                <Stack direction="row">
-                                    <FormControl flex="1">
-                                        <FormLabel htmlFor="fname">First Name</FormLabel>
-                                        <Input id="fname" type="text" />
-                                    </FormControl>
-                                    <FormControl flex="1">
-                                        <FormLabel htmlFor="lname">Last Name</FormLabel>
-                                        <Input id="lname" type="text" />
-                                    </FormControl>
-                                </Stack>
-                                <FormControl>
-                                    <FormLabel htmlFor="email">Email</FormLabel>
-                                    <Input id="email" type="email" />
-                                </FormControl>
-                                <FormControl>
-                                    <FormLabel htmlFor="username">User Name</FormLabel>
-                                    <Input id="username" type="text" />
-                                </FormControl>
-                                <Stack direction="row">
-                                    <FormControl flex="1">
-                                        <FormLabel htmlFor="address">Address</FormLabel>
-                                        <Input id="address" type="text" />
-                                    </FormControl>
-                                    <FormControl flex="1">
-                                        <FormLabel htmlFor="bday">Birthday</FormLabel>
-                                        <Input
-                                            name="bday"
-                                            placeholder="Select Date"
-                                            size="md"
-                                            type="date"
-                                        />
-                                    </FormControl>
-                                </Stack>
-                                <FormControl id="options">
-                                    <FormLabel htmlFor="select">Gender</FormLabel>
-                                    <Select placeholder="Male / Female">
-                                        <option value="male">Male</option>
-                                        <option value="female">Female</option>
-                                    </Select>
-                                </FormControl>
-                                <PasswordField />
-                            </Stack>
-                            <Stack direction='row'>
-                                <Checkbox defaultChecked>I have read and agreed to the</Checkbox>
-                                <Link variant="text" size="sm" style={{ textDecoration: 'underline lightblue', color: 'black' }} href='#'>
-                                    Terms of use
-                                </Link>
-                                <Link variant="text" size="sm" style={{ textDecoration: 'underline lightblue', color: 'black' }} href='#'>
-                                    Privacy notice
-                                </Link>
-                            </Stack>
-                            <Button type="submit">Sign Up</Button>
-                            <Text color="fg.muted">
-                                Already have an account?{' '}
-                                <Link href="signin" style={{ textDecoration: 'underline lightblue' }}>
-                                    Sign In
-                                </Link>
-                            </Text>
-                        </Stack>
-                    </Box>
-                </Stack>
-            </form>
-            <AlertDialog
-                motionPreset="slideInBottom"
-                leastDestructiveRef={cancelRef}
-                onClose={onClose}
-                isOpen={isOpen}
-                isCentered
-            >
-                <AlertDialogOverlay />
-                <AlertDialogContent>
-                    <AlertDialogHeader>Error</AlertDialogHeader>
-                    <AlertDialogCloseButton />
-                    <AlertDialogBody>{error}</AlertDialogBody>
-                    <AlertDialogFooter>
-                        <Button ref={cancelRef} onClick={onClose}>
-                            OK
-                        </Button>
-                    </AlertDialogFooter>
-                </AlertDialogContent>
-            </AlertDialog>
-            <Animation />
-        </Container>
+                <form onSubmit={submitHandler}>
+                    <Stack spacing="4">
+                        <Box
+                            px="4"
+                            bg="transparent"
+                            boxShadow="md"
+                            borderRadius="xl"
+                        >
+                            <Stack>
+                                <Box textAlign="center">
+                                    <Heading className='logo-signup'> <img src={logo3} alt="LOGO PIXLE TIME" /></Heading>
 
-     </>
+                                    <Heading className='head-signup'>Sign Up</Heading>
+                                    <Divider />
+                                </Box>
+                                <Stack spacing="2">
+                                    <Stack direction="row">
+                                        <FormControl flex="1">
+                                            <FormLabel htmlFor="fname">First Name</FormLabel>
+                                            <Input id="fname" type="text" />
+                                        </FormControl>
+                                        <FormControl flex="1">
+                                            <FormLabel htmlFor="lname">Last Name</FormLabel>
+                                            <Input id="lname" type="text" />
+                                        </FormControl>
+                                    </Stack>
+                                    <FormControl>
+                                        <FormLabel htmlFor="email">Email</FormLabel>
+                                        <Input id="email" type="email" />
+                                    </FormControl>
+                                    <FormControl>
+                                        <FormLabel htmlFor="username">User Name</FormLabel>
+                                        <Input id="username" type="text" />
+                                    </FormControl>
+                                    <Stack direction="row">
+                                        <FormControl flex="1">
+                                            <FormLabel htmlFor="address">Address</FormLabel>
+                                            <Input id="address" type="text" />
+                                        </FormControl>
+                                        <FormControl flex="1">
+                                            <FormLabel htmlFor="bday">Birthday</FormLabel>
+                                            <Input
+                                                name="bday"
+                                                placeholder="Select Date"
+                                                size="md"
+                                                type="date"
+                                            />
+                                        </FormControl>
+                                    </Stack>
+                                    <FormControl id="options">
+                                        <FormLabel htmlFor="select">Gender</FormLabel>
+                                        <Select placeholder="Male / Female">
+                                            <option value="male">Male</option>
+                                            <option value="female">Female</option>
+                                        </Select>
+                                    </FormControl>
+                                    <PasswordField />
+                                </Stack>
+                                <Stack direction='row'>
+                                    <Checkbox defaultChecked>I have read and agreed to the</Checkbox>
+                                    <Link variant="text" size="sm" style={{ textDecoration: 'underline lightblue', color: 'black' }} href='#'>
+                                        Terms of use
+                                    </Link>
+                                    <Link variant="text" size="sm" style={{ textDecoration: 'underline lightblue', color: 'black' }} href='#'>
+                                        Privacy notice
+                                    </Link>
+                                </Stack>
+                                <Button type="submit">Sign Up</Button>
+                                <Text color="fg.muted">
+                                    Already have an account?{' '}
+                                    <Link href="signin" style={{ textDecoration: 'underline lightblue' }}>
+                                        Sign In
+                                    </Link>
+                                </Text>
+                            </Stack>
+                        </Box>
+                    </Stack>
+                </form>
+                <AlertDialog
+                    motionPreset="slideInBottom"
+                    leastDestructiveRef={cancelRef}
+                    onClose={onClose}
+                    isOpen={isOpen}
+                    isCentered
+                >
+                    <AlertDialogOverlay />
+                    <AlertDialogContent>
+                        <AlertDialogHeader>Error</AlertDialogHeader>
+                        <AlertDialogCloseButton />
+                        <AlertDialogBody>{error}</AlertDialogBody>
+                        <AlertDialogFooter>
+                            <Button ref={cancelRef} onClick={onClose}>
+                                OK
+                            </Button>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialog>
+                <Animation />
+            </Container>
+
+        </>
     )
 }

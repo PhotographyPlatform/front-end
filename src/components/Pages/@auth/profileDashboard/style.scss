@@ -87,3 +87,40 @@
 .btn-hover3:hover {
     background-color: #e00d0d !important;
 }
+
+
+.empty-profile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    opacity: 0.4;
+    color: #112D4E;
+
+    h4 {
+        font-size: 42px;
+    }
+}
+
+
+.address-profile {
+    // text-decoration: ;
+    text-transform: capitalize;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .Text::first-letter {
+        text-transform: uppercase;
+    }
+}
+
+.name-profile {
+    text-transform: capitalize;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    SVG{
+        margin-left: 7px;
+    }
+}

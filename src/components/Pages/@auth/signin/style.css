@@ -11,6 +11,20 @@
     z-index: -100;
 }
 
+.logo-login {
+    background-color: #F9F7F7;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.1); */
+}
+
+.logo-login img {
+    height: 20vh;
+    width: auto;
+}
+
 /* .animation {
     z-index: 10 !important;
     position: absolute !important;

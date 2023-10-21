@@ -39,12 +39,8 @@
                     color: white;
                     border-radius: 10px;
                     transition: all 0.3s ease;
-                    /* Add this line for smooth transition */
-                    // transition: all 0.3s ease; /* Add this line for smooth transition */
-
 
                     &:hover {
-                         // box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* Add a box shadow on hover */
                          transform: scale(1.01);
 
                          .favTitle {
@@ -124,16 +120,19 @@
 
 
 .fav-empty {
+     width: 100% !important;
      display: flex;
      flex-direction: column;
      align-items: center;
+     justify-content: center;
      gap: 20px;
      opacity: 0.4;
      color: #112D4E !important;
-
+     
      SVG {}
 
      .search-link {
+          font-size: 22px;
           opacity: 1 !important;
           color: #000000 !important;
           text-decoration: underline;
