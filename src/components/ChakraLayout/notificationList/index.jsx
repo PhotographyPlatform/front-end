@@ -184,7 +184,7 @@ function NotifiList() {
                 <span className={`notifi-span ${notifiRead ? 'notifi-none' : 'notifi-red'}`}></span>
 
 
-                <MenuButton as={IconButton} aria-label="Options" icon={<FiBell size={25} />} variant="outline" />
+                <MenuButton as={IconButton} aria-label="Options" icon={<FiBell size={22} />} variant="outline" />
             </div>
             <MenuList isOpen={isOpen} onClose={onClose} className={"notifi"}>
 

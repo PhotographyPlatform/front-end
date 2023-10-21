@@ -47,6 +47,7 @@
 
     /* Hide the default scrollbar */
     &::-webkit-scrollbar {
+        margin-top: -40px;
         opacity: 0 !important;
         transition: opacity 0.3s;
     }
@@ -63,16 +64,28 @@
     }
 
     &::-webkit-scrollbar {
+        all: unset;
+        width: 10px;
+        margin-top: 40px !important;
+        // margin-top: none !important;
+        margin-bottom: 0px !important;
+        all: unset;
         width: 4px;
+        height: 200%;
+
+
     }
 
     &::-webkit-scrollbar-track {
-        background: var(--scrollbar-track-color);
+        background-color: transparent;
+        margin-top: 0px !important;
+        // background: var(--scrollbar-track-color);
         background-color: transparent;
     }
 
     &::-webkit-scrollbar-thumb {
         background: var(--scrollbar-thumb-color);
+        background-color: transparent;
         border-radius: 4px;
     }
 

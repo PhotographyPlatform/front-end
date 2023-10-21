@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import './navCustome.scss'
 import {
     IconButton,
     Avatar,
@@ -38,10 +39,6 @@ import { useSelector } from 'react-redux';
 function NavItem({ name, icon, children, ...rest }) {
 
     const notificationState = useSelector((state) => state.ChatList.AllNotification);
-    // console.log("UUUUUUUUUUUUUUUUIII",notificationState)
-    // useEffect(() => {
-    //     console.log('dddddddddddddddddddd');
-    // }, [notificationState])
 
     return (
         <Box
@@ -49,19 +46,25 @@ function NavItem({ name, icon, children, ...rest }) {
             href="#"
             style={{ textDecoration: 'none', backgroundColor: '#F9F7F7' }}
             _focus={{ boxShadow: 'none' }}
-
+            className='nav-custome-link'
         >
             <Flex
+
+                // className='nav-custome-link'
                 align="center"
                 p="4"
                 mx="4"
                 borderRadius="lg"
+                border="1px solid transparent"
                 role="group"
                 cursor="pointer"
                 _hover={{
-                    bg: 'cyan.400',
+                    bg: '#3F72AF',
                     color: 'white',
                 }}
+
+                className='nav-custome-link'
+
                 {...rest}
             >
                 {icon && (
@@ -80,7 +83,7 @@ function NavItem({ name, icon, children, ...rest }) {
                 )}
                 {children}
             </Flex>
-        </Box>
+        </Box >
     );
 }
 

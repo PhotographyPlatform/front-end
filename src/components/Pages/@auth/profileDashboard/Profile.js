@@ -40,7 +40,7 @@ import {
     EditablePreview,
     FormHelperText,
 } from '@chakra-ui/react';
-import { BsFillPencilFill } from 'react-icons/bs'
+import { BsCamera, BsFillPencilFill } from 'react-icons/bs'
 import { logOut, uderData } from '../../../../store/reducers/auth/user.reducer'
 import { profileEdit, update, getFollowing, getFollowers, uploadImage, uploadHero, getImages } from '../../../../store/reducers/profile/profile.reducer'
 import { useDispatch, useSelector } from 'react-redux';
@@ -53,6 +53,11 @@ import axios from 'axios';
 import { setTrue } from '../../../../store/reducers/profile/refresh';
 import Posts from '../../../components/posts';
 import placeholder from '../../../assets/cover-1.png'
+import MainFooter from '../../Footer';
+import { IoLocationOutline } from 'react-icons/io5';
+import { MdLocationOn } from 'react-icons/md';
+import { FaPen } from 'react-icons/fa';
+
 function Profile() {
     const [profileImage, setprofileImage] = useState(null);
     const [heroImage, setheroImage] = useState(null);
@@ -151,244 +156,264 @@ function Profile() {
     }, [])
 
     return (
-        <>
-            <Stack
-                as={Box}
-                spacing={{ base: 8, md: 16 }}
-            >
+        <div>
+            <>
                 <Stack
-                    direction={'column'}
-                    align={'center'}
-                    alignSelf={'center'}
-                    position={'relative'}
+                    as={Box}
+                    spacing={{ base: 8, md: 16 }}
                 >
+                    <Stack
+                        direction={'column'}
+                        align={'center'}
+                        alignSelf={'center'}
+                        position={'relative'}
+                    >
 
-                    {
-                        image.allImages &&
-                        <Image
-                            src={image.allImages.heroImage || placeholder}
-                            objectFit="cover"
-                            maxW={['100%', '100%', '100%', '100%', '100%']}
-                            width={['100%', '100%', '100%', '1000px', '1260px']}
-                            height="350px"
-                        />
-                    }
-                    {
-                        image.allImages &&
-                        <Avatar
-                            position="absolute"
-                            top={['88%', '90%', '93%', '90%']}
-                            size={['xl', 'xl', '2xl']}
-                            src={image.allImages.profileImg}
-                        />
-                    }
-                </Stack>
-                <Stack gap='0'>
-                    <Box display='flex' justifyContent='flex-end'>
-                        <Button
-                            className='btn-profile'
-                            onClick={handleClick}
-                            style={{
-                                transition: 'background-color 0.3s ease',
-                                backgroundColor: '#3F72AF',
-                                color: '#F9F7F7',
-                                borderColor: '#112D4E',
-                                borderWidth: '2px',
-                                borderStyle: 'solid',
-                            }}
-                        >
-                            <BsFillPencilFill />
-                        </Button>
-                    </Box>
-                    <Text fontSize='3xl' marginBottom='0'>{`${data.firstName} ${data.lastName}`}</Text>
-                    <Text fontSize='2xl' >{data.address}</Text>
-                    <HStack justifyContent='center' gap='30px'>
-                        {profileState.followers && (
-                            <Text fontSize='xl' fontWeight='bold' cursor='pointer' onClick={handleFollowersClick} _hover={{ color: 'gray' }}>
-                                Followers <Text>{profileState.followers.Count || 0}</Text>
-                            </Text>
-                        )}
-                        {profileState.following && (
-                            <Text fontSize='xl' fontWeight='bold' cursor='pointer' onClick={handleFollowingClick} _hover={{ color: 'gray' }}>
-                                Following <Text>{profileState.following.Count || 0}</Text>
-                            </Text>
-                        )}
-
-                    </HStack>
-                    {showFollowersModal && profileState.followers.Count !== 0 ? <FollowersModal followers={true} /> : null}
-                    {showFollowingModal && profileState.following.Count !== 0 ? <FollowersModal following={true} /> : null}
-                </Stack>
-            </Stack>
-            <Divider />
-            <Posts posts={images} />
-
-            {/*/ Edit profile Modal/*/}
-
-            <Modal onClose={onClose} size='2xl' isOpen={isOpen}>
-                < form onSubmit={submitHandler} >
-                    <ModalOverlay
-                        bg='blackAlpha.300'
-                        backdropFilter='blur(10px) '
-                    />
-                    <ModalContent>
-                        <ModalHeader>Edit Profile</ModalHeader>
-                        <ModalCloseButton />
-                        <ModalBody>
-                            <Stack
-                                as={Box}
-                                spacing={{ base: 9, md: 10 }}
+                        {
+                            image.allImages &&
+                            <Image
+                                src={image.allImages.heroImage || placeholder}
+                                objectFit="cover"
+                                maxW={['100%', '100%', '100%', '100%', '100%']}
+                                width={['100%', '100%', '100%', '1000px', '1260px']}
+                                height="350px"
+                            />
+                        }
+                        {
+                            image.allImages &&
+                            <Avatar
+                                position="absolute"
+                                top={['88%', '90%', '93%', '90%']}
+                                size={['xl', 'xl', '2xl']}
+                                src={image.allImages.profileImg}
+                            />
+                        }
+                    </Stack>
+                    <Stack gap='0'>
+                        <Box display='flex' justifyContent='flex-end'>
+                            <Button
+                                className='btn-profile'
+                                onClick={handleClick}
+                                style={{
+                                    transition: 'background-color 0.3s ease',
+                                    backgroundColor: '#3F72AF',
+                                    color: '#F9F7F7',
+                                    borderColor: '#112D4E',
+                                    borderWidth: '2px',
+                                    borderStyle: 'solid',
+                                }}
                             >
+                                <BsFillPencilFill />
+                            </Button>
+                        </Box>
+                        <Text fontSize='3xl' marginBottom='0' className='name-profile'>{`${data.firstName} ${data.lastName}`} <FaPen size={22}/> </Text>
+                        <Text fontSize='2xl' className='address-profile'> {data.address}   <MdLocationOn /> </Text>
+                        <HStack justifyContent='center' gap='30px'>
+                            {profileState.followers && (
+                                <Text fontSize='xl' fontWeight='bold' cursor='pointer' onClick={handleFollowersClick} _hover={{ color: 'gray' }}>
+                                    Followers <Text>{profileState.followers.Count || 0}</Text>
+                                </Text>
+                            )}
+                            {profileState.following && (
+                                <Text fontSize='xl' fontWeight='bold' cursor='pointer' onClick={handleFollowingClick} _hover={{ color: 'gray' }}>
+                                    Following <Text>{profileState.following.Count || 0}</Text>
+                                </Text>
+                            )}
+
+                        </HStack>
+                        {showFollowersModal && profileState.followers.Count !== 0 ? <FollowersModal followers={true} /> : null}
+                        {showFollowingModal && profileState.following.Count !== 0 ? <FollowersModal following={true} /> : null}
+                    </Stack>
+                </Stack>
+                <Divider />
+                <div>
+                    {images && images.length > 0 ? (
+                        <Posts posts={images} />
+                    ) : (
+                        <div className='empty-profile'>
+                            <BsCamera size={100} />
+                            <h4>Add New Post</h4>
+                            <p>
+                                Add New Post, they will appear on your profile.
+                            </p>
+
+                        </div>
+                    )}
+                </div>
+
+                {/*/ Edit profile Modal/*/}
+
+                <Modal onClose={onClose} size='2xl' isOpen={isOpen}>
+                    < form onSubmit={submitHandler} >
+                        <ModalOverlay
+                            bg='blackAlpha.300'
+                            backdropFilter='blur(10px) '
+                        />
+                        <ModalContent>
+                            <ModalHeader>Edit Profile</ModalHeader>
+                            <ModalCloseButton />
+                            <ModalBody>
                                 <Stack
-                                    direction={'column'}
-                                    align={'center'}
-                                    alignSelf={'center'}
-                                    position={'relative'}>
-                                    <Button
-                                        as="label"
-                                        htmlFor="hero-file-input"
-                                        position="absolute"
-                                        bg='Background'
-                                        color='white'
-                                        left={['56%', '55%', '54%', '93%']}
-                                        top={['99%', '100%', '100%', '1%']}
-                                        rounded='30px'
-                                        width='40px'
-                                        className='btn'
-                                        cursor='pointer'
-                                        _hover={{ bg: 'hoverColor' }}
-                                    >
-                                        <BsFillPencilFill />
-                                    </Button>
+                                    as={Box}
+                                    spacing={{ base: 9, md: 10 }}
+                                >
+                                    <Stack
+                                        direction={'column'}
+                                        align={'center'}
+                                        alignSelf={'center'}
+                                        position={'relative'}>
+                                        <Button
+                                            as="label"
+                                            htmlFor="hero-file-input"
+                                            position="absolute"
+                                            bg='Background'
+                                            color='white'
+                                            left={['56%', '55%', '54%', '93%']}
+                                            top={['99%', '100%', '100%', '1%']}
+                                            rounded='30px'
+                                            width='40px'
+                                            className='btn'
+                                            cursor='pointer'
+                                            _hover={{ bg: 'hoverColor' }}
+                                        >
+                                            <BsFillPencilFill />
+                                        </Button>
 
-                                    <Input
-                                        type="file"
-                                        id="hero-file-input"
-                                        display="none"
-                                        onChange={(event) => {
-                                            setheroImage(event.target.files[0]);
-                                        }}
-                                    />
-                                    {
-                                        image.allImages &&
-                                        <Image
-                                            src={heroImage && URL.createObjectURL(heroImage) || image.allImages.heroImage || placeholder}
-                                            objectFit="cover"
-                                            maxW={['420px', '768px', '992px', '1200px', '1260px']}
-                                            width={['100%', '490px', '620px', '600px', '630px']}
-                                            height="220px"
+                                        <Input
+                                            type="file"
+                                            id="hero-file-input"
+                                            display="none"
+                                            onChange={(event) => {
+                                                setheroImage(event.target.files[0]);
+                                            }}
                                         />
-                                    }
-                                    {
-                                        image.allImages &&
-                                        <Avatar
-                                            position='absolute'
-                                            top={['76%', '82%', '93%', '70%']}
-                                            size={['xl', 'xl', 'xl']}
-
-                                            src={profileImage && URL.createObjectURL(profileImage) || image.allImages.profileImg}
-                                        />
-                                    }
-                                    <Button
-                                        as="label"
-                                        htmlFor="file-input"
-                                        position="absolute"
-                                        left={['56%', '55%', '54%', '54%']}
-                                        top={['99%', '100%', '100%', '96%']}
-                                        bg='Background'
-                                        rounded='30px'
-                                        color='white'
-                                        width='40px'
-                                        className='btn'
-                                        cursor='pointer'
-                                        _hover={{ bg: 'hoverColor' }}
-
-                                    >
-                                        <BsFillPencilFill />
-                                    </Button>
-
-                                    <Input
-                                        type="file"
-                                        id="file-input"
-                                        display="none" // Hide the actual file input
-                                        onChange={(event) => {
-                                            setprofileImage(event.target.files[0]);
-                                        }}
-                                    />
-                                    <BsFillPencilFill />
-                                </Stack>
-                                <Stack>
-                                    <HStack marginTop='20px'>
-                                        <FormControl>
-                                            <FormLabel fontWeight='bold'>First Name</FormLabel>
-                                            <Editable defaultValue={data.firstName} style={{ borderBottom: '1px solid #000', padding: '1%', width: '50%' }}>
-                                                <EditablePreview />
-                                                <EditableInput name='firstName' />
-                                            </Editable>
-                                        </FormControl>
-                                        <FormControl>
-                                            <FormLabel fontWeight='bold'>Last Name</FormLabel>
-                                            <Editable defaultValue={data.lastName} style={{ borderBottom: '1px solid #000', padding: '1%', width: '50%' }}>
-                                                <EditablePreview />
-                                                <EditableInput name='lastName' />
-                                            </Editable>
-                                        </FormControl>
-                                    </HStack>
-                                    <HStack>
-                                        <FormControl>
-                                            <FormLabel fontWeight='bold'>username</FormLabel>
-                                            <Editable defaultValue={data.username} style={{ borderBottom: '1px solid #000', padding: '1%', width: '50%' }}>
-                                                <EditablePreview />
-                                                <EditableInput name='username' />
-                                            </Editable>
-                                        </FormControl>
-                                        <FormControl>
-                                            <FormLabel fontWeight='bold'>Address</FormLabel>
-                                            <Editable defaultValue={data.address} style={{ borderBottom: '1px solid #000', padding: '1%', width: '50%' }}>
-                                                <EditablePreview />
-                                                <EditableInput name='address' />
-                                            </Editable>
-                                        </FormControl>
-                                    </HStack>
-                                    <HStack>
-                                        <FormControl>
-                                            <FormLabel fontWeight='bold'>Email</FormLabel>
-                                            <Editable defaultValue={data.email} style={{ borderBottom: '1px solid #000', padding: '1%', width: '70%' }} >
-                                                <EditablePreview />
-                                                <EditableInput name='email' />
-                                            </Editable>
-                                        </FormControl>
-                                        <FormControl>
-                                            <FormLabel fontWeight='bold' htmlFor="bday">Birthday</FormLabel>
-                                            <Input
-                                                defaultValue={data.birthday}
-                                                style={{ border: 'none', borderBottom: '1px solid #000', padding: '1%', width: '50%' }}
-                                                name='bday'
-                                                placeholder="Select Date"
-                                                size="md"
-                                                type="date"
+                                        {
+                                            image.allImages &&
+                                            <Image
+                                                src={heroImage && URL.createObjectURL(heroImage) || image.allImages.heroImage || placeholder}
+                                                objectFit="cover"
+                                                maxW={['420px', '768px', '992px', '1200px', '1260px']}
+                                                width={['100%', '490px', '620px', '600px', '630px']}
+                                                height="220px"
                                             />
-                                        </FormControl>
-                                    </HStack>
+                                        }
+                                        {
+                                            image.allImages &&
+                                            <Avatar
+                                                position='absolute'
+                                                top={['76%', '82%', '93%', '70%']}
+                                                size={['xl', 'xl', 'xl']}
+
+                                                src={profileImage && URL.createObjectURL(profileImage) || image.allImages.profileImg}
+                                            />
+                                        }
+                                        <Button
+                                            as="label"
+                                            htmlFor="file-input"
+                                            position="absolute"
+                                            left={['56%', '55%', '54%', '54%']}
+                                            top={['99%', '100%', '100%', '96%']}
+                                            bg='Background'
+                                            rounded='30px'
+                                            color='white'
+                                            width='40px'
+                                            className='btn'
+                                            cursor='pointer'
+                                            _hover={{ bg: 'hoverColor' }}
+
+                                        >
+                                            <BsFillPencilFill />
+                                        </Button>
+
+                                        <Input
+                                            type="file"
+                                            id="file-input"
+                                            display="none" // Hide the actual file input
+                                            onChange={(event) => {
+                                                setprofileImage(event.target.files[0]);
+                                            }}
+                                        />
+                                        <BsFillPencilFill />
+                                    </Stack>
+                                    <Stack>
+                                        <HStack marginTop='20px'>
+                                            <FormControl>
+                                                <FormLabel fontWeight='bold'>First Name</FormLabel>
+                                                <Editable defaultValue={data.firstName} style={{ borderBottom: '1px solid #000', padding: '1%', width: '50%' }}>
+                                                    <EditablePreview />
+                                                    <EditableInput name='firstName' />
+                                                </Editable>
+                                            </FormControl>
+                                            <FormControl>
+                                                <FormLabel fontWeight='bold'>Last Name</FormLabel>
+                                                <Editable defaultValue={data.lastName} style={{ borderBottom: '1px solid #000', padding: '1%', width: '50%' }}>
+                                                    <EditablePreview />
+                                                    <EditableInput name='lastName' />
+                                                </Editable>
+                                            </FormControl>
+                                        </HStack>
+                                        <HStack>
+                                            <FormControl>
+                                                <FormLabel fontWeight='bold'>username</FormLabel>
+                                                <Editable defaultValue={data.username} style={{ borderBottom: '1px solid #000', padding: '1%', width: '50%' }}>
+                                                    <EditablePreview />
+                                                    <EditableInput name='username' />
+
+                                                </Editable>
+                                            </FormControl>
+                                            <FormControl>
+                                                <FormLabel fontWeight='bold'>Address</FormLabel>
+
+
+                                                <Editable defaultValue={data.address} style={{ borderBottom: '1px solid #000', padding: '1%', width: '50%' }}>
+                                                    <EditablePreview />
+
+                                                    <EditableInput name='address' />
+                                                </Editable>
+                                            </FormControl>
+                                        </HStack>
+                                        <HStack>
+                                            <FormControl>
+                                                <FormLabel fontWeight='bold'>Email</FormLabel>
+                                                <Editable defaultValue={data.email} style={{ borderBottom: '1px solid #000', padding: '1%', width: '70%' }} >
+                                                    <EditablePreview />
+                                                    <EditableInput name='email' />
+                                                </Editable>
+                                            </FormControl>
+                                            <FormControl>
+                                                <FormLabel fontWeight='bold' htmlFor="bday">Birthday</FormLabel>
+                                                <Input
+                                                    defaultValue={data.birthday}
+                                                    style={{ border: 'none', borderBottom: '1px solid #000', padding: '1%', width: '50%' }}
+                                                    name='bday'
+                                                    placeholder="Select Date"
+                                                    size="md"
+                                                    type="date"
+                                                />
+                                            </FormControl>
+                                        </HStack>
+                                    </Stack>
                                 </Stack>
-                            </Stack>
-                        </ModalBody>
-                        <ModalFooter>
-                            <HStack spacing={6}>
-                                <Button onClick={onClose} className='btnClose'>Close</Button>
-                                <Button className='btn' color='white' type='submit'>Save Changes</Button>
-                            </HStack>
-                        </ModalFooter>
-                    </ModalContent>
-                </form>
-            </Modal>
-            <Divider />
-            <HStack flexWrap='wrap' display='flex' justifyContent='flex-start' alignItems='center'>
-                {/* {images &&
+                            </ModalBody>
+                            <ModalFooter>
+                                <HStack spacing={6}>
+                                    <Button onClick={onClose} className='btnClose'>Close</Button>
+                                    <Button className='btn' color='white' type='submit'>Save Changes</Button>
+                                </HStack>
+                            </ModalFooter>
+                        </ModalContent>
+                    </form>
+                </Modal>
+                <Divider />
+                <HStack flexWrap='wrap' display='flex' justifyContent='flex-start' alignItems='center'>
+                    {/* {images &&
                     images.map((item, index) => (
                         <Image key={index} src={item.imgurl} width='30%' />
                     ))} */}
-            </HStack>
-        </>
+                </HStack>
+            </>
+            <MainFooter />
+        </div>
     )
 }
 

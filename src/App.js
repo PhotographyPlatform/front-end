@@ -1,6 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
-
+import './App.scss'
 
 import Container from './components/Pages/@auth/index';
 import Cookies from 'react-cookies';

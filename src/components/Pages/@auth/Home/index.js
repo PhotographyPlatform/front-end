@@ -92,7 +92,6 @@ function Home() {
     const token = Cookies.load("user_session");
     const parsedToken = decodeToken(token);
 
-    console.log(parsedToken.userId);
 
     useEffect(() => {
         try {
@@ -107,7 +106,6 @@ function Home() {
                 }
             );
             response.then((data) => {
-                console.log(data, "!!!!!!!!!!!!!!!");
                 sethomePosts(data.data);
                 setLoading(false);
             });
@@ -179,7 +177,7 @@ function Home() {
             {
                 homePosts.length !== 0 ? (
                     <div className="auth-profile">
-                        <div className="search-bar-home">
+                        {/* <div className="search-bar-home">
                             <Search2Icon className="search-icon-home" />
                             <input
                                 type="search"
@@ -187,7 +185,7 @@ function Home() {
                                 maxLength={30}
                                 onKeyDown={setSearchWorldHandler}
                             />
-                        </div>
+                        </div> */}
                         {loading ? (<Spinner
                             thickness="3px"
                             speed="0.65s"

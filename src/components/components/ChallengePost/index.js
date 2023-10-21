@@ -8,15 +8,15 @@ import {
   ModalBody,
   ModalCloseButton,
   Button,
-  useToast 
+  useToast
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import cookies from 'react-cookies';
 import "./ChallengePost.scss";
 
-function ChallengePost({onCloseNewPost, isOpenNewPost, ChallengeName, challengeId, setIsNewPostAdded}) {
-  
+function ChallengePost({ onCloseNewPost, isOpenNewPost, ChallengeName, challengeId, setIsNewPostAdded }) {
+
   const TitleLimit = 65;
   const desLimit = 200;
 
@@ -29,13 +29,13 @@ function ChallengePost({onCloseNewPost, isOpenNewPost, ChallengeName, challengeI
   const [isTitleInputEmpty, setisTitleInputEmpty] = useState(false);
   const [isDecEmpty, setisDecEmpty] = useState(false);
   const [isTagInputEmpty, setIsTagInputEmpty] = useState(false);
-  
+
   const toast = useToast();
   const fileInputRef = useRef(null);
 
   const allowedTags = useSelector((state) => state.search.categories.map(item => item.name));
 
-const handleFileInputChange = () => {
+  const handleFileInputChange = () => {
     const fileNameSpan = document.getElementById("fileName");
     const previewImage = document.getElementById("previewImage");
     const fileInput = fileInputRef.current;
@@ -43,14 +43,14 @@ const handleFileInputChange = () => {
     if (fileInput.files.length > 0) {
       fileNameSpan.textContent = fileInput.files[0].name;
       const selectedFile = fileInput.files[0];
-        if (selectedFile.type.startsWith("image/")) {
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            previewImage.src = e.target.result;
-            previewImage.style.display = "block";
-          };
-          reader.readAsDataURL(selectedFile);
-        }
+      if (selectedFile.type.startsWith("image/")) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          previewImage.src = e.target.result;
+          previewImage.style.display = "block";
+        };
+        reader.readAsDataURL(selectedFile);
+      }
     } else {
       fileNameSpan.textContent = "";
       previewImage.style.display = "none";
@@ -113,7 +113,7 @@ const handleFileInputChange = () => {
             }
           }
         );
-    
+
         console.log(response, '88888888888888888888888888888888888');
         if (response.status === 201) {
           onCloseNewPost();
@@ -131,7 +131,7 @@ const handleFileInputChange = () => {
       } catch (error) {
         console.error(`error when adding a new post for a the challenge '${ChallengeName}'`, error);
       }
-  }
+    }
   };
 
   const addTagHandler = (e) => {
@@ -165,144 +165,144 @@ const handleFileInputChange = () => {
   };
 
   const validateTagInput = isTagInputEmpty ? 'empty-tag-input' : 'tags-container';
-  const validateTitleInput = isTitleInputEmpty ?  'empty-title-input' : 'title-input';
-  const validateDecInput = isDecEmpty ?  'empty-title-input' : 'title-input';
+  const validateTitleInput = isTitleInputEmpty ? 'empty-title-input' : 'title-input';
+  const validateDecInput = isDecEmpty ? 'empty-title-input' : 'title-input';
 
   return (
-    <>
-
-      <Modal isOpen={isOpenNewPost} onClose={onCloseNewPost} size="xl">
-        <ModalOverlay />
-        <ModalContent className="modal">
-          <ModalHeader className="modal-title">Participate</ModalHeader>
-          <ModalCloseButton />
-          <form onSubmit={onSubmitHandler}>
-            <ModalBody>
-              <div className="modal-form">
-              <div className="upload-image-container modal-item">
-                  <input
-                    type="file"
-                    name="fileInput"
-                    id="fileInput"
-                    style={{ display: "none" }}
-                    ref={fileInputRef}
-                    onChange={handleFileInputChange}
-                  />
-                  <div className="ulpoad-dec">
-                    <p>Upload your image here</p>
-                    <div className="review-img-title">
-                      <img id="previewImage" src="" alt="yourimage" className="review-img"/>
-                      <span id="fileName"></span>
+      <>
+        <Modal isOpen={isOpenNewPost} onClose={onCloseNewPost} size="xl">
+          <ModalOverlay />
+          <ModalContent className="modal">
+            <ModalHeader className="modal-title">Participate</ModalHeader>
+            <ModalCloseButton />
+            <form onSubmit={onSubmitHandler}>
+              <ModalBody>
+                <div className="modal-form">
+                  <div className="upload-image-container modal-item">
+                    <input
+                      type="file"
+                      name="fileInput"
+                      id="fileInput"
+                      style={{ display: "none" }}
+                      ref={fileInputRef}
+                      onChange={handleFileInputChange}
+                    />
+                    <div className="ulpoad-dec">
+                      <p>Upload your image here</p>
+                      <div className="review-img-title">
+                        <img id="previewImage" src="" alt="yourimage" className="review-img" />
+                        <span id="fileName"></span>
+                      </div>
+                      <label
+                        htmlFor="fileInput"
+                        className="upload-image-container_ulpoader"
+                      >
+                        Ulpoad image
+                      </label>
                     </div>
-                    <label
-                      htmlFor="fileInput"
-                      className="upload-image-container_ulpoader"
-                    >
-                      Ulpoad image
-                    </label>
+                    {isUploadImageInputEmpty && <span className="empty-img-input">!! you must upload an image !!</span>}
                   </div>
-                  {isUploadImageInputEmpty && <span className="empty-img-input">!! you must upload an image !!</span>}
-                </div>
 
-                <div className="modal-item">
-                  <div className="counter-flex">
-                    <label>Challenge name</label>
-                  </div>
-                  <input
-                    type="text"
-                    placeholder={ChallengeName}
-                    className='input-disabled'
-                    disabled={true}
-                  />
-                </div>
-
-                <div className="modal-item">
-                  <div className="counter-flex">
-                    <label>Title</label>
-                    <small>
-                      {titleCounter}/{TitleLimit}
-                    </small>
-                  </div>
-                  <input
-                    type="text"
-                    name="title"
-                    placeholder="write the title here...."
-                    className={validateTitleInput}
-                    onChange={onChangeTitle}
-                    maxLength={TitleLimit}
-                  />
-                </div>
-
-                <div className="modal-item">
-                  <div className="counter-flex">
-                    <label>Description</label>
-                    <small>
-                      {desCounter}/{desLimit}
-                    </small>
-                  </div>
-                  <textarea name="descript"
-                    className={validateDecInput}
-                    maxLength={desLimit}
-                    placeholder="write the description here...."
-                    onChange={onChangeDes}></textarea>
-                </div>
-
-                <div className="modal-item">
-                  <label>Tags</label>
-                  <div className="tags">
-                    <div className={validateTagInput}>
-                      {tags.map((item, index) => (
-                        <div className="tags-item" key={index}>
-                          <span className="text">{item}</span>
-                          <span
-                            onClick={() => removeTag(item)}
-                            className="close"
-                          >
-                            &times;
-                          </span>
-                        </div>
-                      ))}
-                      <input
-                        className="tag-input"
-                        type="search"
-                        placeholder="Ex: nature, country, food..."
-                        onKeyDown={addTagHandler}
-                        onChange={suggestTag}
-                        value={tagInput}
-                      />
+                  <div className="modal-item">
+                    <div className="counter-flex">
+                      <label>Challenge name</label>
                     </div>
+                    <input
+                      type="text"
+                      placeholder={ChallengeName}
+                      className='input-disabled'
+                      disabled={true}
+                    />
+                  </div>
 
-                    <ul className="suggestions">
-                      {suggestedTags.map(
-                        (suggestion, index) =>
-                          !tags.includes(suggestion.trim()) && (
-                            <li
-                              key={index}
-                              onClick={() => handleSuggestionClick(suggestion)}
-                              className="suggestion"
+                  <div className="modal-item">
+                    <div className="counter-flex">
+                      <label>Title</label>
+                      <small>
+                        {titleCounter}/{TitleLimit}
+                      </small>
+                    </div>
+                    <input
+                      type="text"
+                      name="title"
+                      placeholder="write the title here...."
+                      className={validateTitleInput}
+                      onChange={onChangeTitle}
+                      maxLength={TitleLimit}
+                    />
+                  </div>
+
+                  <div className="modal-item">
+                    <div className="counter-flex">
+                      <label>Description</label>
+                      <small>
+                        {desCounter}/{desLimit}
+                      </small>
+                    </div>
+                    <textarea name="descript"
+                      className={validateDecInput}
+                      maxLength={desLimit}
+                      placeholder="write the description here...."
+                      onChange={onChangeDes}></textarea>
+                  </div>
+
+                  <div className="modal-item">
+                    <label>Tags</label>
+                    <div className="tags">
+                      <div className={validateTagInput}>
+                        {tags.map((item, index) => (
+                          <div className="tags-item" key={index}>
+                            <span className="text">{item}</span>
+                            <span
+                              onClick={() => removeTag(item)}
+                              className="close"
                             >
-                              {suggestion}
-                            </li>
-                          )
-                      )}
-                    </ul>
+                              &times;
+                            </span>
+                          </div>
+                        ))}
+                        <input
+                          className="tag-input"
+                          type="search"
+                          placeholder="Ex: nature, country, food..."
+                          onKeyDown={addTagHandler}
+                          onChange={suggestTag}
+                          value={tagInput}
+                        />
+                      </div>
+
+                      <ul className="suggestions">
+                        {suggestedTags.map(
+                          (suggestion, index) =>
+                            !tags.includes(suggestion.trim()) && (
+                              <li
+                                key={index}
+                                onClick={() => handleSuggestionClick(suggestion)}
+                                className="suggestion"
+                              >
+                                {suggestion}
+                              </li>
+                            )
+                        )}
+                      </ul>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </ModalBody>
+              </ModalBody>
 
-            <ModalFooter className="modal-buttons-cp">
-              <Button variant="ghost" onClick={onCloseNewPost}>
-                Close
-              </Button>
-              <Button type="submit" colorScheme="blue" mr={3}>
-                Done
-              </Button>
-            </ModalFooter>
-          </form>
-        </ModalContent>
-      </Modal>
-    </>
+              <ModalFooter className="modal-buttons-cp">
+                <Button variant="ghost" onClick={onCloseNewPost}>
+                  Close
+                </Button>
+                <Button type="submit" colorScheme="blue" mr={3}>
+                  Done
+                </Button>
+              </ModalFooter>
+            </form>
+          </ModalContent>
+        </Modal>
+      </>
+    
   );
 }
 
