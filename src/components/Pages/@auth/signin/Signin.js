@@ -176,7 +176,7 @@ const LoginForm = () => {
             <Checkbox isChecked={data ? !isChecked : isChecked} onChange={handleCheckboxChange}>Remember Me</Checkbox>
           </Box>
           <Box>
-            <Link color={'#3F72AF'} href='/forgetPassword'>Forgot your password?</Link>
+            <Link color={'#3F72AF'} to='/forgetPassword'>Forgot your password?</Link>
           </Box>
         </Stack>
         <br />

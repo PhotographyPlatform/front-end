@@ -207,7 +207,7 @@ function Profile() {
                                 <BsFillPencilFill />
                             </Button>
                         </Box>
-                        <Text fontSize='3xl' marginBottom='0' className='name-profile'>{`${data.firstName} ${data.lastName}`} <FaPen size={22}/> </Text>
+                        <Text fontSize='3xl' marginBottom='0' className='name-profile'>{`${data.firstName} ${data.lastName}`}  </Text>
                         <Text fontSize='2xl' className='address-profile'> {data.address}   <MdLocationOn /> </Text>
                         <HStack justifyContent='center' gap='30px'>
                             {profileState.followers && (
