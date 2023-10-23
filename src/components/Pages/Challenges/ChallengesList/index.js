@@ -30,7 +30,7 @@ function ChallengesList({challenges, setIsViewClicked, setSelectedChallenge}) {
 <div class="row g-0">
   <div class="col-md-5 col-md-5-img">
     <img
-      src="https://images.pexels.com/photos/3225517/pexels-photo-3225517.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+      src={challenges.imgurl}
       alt="Trendy Pants and Shoes"
       class="img-fluid rounded-start"
     />

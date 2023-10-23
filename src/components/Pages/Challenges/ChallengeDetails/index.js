@@ -22,7 +22,7 @@ function ChallengeDetails({ selectedChallenge }) {
   
   useEffect(()=>{
     try{
-      const response = axios.get(`{URL}/v1/newPostCOll`);
+      const response = axios.get(`${URL}/v1/newPostCOll`);
 
       response.then((data) => {
         const posts = data.data.filter(
@@ -55,7 +55,7 @@ function ChallengeDetails({ selectedChallenge }) {
         <div className="challenge-details card-ch-li">
           <div class="card card-cd mb-3">
             <img
-              src="https://images.pexels.com/photos/3225517/pexels-photo-3225517.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+              src={selectedChallenge.imgurl}
               class="card-img-top card-img-top-cd"
               alt="..."
             />
