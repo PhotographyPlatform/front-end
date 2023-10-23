@@ -4,6 +4,7 @@ import './Post.scss';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import CalculateTime from '../../Time';
+const baseUrl = process.env.REACT_APP_URL;
 
 //props
 //{ id, imgurl, userid, title, contant, challengeName, challengeID, category, createdAt, updatedAt }
@@ -23,7 +24,7 @@ function Post(props) {
     try {
       if (userid) {
         const response = axios.get(
-          `http://localhost:3002/v1/newUserCOll/${userid}`
+          `${baseUrl}/v1/newUserCOll/${userid}`
         );
         response.then((data) => {
           setUsername(data.data.data.username);

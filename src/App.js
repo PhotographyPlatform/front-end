@@ -37,12 +37,12 @@ import { setOldNotifi } from './store/reducers/notificationAction';
 import { fetchCategories } from './store/reducers/Search';
 
 // socket assets 
-const URL = process.env.REACT_APP_URL;
+const baseUrl = process.env.REACT_APP_baseUrl;
 
 const port = 3002;
-const host = URL;
-const homeHost = `${URL}/home`;
-const nameSpacehost = `${URL}/notification`;
+const host = baseUrl;
+const homeHost = `${baseUrl}/home`;
+const nameSpacehost = `${baseUrl}/notification`;
 
 export const socket = io.connect(host, { transports: ["websocket"] });
 export const homeSocket = io.connect(homeHost, { transports: ["websocket"] });
@@ -63,7 +63,7 @@ function App() {
   const [notifiOff, setnotifiOff] = useState(true)
 
   let params = useParams()
-  const [reload , setReload] = useState(true)
+  const [reload, setReload] = useState(true)
 
 
   const Logged = userState.isLogged;
@@ -84,7 +84,7 @@ function App() {
     })
   }, [])
 
-  console.log(URL);
+  console.log(baseUrl);
 
 
   // Notification Action (Post, Like, Comment,  Follow)
@@ -122,18 +122,18 @@ function App() {
     dispatch(getNotification(cookieData))
 
   }, [Logged]);
-  
- 
 
-    
+
+
+
   dispatch(fetchCategories());
 
 
   return (
     <div className="App">
-      
+
       <ThemeProvider theme={theme}>
-        
+
 
         {decodeAuth && decodeAuth.userId ? (
           <SidebarWithHeader>

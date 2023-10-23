@@ -54,7 +54,7 @@ function Home() {
   const following = useSelector((state) => state.profile.following);
   const image = useSelector((state) => state.profile);
   const data = useSelector((state) => state.user.user);
-  const URL = process.env.REACT_APP_URL;
+  const baseUrl = process.env.REACT_APP_URL;
 
   const storyHandler = (id) => {
     setSelectedStoryId(id);
@@ -101,7 +101,7 @@ function Home() {
     try {
       const token = Cookies.load("user_session");
       setLoading(true);
-      const response = axios.get(`${URL}/home` , {
+      const response = axios.get(`${baseUrl}/home`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
