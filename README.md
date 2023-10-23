@@ -97,4 +97,4 @@ Pixel Time adheres to non-functional requirements:
 
 ![Database Diagram](https://raw.githubusercontent.com/PhotographyPlatform/back-end/main/assests/database.png)
 
-Join us at Pixel Time and be part of this vibrant photography community!
+
