@@ -75,7 +75,7 @@ function Profile() {
     const data = state.user
     const { isOpen, onOpen, onClose } = useDisclosure()
     const refreshState = useSelector(state => state.refresh)
-    const URL = process.env.REACT_APP_URL;
+    const url = process.env.REACT_APP_URL;
 
 
     const handleClick = () => {
@@ -140,7 +140,7 @@ function Profile() {
     const fetchData = async () => {
         try {
             const token = cookies.load('user_session');
-            const response = await axios.get(`${URL}/getallPostUser`, {
+            const response = await axios.get(`${url}/getallPostUser`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -207,7 +207,7 @@ function Profile() {
                                 <BsFillPencilFill />
                             </Button>
                         </Box>
-                        <Text fontSize='3xl' marginBottom='0' className='name-profile'>{`${data.firstName} ${data.lastName}`} <FaPen size={22}/> </Text>
+                        <Text fontSize='3xl' marginBottom='0' className='name-profile'>{`${data.firstName} ${data.lastName}`}  </Text>
                         <Text fontSize='2xl' className='address-profile'> {data.address}   <MdLocationOn /> </Text>
                         <HStack justifyContent='center' gap='30px'>
                             {profileState.followers && (

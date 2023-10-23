@@ -24,7 +24,8 @@ import logo3 from "../../../assets/logo3.png"
 import PNGyellow from "../../../assets/PNG yellow.png"
 import { DecodeToken, signin } from '../../../../store/reducers/auth/user.reducer';
 import { useDispatch } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { PasswordField } from '../signup/passwordFiled/Password';
@@ -94,7 +95,6 @@ const LoginHeader = () => {
       </Heading>
       <Text color="fg.muted" fontSize='17px'>
         Don't have an account? <Link to="/signup" color={`${VARIANT_COLOR}.500`}>Sign up</Link>
-
       </Text>
     </Box>
   );
@@ -176,7 +176,7 @@ const LoginForm = () => {
             <Checkbox isChecked={data ? !isChecked : isChecked} onChange={handleCheckboxChange}>Remember Me</Checkbox>
           </Box>
           <Box>
-            <Link color={'#3F72AF'} href='/forgetPassword'>Forgot your password?</Link>
+            <Link color={'#3F72AF'} to='/forgetPassword'>Forgot your password?</Link>
           </Box>
         </Stack>
         <br />
