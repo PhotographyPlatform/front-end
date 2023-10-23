@@ -1,7 +1,7 @@
 # Pixel Time - A Photography Community
 
 **Website Link: [Pixel Time](https://main--voluble-maamoul-2711f4.netlify.app/)**
-
+![img](./assest/PNG%20yellow.png)
 ---
 
 ## Team Members
@@ -12,7 +12,7 @@
 - [Ihab Salhi](https://github.com/ehabsalhi)
 
 
-![img](./assest/PNG%20yellow.png)
+
 
 ## Introduction
 
