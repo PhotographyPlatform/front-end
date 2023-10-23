@@ -16,6 +16,7 @@ import { useSelector } from "react-redux";
 import cookies from "react-cookies";
 import { decodeToken } from "react-jwt";
 import "./NewPost.scss";
+const baseUrl = process.env.REACT_APP_URL;
 
 function NewPost({ onCloseNewPost, isOpenNewPost }) {
   const TitleLimit = 65;
@@ -106,7 +107,7 @@ function NewPost({ onCloseNewPost, isOpenNewPost }) {
         setUploadingPost(true);
         const token = cookies.load("user_session");
         const response = await axios.post(
-          "http://localhost:3002/notification/post",
+          `${baseUrl}/notification/post`,
           formData,
           {
             headers: {

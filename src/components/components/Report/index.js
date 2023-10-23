@@ -15,6 +15,8 @@ import { useSelector } from "react-redux";
 import "./Report.scss";
 import cookies from 'react-cookies';
 import jwtDecode from "jwt-decode";
+const baseUrl = process.env.REACT_APP_URL;
+
 function Report({ onCloseReport, isOpenReport, actionId, actionType }) {
 
 
@@ -51,7 +53,7 @@ function Report({ onCloseReport, isOpenReport, actionId, actionType }) {
 
     try {
       const response = await axios.post(
-        "http://localhost:3002/v1/reportCollection",
+        `${baseUrl}/v1/reportCollection`,
         report
       );
       if (response.status === 201) {
