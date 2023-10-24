@@ -37,7 +37,7 @@ import { setOldNotifi } from './store/reducers/notificationAction';
 import { fetchCategories } from './store/reducers/Search';
 
 // socket assets 
-const baseUrl = process.env.REACT_APP_baseUrl;
+const baseUrl = process.env.REACT_APP_URL;
 
 const port = 3002;
 const host = baseUrl;
