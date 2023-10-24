@@ -115,7 +115,7 @@ function NewPost({ onCloseNewPost, isOpenNewPost }) {
             },
           }
         );
-
+        console.log("resss", response)
         if (response.status === 201) {
           setUploadingPost(false);
           onCloseNewPost();
