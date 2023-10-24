@@ -24,7 +24,7 @@ import axios from 'axios';
 
 function Code() {
     const email = localStorage.getItem('email')
-    const URL = process.env.REACT_APP_URL;
+    const baseUrl = process.env.REACT_APP_URL;
 
     const navigate = useNavigate()
     const [pinValue, setPinValue] = useState('');
@@ -37,7 +37,7 @@ function Code() {
     const submitHandler = async (e) => {
         try {
             e.preventDefault();
-            const data = await axios.post(`${URL}/signup/confirm`, { codes: pinValue })
+            const data = await axios.post(`${baseUrl}/signup/confirm`, { codes: pinValue })
             if (data.status === 200) {
                 navigate('/signin')
             }

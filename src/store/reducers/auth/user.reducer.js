@@ -1,8 +1,10 @@
+/* eslint-disable*/
+
+
 import cookies from 'react-cookies';
 import CryptoJS from 'crypto-js';
 import { useDispatch } from 'react-redux'
 import jwtDecode from "jwt-decode";
-
 const session_user = cookies.load('user_session');
 let decoded = null;
 
